@@ -24,6 +24,8 @@ export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   },
   loginFn: async (data: TLoginInput) => {
     const response = await loginWithEmailAndPassword(data)
+    localStorage.setItem('access-token', response.data.token.accessToken)
+    localStorage.setItem('refresh-token', response.data.token.refreshToken)
     return response.data
   },
   registerFn: async () => {
