@@ -20,13 +20,12 @@ api.interceptors.response.use(
   (response) => response.data,
   (error) => {
     const message = error.response?.data?.message || error.message
-    console.log(message)
+    console.log('AXIOS: ', message)
 
     if (error.response?.status === 401) {
       const searchParams = new URLSearchParams()
-      const redirectTo =
-        searchParams.get('redirectTo') || window.location.pathname
-      window.location.href = paths.auth.login.getHref(redirectTo)
+      const redirect = searchParams.get('redirect') || window.location.pathname
+      window.location.href = paths.auth.login.getHref(redirect)
     }
 
     return Promise.reject(error)
