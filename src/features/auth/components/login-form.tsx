@@ -13,10 +13,12 @@ import { Label } from '@/components/ui/label'
 import { Loader2, LogIn } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
-import { useLogin, loginInputSchema, type TLoginInput } from '@/api/lib/auth'
+import { loginInputSchema, useLogin, type TLoginInput } from '@/api/lib/auth'
 
 export const LoginForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const form = useForm({
@@ -30,6 +32,10 @@ export const LoginForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
   const { mutate: login, isPending } = useLogin({
     onSuccess,
+    onError: (error) => {
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data?.message || error.message)
+    },
   })
 
   const onSubmit = (data: TLoginInput) => {
