@@ -1,6 +1,5 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 import { env } from '@/config/env'
-import { paths } from '@/config/paths'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (config.headers) {
@@ -21,12 +20,6 @@ api.interceptors.response.use(
   (error) => {
     const message = error.response?.data?.message || error.message
     console.log('AXIOS: ', message)
-
-    if (error.response?.status === 401) {
-      const searchParams = new URLSearchParams()
-      const redirect = searchParams.get('redirect') || window.location.pathname
-      window.location.href = paths.auth.login.getHref(redirect)
-    }
 
     return Promise.reject(error)
   },

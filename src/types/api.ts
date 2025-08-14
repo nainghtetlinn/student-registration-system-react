@@ -1,19 +1,18 @@
-export type BaseEntity = {
-  id: string
-  createdAt: number
+export interface ApiResponse<T> {
+  code: number
+  duration: number
+  message: string
+  success: number
+  meta: { endpoint: string; method: string }
+  data: T
 }
 
-export type Entity<T> = {
-  [K in keyof T]: T[K]
-} & BaseEntity
-
-export type User = Entity<{
-  name: string
+export type LoginResponse = {
+  name: string | null
   email: string
-  role: 'ADMIN' | 'USER'
-}>
-
-export type AuthResponse = {
-  jwt: string
-  user: User
+  role: string
+  token: {
+    accessToken: string
+    refreshToken: string
+  }
 }
