@@ -11,5 +11,14 @@ export const paths = {
     },
   },
 
-  app: {},
+  admin: {
+    root: {
+      path: '/admin',
+      getHref: () => '/admin',
+    },
+    shortcuts: {
+      path: '/admin/shortcuts',
+      getHref: () => '/admin/shortcuts',
+    },
+  },
 } as const
