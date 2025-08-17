@@ -1,3 +1,5 @@
+import type { TUser } from './user'
+
 export interface ApiResponse<T> {
   code: number
   duration: number
@@ -8,11 +10,15 @@ export interface ApiResponse<T> {
 }
 
 export type LoginResponse = {
-  name: string | null
-  email: string
-  role: string
   token: {
     accessToken: string
-    refreshToken: string
   }
+} & TUser
+
+export type LogoutResponse = string
+
+export type GetMeResponse = TUser
+
+export type RefreshTokenResponse = {
+  accessToken: string
 }
