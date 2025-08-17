@@ -6,6 +6,26 @@ import { Loader2 } from 'lucide-react'
 
 import { ThemeProvider } from './theme-provider'
 import * as TanStackQueryProvider from '@/providers/query-provider.tsx'
+import { useUser } from '@/api/lib/auth'
+
+function InnerApp({ children }: { children: React.ReactNode }) {
+  const { isPending } = useUser({
+    retry: 0,
+    staleTime: 1000 * 60 * 10,
+  })
+
+  if (isPending)
+    return (
+      <div className='flex h-screen w-screen items-center justify-center'>
+        <Loader2
+          size={40}
+          className='animate-spin'
+        />
+      </div>
+    )
+
+  return children
+}
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -39,7 +59,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       >
         <ThemeProvider defaultTheme='dark'>
           <TanStackQueryProvider.Provider>
-            {children}
+            <InnerApp>{children}</InnerApp>
           </TanStackQueryProvider.Provider>
         </ThemeProvider>
       </ErrorBoundary>
