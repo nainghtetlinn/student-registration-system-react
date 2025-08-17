@@ -1,5 +1,5 @@
-import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { env } from '@/config/env'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (config.headers) {
@@ -26,10 +26,6 @@ api.interceptors.response.use(
   (error) => {
     const message = error.response?.data?.message || error.message
     console.log('AXIOS: ', message)
-
-    if (error instanceof AxiosError) {
-      return Promise.reject(error.response?.data)
-    }
 
     return Promise.reject(error)
   },
