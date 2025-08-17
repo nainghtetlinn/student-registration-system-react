@@ -13,14 +13,6 @@ import { AppSidebarFooter } from './AppSidebarFooter'
 
 import { paths } from '@/config/paths'
 
-const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/shadcn.jpg',
-  },
-}
-
 const contents = {
   register: [
     {
@@ -92,7 +84,7 @@ export const AppSidebar = ({
       </SidebarContent>
 
       <SidebarFooter>
-        <AppSidebarFooter user={data.user} />
+        <AppSidebarFooter />
       </SidebarFooter>
     </Sidebar>
   )

@@ -13,18 +13,25 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { EllipsisVertical, LogOut } from 'lucide-react'
+import { EllipsisVertical, Loader2, LogOut } from 'lucide-react'
 
-export const AppSidebarFooter = ({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) => {
+import { useLogout } from '@/api/lib/auth'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import type { TUser } from '@/types/user'
+
+export const AppSidebarFooter = () => {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
+  const logout = useLogout({
+    onSuccess: () => {
+      navigate({ to: '/' })
+    },
+  })
+
+  const user = queryClient.getQueryData(['user']) as TUser
 
   return (
     <SidebarMenu>
@@ -37,15 +44,19 @@ export const AppSidebarFooter = ({
             >
               <Avatar className='h-8 w-8 rounded-lg grayscale'>
                 <AvatarImage
-                  src={user.avatar}
-                  alt={user.name}
+                  src={'/shadcn.jpg'}
+                  alt={user?.name || 'username'}
                 />
-                <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                <AvatarFallback className='rounded-lg'>
+                  {user?.name ? user.name.slice(0, 2).toUpperCase() : '??'}
+                </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-medium'>{user.name}</span>
+                <span className='truncate font-medium'>
+                  {user?.name || 'username'} ({user?.role})
+                </span>
                 <span className='text-muted-foreground truncate text-xs'>
-                  {user.email}
+                  {user?.email}
                 </span>
               </div>
               <EllipsisVertical className='ml-auto size-4' />
@@ -60,15 +71,19 @@ export const AppSidebarFooter = ({
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage
-                    src={user.avatar}
-                    alt={user.name}
+                    src={'/shadcn.jpg'}
+                    alt={user?.name || 'username'}
                   />
-                  <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                  <AvatarFallback className='rounded-lg'>
+                    {user?.name ? user.name.slice(0, 2).toUpperCase() : '??'}
+                  </AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>{user.name}</span>
+                  <span className='truncate font-medium'>
+                    {user?.name || 'username'} ({user?.role})
+                  </span>
                   <span className='text-muted-foreground truncate text-xs'>
-                    {user.email}
+                    {user?.email}
                   </span>
                 </div>
               </div>
@@ -76,8 +91,15 @@ export const AppSidebarFooter = ({
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
-              <LogOut />
+            <DropdownMenuItem
+              onClick={() => logout.mutate({})}
+              disabled={logout.isPending}
+            >
+              {logout.isPending ? (
+                <Loader2 className='animate-spin' />
+              ) : (
+                <LogOut />
+              )}
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

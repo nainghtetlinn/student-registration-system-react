@@ -1,12 +1,11 @@
 import { AppHeader } from '@/components/layouts/admin/AppHeader'
 import { AppSidebar } from '@/components/layouts/admin/AppSidebar'
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
-import { createFileRoute, redirect, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/admin')({
-  component: RouteComponent,
-  beforeLoad: async ({ location, context }) => {
+  beforeLoad: ({ location, context }) => {
     const user = context.queryClient.getQueryData(['user'])
     if (!user) {
       throw redirect({
@@ -17,10 +16,7 @@ export const Route = createFileRoute('/admin')({
       })
     }
   },
-  loader: async () => {
-    // const defaultOpen = localStorage.getItem
-    // return {defaultSidebarOpen: }
-  },
+  component: RouteComponent,
 })
 
 function RouteComponent() {
