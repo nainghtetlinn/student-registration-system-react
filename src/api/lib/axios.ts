@@ -1,4 +1,4 @@
-import axios, { type InternalAxiosRequestConfig } from 'axios'
+import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { env } from '@/config/env'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
@@ -6,7 +6,13 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
     config.headers.Accept = 'application/json'
   }
 
-  config.withCredentials = true
+  const accessToken = localStorage.getItem('access-token')
+
+  if (accessToken) {
+    config.headers['authorization'] = `Bearer ${accessToken}`
+    config.withCredentials = true
+  }
+
   return config
 }
 
@@ -20,6 +26,10 @@ api.interceptors.response.use(
   (error) => {
     const message = error.response?.data?.message || error.message
     console.log('AXIOS: ', message)
+
+    if (error instanceof AxiosError) {
+      return Promise.reject(error.response?.data)
+    }
 
     return Promise.reject(error)
   },
