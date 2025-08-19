@@ -20,11 +20,17 @@ import { toast } from 'sonner'
 
 import { loginInputSchema, useLogin, type TLoginInput } from '@/api/lib/auth'
 
-export const LoginForm = ({ onSuccess }: { onSuccess: () => void }) => {
+export const LoginForm = ({
+  email,
+  onSuccess,
+}: {
+  email: string
+  onSuccess: () => void
+}) => {
   const form = useForm({
     resolver: zodResolver(loginInputSchema),
     defaultValues: {
-      email: '',
+      email,
       password: '',
     },
   })
