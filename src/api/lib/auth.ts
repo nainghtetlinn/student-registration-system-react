@@ -9,13 +9,16 @@ import type {
   LoginResponse,
   LogoutResponse,
   RefreshTokenResponse,
+  ResetPasswordResponse,
   VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
 
+const passwordSchema = z.string().min(6)
+
 export const loginInputSchema = z.object({
   email: z.email(),
-  password: z.string().min(6),
+  password: passwordSchema,
 })
 
 export type TLoginInput = z.infer<typeof loginInputSchema>
@@ -89,6 +92,31 @@ export const useVerifyOtp = (
     ...options,
   })
 /********** Verify Otp **********/
+
+/********** Reset Password **********/
+export const resetPasswordInputSchema = z.object({
+  email: z.email(),
+  newPassword: passwordSchema,
+  confirmPassword: passwordSchema,
+})
+
+export type TResetPasswordInput = z.infer<typeof resetPasswordInputSchema>
+
+const resetPassword = async (
+  data: TResetPasswordInput,
+): Promise<ResetPasswordResponse> => {
+  const response = await api.post('/auth/reset-password', data)
+  console.log(response)
+  return response.data
+}
+
+export const useResetPassword = (
+  options?: Omit<
+    UseMutationOptions<ResetPasswordResponse, Error, TResetPasswordInput>,
+    'mutationFn'
+  >,
+) => useMutation({ mutationFn: resetPassword, ...options })
+/********** Reset Password **********/
 
 export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   userFn: async () => {
