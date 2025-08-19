@@ -1,18 +1,24 @@
+import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 import { configureAuth } from 'react-query-auth'
 import { z } from 'zod'
 
 import type {
   ApiResponse,
+  ChangePasswordResponse,
   GetMeResponse,
   LoginResponse,
   LogoutResponse,
   RefreshTokenResponse,
+  ResetPasswordResponse,
+  VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
 
+const passwordSchema = z.string().min(6)
+
 export const loginInputSchema = z.object({
   email: z.email(),
-  password: z.string().min(6),
+  password: passwordSchema,
 })
 
 export type TLoginInput = z.infer<typeof loginInputSchema>
@@ -38,6 +44,77 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
   localStorage.setItem('access-token', response.data.accessToken)
   return response.data
 }
+
+/********** Change Password **********/
+export const changePasswordInputSchema = z.object({ email: z.email() })
+
+export type TChangePasswordInput = z.infer<typeof changePasswordInputSchema>
+
+export const changePassword = async (
+  data: TChangePasswordInput,
+): Promise<ChangePasswordResponse> => {
+  const response = await api.post('/auth/change-password', data)
+  return response.data
+}
+
+export const useChangePassword = (
+  options?: Omit<
+    UseMutationOptions<ChangePasswordResponse, Error, TChangePasswordInput>,
+    'mutationFn'
+  >,
+) => useMutation({ mutationFn: changePassword, ...options })
+/********** Change Password **********/
+
+/********** Verify Otp **********/
+export const verifyOtpInputSchema = z.object({
+  email: z.email(),
+  otp: z.string().length(6),
+})
+
+export type TVerifyOtpInput = z.infer<typeof verifyOtpInputSchema>
+
+export const verifyOtp = async (
+  data: TVerifyOtpInput,
+): Promise<VerifyOtpResponse> => {
+  const response = await api.post('/auth/verify-otp', data)
+  return response.data
+}
+
+export const useVerifyOtp = (
+  options?: Omit<
+    UseMutationOptions<VerifyOtpResponse, Error, TVerifyOtpInput>,
+    'mutationFn'
+  >,
+) =>
+  useMutation({
+    mutationFn: verifyOtp,
+    ...options,
+  })
+/********** Verify Otp **********/
+
+/********** Reset Password **********/
+export const resetPasswordInputSchema = z.object({
+  email: z.email(),
+  newPassword: passwordSchema,
+  confirmPassword: passwordSchema,
+})
+
+export type TResetPasswordInput = z.infer<typeof resetPasswordInputSchema>
+
+const resetPassword = async (
+  data: TResetPasswordInput,
+): Promise<ResetPasswordResponse> => {
+  const response = await api.post('/auth/reset-password', data)
+  return response.data
+}
+
+export const useResetPassword = (
+  options?: Omit<
+    UseMutationOptions<ResetPasswordResponse, Error, TResetPasswordInput>,
+    'mutationFn'
+  >,
+) => useMutation({ mutationFn: resetPassword, ...options })
+/********** Reset Password **********/
 
 export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   userFn: async () => {

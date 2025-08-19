@@ -6,21 +6,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
-import { Label } from '@/components/ui/label'
-import { Loader2, LogIn } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AxiosError } from 'axios'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { loginInputSchema, useLogin, type TLoginInput } from '@/api/lib/auth'
+import {
+  useVerifyOtp,
+  verifyOtpInputSchema,
+  type TVerifyOtpInput,
+} from '@/api/lib/auth'
 
-export const LoginForm = ({
+export const VerifyOtpForm = ({
   email,
   onSuccess,
 }: {
@@ -28,15 +29,14 @@ export const LoginForm = ({
   onSuccess: () => void
 }) => {
   const form = useForm({
-    resolver: zodResolver(loginInputSchema),
+    resolver: zodResolver(verifyOtpInputSchema),
     defaultValues: {
       email,
-      password: '',
+      otp: '',
     },
   })
-  const [show, setShow] = useState(false)
 
-  const { mutate: login, isPending } = useLogin({
+  const { mutate, isPending } = useVerifyOtp({
     onSuccess,
     onError: (error) => {
       if (error instanceof AxiosError)
@@ -44,8 +44,8 @@ export const LoginForm = ({
     },
   })
 
-  const onSubmit = (data: TLoginInput) => {
-    login(data)
+  const onSubmit = (data: TVerifyOtpInput) => {
+    mutate(data)
   }
 
   return (
@@ -56,7 +56,7 @@ export const LoginForm = ({
       >
         <Card>
           <CardHeader>
-            <CardTitle>Login</CardTitle>
+            <CardTitle>Verify Otp</CardTitle>
           </CardHeader>
           <CardContent className='grid gap-4'>
             <FormInputField
@@ -67,22 +67,13 @@ export const LoginForm = ({
             />
             <FormInputField
               control={form.control}
-              name='password'
-              label='Password'
-              type={show ? 'text' : 'password'}
+              name='otp'
+              label='OTP'
             />
-            <div className='flex gap-2'>
-              <Checkbox
-                id='show'
-                onCheckedChange={(d) => setShow(!!d)}
-              />
-              <Label htmlFor='show'>Show password</Label>
-            </div>
           </CardContent>
           <CardFooter className='flex justify-between'>
             <Button disabled={isPending}>
-              Login{' '}
-              {isPending ? <Loader2 className='animate-spin' /> : <LogIn />}
+              Verify {isPending && <Loader2 className='animate-spin' />}
             </Button>
           </CardFooter>
         </Card>

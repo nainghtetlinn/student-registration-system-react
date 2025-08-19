@@ -22,3 +22,9 @@ export type GetMeResponse = TUser
 export type RefreshTokenResponse = {
   accessToken: string
 }
+
+export type ChangePasswordResponse = string
+
+export type VerifyOtpResponse = string
+
+export type ResetPasswordResponse = string
