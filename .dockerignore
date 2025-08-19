@@ -1,0 +1,11 @@
+node_modules
+.vscode
+.tanstack
+.env
+.git
+.gitignore
+.dockerignore
+docker-compose.yml
+Dockerfile
+Dockerfile.dev
+dist
