@@ -4,7 +4,10 @@ import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { z } from 'zod'
 
 export const Route = createFileRoute('/auth/login/')({
-  validateSearch: z.object({ redirect: z.string().optional() }),
+  validateSearch: z.object({
+    redirect: z.string().optional(),
+    email: z.email().optional(),
+  }),
   component: RouteComponent,
 })
 
@@ -17,6 +20,7 @@ function RouteComponent() {
       <title>Login</title>
 
       <LoginForm
+        email={search.email ?? ''}
         onSuccess={() => {
           router.history.push(search.redirect ?? '/')
         }}
