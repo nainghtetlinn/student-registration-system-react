@@ -77,7 +77,6 @@ export const verifyOtp = async (
   data: TVerifyOtpInput,
 ): Promise<VerifyOtpResponse> => {
   const response = await api.post('/auth/verify-otp', data)
-  console.log(response)
   return response.data
 }
 
@@ -106,7 +105,6 @@ const resetPassword = async (
   data: TResetPasswordInput,
 ): Promise<ResetPasswordResponse> => {
   const response = await api.post('/auth/reset-password', data)
-  console.log(response)
   return response.data
 }
 
