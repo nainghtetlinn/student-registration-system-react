@@ -9,6 +9,7 @@ import type {
   LoginResponse,
   LogoutResponse,
   RefreshTokenResponse,
+  VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
 
@@ -60,6 +61,34 @@ export const useChangePassword = (
   >,
 ) => useMutation({ mutationFn: changePassword, ...options })
 /********** Change Password **********/
+
+/********** Verify Otp **********/
+export const verifyOtpInputSchema = z.object({
+  email: z.email(),
+  otp: z.string().length(6),
+})
+
+export type TVerifyOtpInput = z.infer<typeof verifyOtpInputSchema>
+
+export const verifyOtp = async (
+  data: TVerifyOtpInput,
+): Promise<VerifyOtpResponse> => {
+  const response = await api.post('/auth/verify-otp', data)
+  console.log(response)
+  return response.data
+}
+
+export const useVerifyOtp = (
+  options?: Omit<
+    UseMutationOptions<VerifyOtpResponse, Error, TVerifyOtpInput>,
+    'mutationFn'
+  >,
+) =>
+  useMutation({
+    mutationFn: verifyOtp,
+    ...options,
+  })
+/********** Verify Otp **********/
 
 export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   userFn: async () => {
