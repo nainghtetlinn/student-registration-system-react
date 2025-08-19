@@ -14,6 +14,7 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -41,6 +42,11 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthChangePasswordIndexRoute = AuthChangePasswordIndexRouteImport.update({
+  id: '/change-password/',
+  path: '/change-password/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AdminDocumentsShortcutsRoute = AdminDocumentsShortcutsRouteImport.update({
   id: '/_documents/shortcuts',
   path: '/shortcuts',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesByTo {
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin': typeof AdminIndexRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesById {
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,9 +88,16 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin/'
     | '/admin/shortcuts'
+    | '/auth/change-password'
     | '/auth/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/admin' | '/admin/shortcuts' | '/auth/login'
+  to:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/admin/shortcuts'
+    | '/auth/change-password'
+    | '/auth/login'
   id:
     | '__root__'
     | '/'
@@ -89,6 +105,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin/'
     | '/admin/_documents/shortcuts'
+    | '/auth/change-password/'
     | '/auth/login/'
   fileRoutesById: FileRoutesById
 }
@@ -135,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/auth/change-password/': {
+      id: '/auth/change-password/'
+      path: '/change-password'
+      fullPath: '/auth/change-password'
+      preLoaderRoute: typeof AuthChangePasswordIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/admin/_documents/shortcuts': {
       id: '/admin/_documents/shortcuts'
       path: '/shortcuts'
@@ -160,10 +184,12 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 )
 
 interface AuthRouteRouteChildren {
+  AuthChangePasswordIndexRoute: typeof AuthChangePasswordIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthChangePasswordIndexRoute: AuthChangePasswordIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
 }
 

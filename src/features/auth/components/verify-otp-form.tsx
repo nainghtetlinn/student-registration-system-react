@@ -21,11 +21,17 @@ import {
   type TVerifyOtpInput,
 } from '@/api/lib/auth'
 
-export const VerifyOtpForm = ({ onSuccess }: { onSuccess: () => void }) => {
+export const VerifyOtpForm = ({
+  email,
+  onSuccess,
+}: {
+  email: string
+  onSuccess: () => void
+}) => {
   const form = useForm({
     resolver: zodResolver(verifyOtpInputSchema),
     defaultValues: {
-      email: '',
+      email,
       otp: '',
     },
   })

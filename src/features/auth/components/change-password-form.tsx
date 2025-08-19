@@ -24,7 +24,7 @@ import {
 export const ChangePasswordForm = ({
   onSuccess,
 }: {
-  onSuccess: () => void
+  onSuccess: (email: string) => void
 }) => {
   const form = useForm({
     resolver: zodResolver(changePasswordInputSchema),
@@ -34,7 +34,9 @@ export const ChangePasswordForm = ({
   })
 
   const { mutate, isPending } = useChangePassword({
-    onSuccess,
+    onSuccess: () => {
+      onSuccess(form.getValues('email'))
+    },
     onError: (error) => {
       if (error instanceof AxiosError)
         toast.error(error.response?.data?.message || error.message)

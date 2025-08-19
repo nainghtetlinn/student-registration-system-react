@@ -24,11 +24,17 @@ import {
   type TResetPasswordInput,
 } from '@/api/lib/auth'
 
-export const ResetPasswordForm = ({ onSuccess }: { onSuccess: () => void }) => {
+export const ResetPasswordForm = ({
+  email,
+  onSuccess,
+}: {
+  email: string
+  onSuccess: () => void
+}) => {
   const form = useForm({
     resolver: zodResolver(resetPasswordInputSchema),
     defaultValues: {
-      email: '',
+      email,
       newPassword: '',
       confirmPassword: '',
     },
