@@ -1,8 +1,10 @@
+import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 import { configureAuth } from 'react-query-auth'
 import { z } from 'zod'
 
 import type {
   ApiResponse,
+  ChangePasswordResponse,
   GetMeResponse,
   LoginResponse,
   LogoutResponse,
@@ -38,6 +40,26 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
   localStorage.setItem('access-token', response.data.accessToken)
   return response.data
 }
+
+/********** Change Password **********/
+export const changePasswordInputSchema = z.object({ email: z.email() })
+
+export type TChangePasswordInput = z.infer<typeof changePasswordInputSchema>
+
+export const changePassword = async (
+  data: TChangePasswordInput,
+): Promise<ChangePasswordResponse> => {
+  const response = await api.post('/auth/change-password', data)
+  return response.data
+}
+
+export const useChangePassword = (
+  options?: Omit<
+    UseMutationOptions<ChangePasswordResponse, Error, TChangePasswordInput>,
+    'mutationFn'
+  >,
+) => useMutation({ mutationFn: changePassword, ...options })
+/********** Change Password **********/
 
 export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   userFn: async () => {
