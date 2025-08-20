@@ -15,6 +15,7 @@ function RouteComponent() {
 
   const [step, setStep] = useState(0)
   const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
 
   return (
     <>
@@ -22,7 +23,8 @@ function RouteComponent() {
 
       {step == 0 && (
         <ChangePasswordForm
-          onSuccess={(email) => {
+          onSuccess={(message, email) => {
+            setMessage(message)
             setEmail(email)
             setStep(1)
           }}
@@ -30,15 +32,20 @@ function RouteComponent() {
       )}
       {step == 1 && (
         <VerifyOtpForm
+          message={message}
           email={email}
-          onSuccess={() => setStep(2)}
+          onSuccess={(message) => {
+            setMessage(message)
+            setStep(2)
+          }}
         />
       )}
       {step == 2 && (
         <ResetPasswordForm
+          message={message}
           email={email}
-          onSuccess={() => {
-            toast.success('Successfully reset password')
+          onSuccess={(message) => {
+            toast.success(message)
             router.history.push('/auth/login?email=' + email)
           }}
         />

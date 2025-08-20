@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -25,11 +26,13 @@ import {
 } from '@/api/lib/auth'
 
 export const ResetPasswordForm = ({
+  message,
   email,
   onSuccess,
 }: {
+  message: string
   email: string
-  onSuccess: () => void
+  onSuccess: (message: string) => void
 }) => {
   const form = useForm({
     resolver: zodResolver(resetPasswordInputSchema),
@@ -62,6 +65,7 @@ export const ResetPasswordForm = ({
         <Card>
           <CardHeader>
             <CardTitle>Reset Password</CardTitle>
+            <CardDescription>{message}</CardDescription>
           </CardHeader>
           <CardContent className='grid gap-4'>
             <FormInputField

@@ -24,7 +24,7 @@ import {
 export const ChangePasswordForm = ({
   onSuccess,
 }: {
-  onSuccess: (email: string) => void
+  onSuccess: (message: string, email: string) => void
 }) => {
   const form = useForm({
     resolver: zodResolver(changePasswordInputSchema),
@@ -34,8 +34,8 @@ export const ChangePasswordForm = ({
   })
 
   const { mutate, isPending } = useChangePassword({
-    onSuccess: () => {
-      onSuccess(form.getValues('email'))
+    onSuccess: (message) => {
+      onSuccess(message, form.getValues('email'))
     },
     onError: (error) => {
       if (error instanceof AxiosError)

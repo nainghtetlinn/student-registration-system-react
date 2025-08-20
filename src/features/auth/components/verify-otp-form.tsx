@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -22,11 +23,13 @@ import {
 } from '@/api/lib/auth'
 
 export const VerifyOtpForm = ({
+  message,
   email,
   onSuccess,
 }: {
+  message: string
   email: string
-  onSuccess: () => void
+  onSuccess: (message: string) => void
 }) => {
   const form = useForm({
     resolver: zodResolver(verifyOtpInputSchema),
@@ -57,6 +60,7 @@ export const VerifyOtpForm = ({
         <Card>
           <CardHeader>
             <CardTitle>Verify Otp</CardTitle>
+            <CardDescription>{message}</CardDescription>
           </CardHeader>
           <CardContent className='grid gap-4'>
             <FormInputField
