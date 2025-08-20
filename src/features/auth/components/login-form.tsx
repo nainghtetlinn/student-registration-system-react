@@ -13,17 +13,21 @@ import { Label } from '@/components/ui/label'
 import { Loader2, LogIn } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Link } from '@tanstack/react-router'
 import { AxiosError } from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { loginInputSchema, useLogin, type TLoginInput } from '@/api/lib/auth'
+import { paths } from '@/config/paths'
 
 export const LoginForm = ({
+  redirect,
   email,
   onSuccess,
 }: {
+  redirect?: string
   email: string
   onSuccess: () => void
 }) => {
@@ -84,6 +88,9 @@ export const LoginForm = ({
               Login{' '}
               {isPending ? <Loader2 className='animate-spin' /> : <LogIn />}
             </Button>
+            <Link to={paths.auth.changePassword.getHref(redirect)}>
+              Forgot password?
+            </Link>
           </CardFooter>
         </Card>
       </form>

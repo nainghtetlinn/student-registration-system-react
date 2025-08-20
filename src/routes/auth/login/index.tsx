@@ -20,6 +20,7 @@ function RouteComponent() {
       <title>Login</title>
 
       <LoginForm
+        redirect={search.redirect}
         email={search.email ?? ''}
         onSuccess={() => {
           router.history.push(search.redirect ?? '/')
