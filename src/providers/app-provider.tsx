@@ -12,6 +12,7 @@ function InnerApp({ children }: { children: React.ReactNode }) {
   const { isPending } = useUser({
     retry: 0,
     staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
   })
 
   if (isPending)
