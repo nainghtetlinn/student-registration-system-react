@@ -7,8 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Form } from '@/components/ui/form'
-import { FormInputField } from '@/components/ui/form-fields'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
 import { Loader2 } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -63,16 +74,30 @@ export const VerifyOtpForm = ({
             <CardDescription>{message}</CardDescription>
           </CardHeader>
           <CardContent className='grid gap-4'>
-            <FormInputField
-              control={form.control}
-              name='email'
-              label='Email'
-              placeholder='example@gmail.com'
-            />
-            <FormInputField
+            <FormField
               control={form.control}
               name='otp'
-              label='OTP'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>OTP</FormLabel>
+                  <FormControl>
+                    <InputOTP
+                      maxLength={6}
+                      {...field}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </CardContent>
           <CardFooter className='flex justify-between'>

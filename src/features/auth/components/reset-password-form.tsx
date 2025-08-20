@@ -70,12 +70,6 @@ export const ResetPasswordForm = ({
           <CardContent className='grid gap-4'>
             <FormInputField
               control={form.control}
-              name='email'
-              label='Email'
-              placeholder='example@gmail.com'
-            />
-            <FormInputField
-              control={form.control}
               name='newPassword'
               label='New Password'
               type={show ? 'text' : 'password'}
