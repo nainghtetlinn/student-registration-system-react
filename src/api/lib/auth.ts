@@ -13,6 +13,7 @@ import type {
   VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
+import type { TUser } from '@/types/user'
 
 const passwordSchema = z.string().min(6)
 
@@ -23,26 +24,23 @@ export const loginInputSchema = z.object({
 
 export type TLoginInput = z.infer<typeof loginInputSchema>
 
-const loginWithEmailAndPassword = (
-  data: TLoginInput,
-): Promise<ApiResponse<LoginResponse>> => {
-  return api.post('/auth/login', data)
+const loginWithEmailAndPassword = (data: TLoginInput) => {
+  return api.post<ApiResponse<LoginResponse>>('/auth/login', data)
 }
 
-const logout = (): Promise<ApiResponse<LogoutResponse>> => {
-  return api.post('/auth/logout')
+const logout = () => {
+  return api.post<ApiResponse<LogoutResponse>>('/auth/logout')
 }
 
-export const getme = (): Promise<ApiResponse<GetMeResponse>> => {
-  return api.get('/auth/me')
+export const getme = () => {
+  return api.get<ApiResponse<GetMeResponse>>('/auth/me')
 }
 
-export const refreshToken = async (): Promise<RefreshTokenResponse> => {
-  const response = (await api.post(
-    '/auth/refresh',
-  )) as ApiResponse<RefreshTokenResponse>
-  localStorage.setItem('access-token', response.data.accessToken)
-  return response.data
+export const refreshToken = async () => {
+  const response =
+    await api.post<ApiResponse<RefreshTokenResponse>>('/auth/refresh')
+  localStorage.setItem('access-token', response.data.data.accessToken)
+  return response.data.data
 }
 
 /********** Change Password **********/
@@ -50,19 +48,22 @@ export const changePasswordInputSchema = z.object({ email: z.email() })
 
 export type TChangePasswordInput = z.infer<typeof changePasswordInputSchema>
 
-export const changePassword = async (
-  data: TChangePasswordInput,
-): Promise<ChangePasswordResponse> => {
-  const response = await api.post('/auth/change-password', data)
-  return response.data
-}
-
 export const useChangePassword = (
   options?: Omit<
     UseMutationOptions<ChangePasswordResponse, Error, TChangePasswordInput>,
     'mutationFn'
   >,
-) => useMutation({ mutationFn: changePassword, ...options })
+) =>
+  useMutation({
+    mutationFn: async (data) => {
+      const response = await api.post<ApiResponse<ChangePasswordResponse>>(
+        '/auth/change-password',
+        data,
+      )
+      return response.data.message
+    },
+    ...options,
+  })
 /********** Change Password **********/
 
 /********** Verify Otp **********/
@@ -73,13 +74,6 @@ export const verifyOtpInputSchema = z.object({
 
 export type TVerifyOtpInput = z.infer<typeof verifyOtpInputSchema>
 
-export const verifyOtp = async (
-  data: TVerifyOtpInput,
-): Promise<VerifyOtpResponse> => {
-  const response = await api.post('/auth/verify-otp', data)
-  return response.data
-}
-
 export const useVerifyOtp = (
   options?: Omit<
     UseMutationOptions<VerifyOtpResponse, Error, TVerifyOtpInput>,
@@ -87,7 +81,13 @@ export const useVerifyOtp = (
   >,
 ) =>
   useMutation({
-    mutationFn: verifyOtp,
+    mutationFn: async (data) => {
+      const response = await api.post<ApiResponse<VerifyOtpResponse>>(
+        '/auth/verify-otp',
+        data,
+      )
+      return response.data.message
+    },
     ...options,
   })
 /********** Verify Otp **********/
@@ -101,35 +101,38 @@ export const resetPasswordInputSchema = z.object({
 
 export type TResetPasswordInput = z.infer<typeof resetPasswordInputSchema>
 
-const resetPassword = async (
-  data: TResetPasswordInput,
-): Promise<ResetPasswordResponse> => {
-  const response = await api.post('/auth/reset-password', data)
-  return response.data
-}
-
 export const useResetPassword = (
   options?: Omit<
     UseMutationOptions<ResetPasswordResponse, Error, TResetPasswordInput>,
     'mutationFn'
   >,
-) => useMutation({ mutationFn: resetPassword, ...options })
+) =>
+  useMutation({
+    mutationFn: async (data) => {
+      const response = await api.post<ApiResponse<ResetPasswordResponse>>(
+        '/auth/reset-password',
+        data,
+      )
+      return response.data.message
+    },
+    ...options,
+  })
 /********** Reset Password **********/
 
 export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   userFn: async () => {
     await refreshToken()
     const response = await getme()
-    return response.data
+    return response.data.data
   },
   loginFn: async (data: TLoginInput) => {
     const response = await loginWithEmailAndPassword(data)
-    localStorage.setItem('access-token', response.data.token.accessToken)
-    return response.data
+    localStorage.setItem('access-token', response.data.data.token.accessToken)
+    return response.data.data
   },
   registerFn: async () => {
     console.log('Method not implemented yet.')
-    return {} as LoginResponse
+    return {} as TUser
   },
   logoutFn: async () => {
     const response = await logout()

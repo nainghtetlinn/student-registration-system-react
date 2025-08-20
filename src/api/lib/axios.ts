@@ -22,7 +22,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(authRequestInterceptor)
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => response,
   (error) => {
     const message = error.response?.data?.message || error.message
     console.log('AXIOS: ', message)
