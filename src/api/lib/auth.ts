@@ -1,4 +1,8 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutationOptions,
+} from '@tanstack/react-query'
 import { configureAuth } from 'react-query-auth'
 import { z } from 'zod'
 
@@ -17,6 +21,7 @@ import type { TUser } from '@/types/user'
 
 const passwordSchema = z.string().min(6)
 
+/********** Login **********/
 export const loginInputSchema = z.object({
   email: z.email(),
   password: passwordSchema,
@@ -27,6 +32,29 @@ export type TLoginInput = z.infer<typeof loginInputSchema>
 const loginWithEmailAndPassword = (data: TLoginInput) => {
   return api.post<ApiResponse<LoginResponse>>('/auth/login', data)
 }
+export const useLogin = (
+  options?: Omit<
+    UseMutationOptions<LoginResponse, Error, TLoginInput>,
+    'mutationFn'
+  >,
+) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await loginWithEmailAndPassword(data)
+      return response.data.data
+    },
+    ...options,
+    onSuccess: (responseData, ...rest) => {
+      queryClient.setQueryData(['user'], responseData.user)
+      queryClient.setQueryData(['profile'], responseData.profile)
+
+      options?.onSuccess?.(responseData, ...rest)
+    },
+  })
+}
+/********** Login **********/
 
 const logout = () => {
   return api.post<ApiResponse<LogoutResponse>>('/auth/logout')
@@ -119,20 +147,20 @@ export const useResetPassword = (
   })
 /********** Reset Password **********/
 
-export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
+export const { useUser, useRegister, useLogout } = configureAuth({
   userFn: async () => {
     await refreshToken()
     const response = await getme()
-    return response.data.data
+    return { user: response.data.data }
   },
   loginFn: async (data: TLoginInput) => {
     const response = await loginWithEmailAndPassword(data)
     localStorage.setItem('access-token', response.data.data.token.accessToken)
-    return response.data.data.user
+    return { user: response.data.data.user }
   },
   registerFn: async () => {
     console.log('Method not implemented yet.')
-    return {} as TUser
+    return {} as unknown
   },
   logoutFn: async () => {
     const response = await logout()
