@@ -1,7 +1,10 @@
 import {
   useMutation,
+  useQuery,
   useQueryClient,
+  type QueryKey,
   type UseMutationOptions,
+  type UseQueryOptions,
 } from '@tanstack/react-query'
 import { configureAuth } from 'react-query-auth'
 import { z } from 'zod'
@@ -79,9 +82,25 @@ export const useLogout = (
 }
 /********** Logout **********/
 
-export const getme = () => {
+/********** Get Me **********/
+const getme = () => {
   return api.get<ApiResponse<GetMeResponse>>('/auth/me')
 }
+export const useUser = (
+  options?: Omit<
+    UseQueryOptions<GetMeResponse, Error, unknown, QueryKey>,
+    'queryKey' | 'queryFn'
+  >,
+) =>
+  useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const response = await getme()
+      return response.data.data
+    },
+    ...options,
+  })
+/********** Get Me **********/
 
 export const refreshToken = async () => {
   const response =
@@ -166,7 +185,7 @@ export const useResetPassword = (
   })
 /********** Reset Password **********/
 
-export const { useUser, useRegister } = configureAuth({
+export const { useRegister } = configureAuth({
   userFn: async () => {
     await refreshToken()
     const response = await getme()
