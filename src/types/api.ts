@@ -1,3 +1,4 @@
+import type { TProfile } from './profile'
 import type { TUser } from './user'
 
 export interface ApiResponse<T> {
@@ -10,10 +11,12 @@ export interface ApiResponse<T> {
 }
 
 export type LoginResponse = {
+  user: TUser
   token: {
     accessToken: string
   }
-} & TUser
+  profile: TProfile | null
+}
 
 export type LogoutResponse = string
 

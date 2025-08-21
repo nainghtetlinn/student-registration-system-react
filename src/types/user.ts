@@ -3,5 +3,5 @@ export type TUser = {
   email: string
   role: string
   createdAt: Date
-  updatedAd: Date
+  updatedAd: Date | null
 }

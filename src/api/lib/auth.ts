@@ -128,7 +128,7 @@ export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
   loginFn: async (data: TLoginInput) => {
     const response = await loginWithEmailAndPassword(data)
     localStorage.setItem('access-token', response.data.data.token.accessToken)
-    return response.data.data
+    return response.data.data.user
   },
   registerFn: async () => {
     console.log('Method not implemented yet.')
