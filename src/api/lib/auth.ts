@@ -56,9 +56,28 @@ export const useLogin = (
 }
 /********** Login **********/
 
+/********** Logout **********/
 const logout = () => {
   return api.post<ApiResponse<LogoutResponse>>('/auth/logout')
 }
+export const useLogout = (
+  options?: UseMutationOptions<LogoutResponse, Error, unknown>,
+) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await logout()
+      return response.data.data
+    },
+    ...options,
+    onSuccess: (...args) => {
+      queryClient.setQueryData(['user'], null)
+      options?.onSuccess?.(...args)
+    },
+  })
+}
+/********** Logout **********/
 
 export const getme = () => {
   return api.get<ApiResponse<GetMeResponse>>('/auth/me')
@@ -147,7 +166,7 @@ export const useResetPassword = (
   })
 /********** Reset Password **********/
 
-export const { useUser, useRegister, useLogout } = configureAuth({
+export const { useUser, useRegister } = configureAuth({
   userFn: async () => {
     await refreshToken()
     const response = await getme()
