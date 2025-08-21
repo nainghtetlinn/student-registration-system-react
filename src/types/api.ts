@@ -31,3 +31,5 @@ export type ChangePasswordResponse = string
 export type VerifyOtpResponse = string
 
 export type ResetPasswordResponse = string
+
+export type RegisterResponse = string
