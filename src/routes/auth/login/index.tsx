@@ -1,3 +1,4 @@
+import { paths } from '@/config/paths'
 import { LoginForm } from '@/features/auth/components/login-form'
 
 import { createFileRoute, useRouter } from '@tanstack/react-router'
@@ -22,8 +23,20 @@ function RouteComponent() {
       <LoginForm
         redirect={search.redirect}
         email={search.email ?? ''}
-        onSuccess={() => {
-          router.history.push(search.redirect ?? '/')
+        onSuccess={(data) => {
+          if (data.user.updatedAt == null) {
+            router.navigate({
+              to: paths.auth.changePassword.getHref(),
+              search: {
+                email: data.user.email,
+                redirect: search.redirect,
+              },
+            })
+          } else if (data.profile == null) {
+            router.history.push('/profile/create')
+          } else {
+            router.history.push(search.redirect ?? '/')
+          }
         }}
       />
     </>

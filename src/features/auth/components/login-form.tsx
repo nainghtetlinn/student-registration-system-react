@@ -21,6 +21,7 @@ import { toast } from 'sonner'
 
 import { loginInputSchema, useLogin, type TLoginInput } from '@/api/lib/auth'
 import { paths } from '@/config/paths'
+import type { LoginResponse } from '@/types/api'
 
 export const LoginForm = ({
   redirect,
@@ -29,7 +30,7 @@ export const LoginForm = ({
 }: {
   redirect?: string
   email: string
-  onSuccess: () => void
+  onSuccess: (data: LoginResponse) => void
 }) => {
   const form = useForm({
     resolver: zodResolver(loginInputSchema),
