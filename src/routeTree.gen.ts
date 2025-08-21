@@ -16,6 +16,9 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
+import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
+import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
+import { Route as AdminAccountsRegisterRouteImport } from './routes/admin/_accounts/register'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
@@ -52,12 +55,30 @@ const AdminDocumentsShortcutsRoute = AdminDocumentsShortcutsRouteImport.update({
   path: '/shortcuts',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAccountsStudentsRoute = AdminAccountsStudentsRouteImport.update({
+  id: '/_accounts/students',
+  path: '/students',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAccountsStaffsRoute = AdminAccountsStaffsRouteImport.update({
+  id: '/_accounts/staffs',
+  path: '/staffs',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAccountsRegisterRoute = AdminAccountsRegisterRouteImport.update({
+  id: '/_accounts/register',
+  path: '/register',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/admin/register': typeof AdminAccountsRegisterRoute
+  '/admin/staffs': typeof AdminAccountsStaffsRoute
+  '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
@@ -66,6 +87,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin': typeof AdminIndexRoute
+  '/admin/register': typeof AdminAccountsRegisterRoute
+  '/admin/staffs': typeof AdminAccountsStaffsRoute
+  '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
@@ -76,6 +100,9 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/admin/_accounts/register': typeof AdminAccountsRegisterRoute
+  '/admin/_accounts/staffs': typeof AdminAccountsStaffsRoute
+  '/admin/_accounts/students': typeof AdminAccountsStudentsRoute
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
@@ -87,6 +114,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/admin/'
+    | '/admin/register'
+    | '/admin/staffs'
+    | '/admin/students'
     | '/admin/shortcuts'
     | '/auth/change-password'
     | '/auth/login'
@@ -95,6 +125,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/admin'
+    | '/admin/register'
+    | '/admin/staffs'
+    | '/admin/students'
     | '/admin/shortcuts'
     | '/auth/change-password'
     | '/auth/login'
@@ -104,6 +137,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/admin/'
+    | '/admin/_accounts/register'
+    | '/admin/_accounts/staffs'
+    | '/admin/_accounts/students'
     | '/admin/_documents/shortcuts'
     | '/auth/change-password/'
     | '/auth/login/'
@@ -166,16 +202,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDocumentsShortcutsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/_accounts/students': {
+      id: '/admin/_accounts/students'
+      path: '/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof AdminAccountsStudentsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/_accounts/staffs': {
+      id: '/admin/_accounts/staffs'
+      path: '/staffs'
+      fullPath: '/admin/staffs'
+      preLoaderRoute: typeof AdminAccountsStaffsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/_accounts/register': {
+      id: '/admin/_accounts/register'
+      path: '/register'
+      fullPath: '/admin/register'
+      preLoaderRoute: typeof AdminAccountsRegisterRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminAccountsRegisterRoute: typeof AdminAccountsRegisterRoute
+  AdminAccountsStaffsRoute: typeof AdminAccountsStaffsRoute
+  AdminAccountsStudentsRoute: typeof AdminAccountsStudentsRoute
   AdminDocumentsShortcutsRoute: typeof AdminDocumentsShortcutsRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminAccountsRegisterRoute: AdminAccountsRegisterRoute,
+  AdminAccountsStaffsRoute: AdminAccountsStaffsRoute,
+  AdminAccountsStudentsRoute: AdminAccountsStudentsRoute,
   AdminDocumentsShortcutsRoute: AdminDocumentsShortcutsRoute,
 }
 
