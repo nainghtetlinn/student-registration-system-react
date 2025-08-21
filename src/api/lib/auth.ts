@@ -6,7 +6,6 @@ import {
   type UseMutationOptions,
   type UseQueryOptions,
 } from '@tanstack/react-query'
-import { configureAuth } from 'react-query-auth'
 import { z } from 'zod'
 
 import type {
@@ -20,7 +19,6 @@ import type {
   VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
-import type { TUser } from '@/types/user'
 
 const passwordSchema = z.string().min(6)
 
@@ -185,26 +183,3 @@ export const useResetPassword = (
     ...options,
   })
 /********** Reset Password **********/
-
-export const { useRegister } = configureAuth({
-  userFn: async () => {
-    await refreshToken()
-    const response = await getme()
-    return { user: response.data.data }
-  },
-  loginFn: async (data: TLoginInput) => {
-    const response = await loginWithEmailAndPassword(data)
-    localStorage.setItem('access-token', response.data.data.token.accessToken)
-    return { user: response.data.data.user }
-  },
-  registerFn: async () => {
-    console.log('Method not implemented yet.')
-    return {} as unknown
-  },
-  logoutFn: async () => {
-    const response = await logout()
-    localStorage.removeItem('access-token')
-    return response.data
-  },
-  userKey: ['user'],
-})
