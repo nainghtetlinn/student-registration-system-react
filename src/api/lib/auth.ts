@@ -1,5 +1,11 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import { configureAuth } from 'react-query-auth'
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type QueryKey,
+  type UseMutationOptions,
+  type UseQueryOptions,
+} from '@tanstack/react-query'
 import { z } from 'zod'
 
 import type {
@@ -13,10 +19,10 @@ import type {
   VerifyOtpResponse,
 } from '@/types/api'
 import { api } from './axios'
-import type { TUser } from '@/types/user'
 
 const passwordSchema = z.string().min(6)
 
+/********** Login **********/
 export const loginInputSchema = z.object({
   email: z.email(),
   password: passwordSchema,
@@ -27,14 +33,73 @@ export type TLoginInput = z.infer<typeof loginInputSchema>
 const loginWithEmailAndPassword = (data: TLoginInput) => {
   return api.post<ApiResponse<LoginResponse>>('/auth/login', data)
 }
+export const useLogin = (
+  options?: Omit<
+    UseMutationOptions<LoginResponse, Error, TLoginInput>,
+    'mutationFn'
+  >,
+) => {
+  const queryClient = useQueryClient()
 
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await loginWithEmailAndPassword(data)
+      return response.data.data
+    },
+    ...options,
+    onSuccess: (responseData, ...rest) => {
+      queryClient.setQueryData(['user'], responseData.user)
+      queryClient.setQueryData(['profile'], responseData.profile)
+
+      options?.onSuccess?.(responseData, ...rest)
+    },
+  })
+}
+/********** Login **********/
+
+/********** Logout **********/
 const logout = () => {
   return api.post<ApiResponse<LogoutResponse>>('/auth/logout')
 }
+export const useLogout = (
+  options?: UseMutationOptions<LogoutResponse, Error, unknown>,
+) => {
+  const queryClient = useQueryClient()
 
-export const getme = () => {
+  return useMutation({
+    mutationFn: async () => {
+      const response = await logout()
+      return response.data.data
+    },
+    ...options,
+    onSuccess: (...args) => {
+      queryClient.setQueryData(['user'], null)
+      options?.onSuccess?.(...args)
+    },
+  })
+}
+/********** Logout **********/
+
+/********** Get Me **********/
+const getme = () => {
   return api.get<ApiResponse<GetMeResponse>>('/auth/me')
 }
+export const useUser = (
+  options?: Omit<
+    UseQueryOptions<GetMeResponse, Error, unknown, QueryKey>,
+    'queryKey' | 'queryFn'
+  >,
+) =>
+  useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      await refreshToken()
+      const response = await getme()
+      return response.data.data
+    },
+    ...options,
+  })
+/********** Get Me **********/
 
 export const refreshToken = async () => {
   const response =
@@ -118,26 +183,3 @@ export const useResetPassword = (
     ...options,
   })
 /********** Reset Password **********/
-
-export const { useUser, useLogin, useRegister, useLogout } = configureAuth({
-  userFn: async () => {
-    await refreshToken()
-    const response = await getme()
-    return response.data.data
-  },
-  loginFn: async (data: TLoginInput) => {
-    const response = await loginWithEmailAndPassword(data)
-    localStorage.setItem('access-token', response.data.data.token.accessToken)
-    return response.data.data.user
-  },
-  registerFn: async () => {
-    console.log('Method not implemented yet.')
-    return {} as TUser
-  },
-  logoutFn: async () => {
-    const response = await logout()
-    localStorage.removeItem('access-token')
-    return response.data
-  },
-  userKey: ['user'],
-})
