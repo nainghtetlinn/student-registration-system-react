@@ -95,6 +95,7 @@ export const useUser = (
   useQuery({
     queryKey: ['user'],
     queryFn: async () => {
+      await refreshToken()
       const response = await getme()
       return response.data.data
     },
