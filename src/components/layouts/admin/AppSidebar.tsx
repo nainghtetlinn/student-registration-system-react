@@ -7,23 +7,34 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { User2, SquareSlash, ChartPie, UserPlus } from 'lucide-react'
-import { AppSidebarGroup } from './AppSidebarGroup'
+import {
+  ChartPie,
+  SquareSlash,
+  User2,
+  UserRoundCog,
+  UserRoundPlus,
+} from 'lucide-react'
 import { AppSidebarFooter } from './AppSidebarFooter'
+import { AppSidebarGroup } from './AppSidebarGroup'
 
 import { paths } from '@/config/paths'
 
 const contents = {
-  register: [
+  accounts: [
     {
-      name: 'Employee',
-      href: '/admin/register/employee',
-      icon: UserPlus,
+      name: 'Staffs',
+      href: paths.admin.staffs.getHref(),
+      icon: UserRoundCog,
     },
     {
-      name: 'Student',
-      href: '/admin/register/student',
-      icon: UserPlus,
+      name: 'Students',
+      href: paths.admin.students.getHref(),
+      icon: User2,
+    },
+    {
+      name: 'Register',
+      href: paths.admin.register.getHref(),
+      icon: UserRoundPlus,
     },
   ],
 
@@ -70,8 +81,8 @@ export const AppSidebar = ({
 
       <SidebarContent>
         <AppSidebarGroup
-          label='Register'
-          items={contents.register}
+          label='Accounts'
+          items={contents.accounts}
         />
         <AppSidebarGroup
           label='Management'

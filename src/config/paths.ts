@@ -21,6 +21,18 @@ export const paths = {
       path: '/admin',
       getHref: () => '/admin',
     },
+    staffs: {
+      paths: '/admin/staffs',
+      getHref: () => '/admin/staffs',
+    },
+    students: {
+      paths: '/admin/students',
+      getHref: () => '/admin/students',
+    },
+    register: {
+      paths: '/admin/register',
+      getHref: () => '/admin/register',
+    },
     shortcuts: {
       path: '/admin/shortcuts',
       getHref: () => '/admin/shortcuts',
