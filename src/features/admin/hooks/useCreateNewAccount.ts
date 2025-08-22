@@ -12,8 +12,7 @@ export const useCreateNewAccount = (
   useMutation({
     mutationFn: async (data) => {
       const response = await createNewAccountWithEmailAndRole(data)
-      console.log(response.data)
-      return response.data.data
+      return response.data.message
     },
     ...options,
   })

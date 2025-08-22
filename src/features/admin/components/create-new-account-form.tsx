@@ -7,25 +7,21 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Form } from '@/components/ui/form'
 import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
-import { Label } from '@/components/ui/label'
-import { Loader2, LogIn, UserRoundPlus } from 'lucide-react'
+import { Loader2, UserRoundPlus } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
 import { AxiosError } from 'axios'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { useCreateNewAccount } from '../hooks/useCreateNewAccount'
+import { ACCOUNT_ROLES } from '../utils/constants'
 import {
   createNewAccountInputSchema,
   type TCreateNewAccountInput,
 } from '../utils/schemas'
-import { ACCOUNT_ROLES } from '../utils/constants'
-import { useCreateNewAccount } from '../hooks/useCreateNewAccount'
 
 export const CreateNewAccountForm = () => {
   const form = useForm({
@@ -37,6 +33,10 @@ export const CreateNewAccountForm = () => {
   })
 
   const { mutate, isPending } = useCreateNewAccount({
+    onSuccess: (message) => {
+      toast.success(message)
+      form.reset()
+    },
     onError: (error) => {
       if (error instanceof AxiosError)
         toast.error(error.response?.data?.message || error.message)
