@@ -6,8 +6,12 @@ export const Route = createFileRoute('/admin/_accounts/staffs')({
 
 function RouteComponent() {
   return (
-    <div>
-      <h2 className='px-2 py-4 font-bold'>Staffs</h2>
-    </div>
+    <>
+      <title>Admin | Staffs</title>
+
+      <div>
+        <h2 className='px-2 py-4 font-bold'>Staffs</h2>
+      </div>
+    </>
   )
 }
