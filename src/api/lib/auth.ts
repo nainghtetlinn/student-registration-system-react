@@ -50,7 +50,7 @@ export const useLogin = (
     onSuccess: (responseData, ...rest) => {
       queryClient.setQueryData(['user'], responseData.user)
       queryClient.setQueryData(['profile'], responseData.profile)
-
+      localStorage.setItem('access-token', responseData.token.accessToken)
       options?.onSuccess?.(responseData, ...rest)
     },
   })
@@ -74,6 +74,7 @@ export const useLogout = (
     ...options,
     onSuccess: (...args) => {
       queryClient.setQueryData(['user'], null)
+      localStorage.removeItem('access-token')
       options?.onSuccess?.(...args)
     },
   })
