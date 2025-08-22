@@ -60,7 +60,11 @@ function RouteComponent() {
             logout({})
             router.navigate({
               to: paths.auth.login.getHref(),
-              search: { email, redirect: search.redirect },
+              search: {
+                email,
+                redirect: search.redirect,
+                isSuccessPasswordReset: true,
+              },
             })
           }}
         />
