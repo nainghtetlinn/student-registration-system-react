@@ -4,7 +4,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 
 import type { TUser } from '@/types/user'
 
-export const staffsListColumns: ColumnDef<TUser>[] = [
+export const accountsListColumns: ColumnDef<TUser>[] = [
   {
     accessorKey: 'name',
     header: 'Name',

@@ -19,7 +19,7 @@ import { useInView } from 'react-intersection-observer'
 import { paths } from '@/config/paths'
 import type { TUser } from '@/types/user'
 import { useGetAllAccounts } from '../hooks/useGetAllAccounts'
-import { staffsListColumns } from '../utils/staffs-list-columns'
+import { accountsListColumns } from '../utils/accounts-list-columns'
 import { useEffect } from 'react'
 
 export const StaffsListTable = () => {
@@ -34,7 +34,7 @@ export const StaffsListTable = () => {
 
   const table = useReactTable<TUser>({
     data: data || [],
-    columns: staffsListColumns,
+    columns: accountsListColumns,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -91,7 +91,7 @@ export const StaffsListTable = () => {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={staffsListColumns.length}
+                    colSpan={accountsListColumns.length}
                     className='h-24 text-center'
                   >
                     No results.
@@ -102,7 +102,7 @@ export const StaffsListTable = () => {
                 <TableRow>
                   <TableCell
                     ref={ref}
-                    colSpan={staffsListColumns.length}
+                    colSpan={accountsListColumns.length}
                     className='h-12'
                   >
                     <Loader2 className='mx-auto animate-spin' />
