@@ -32,8 +32,6 @@ function RouteComponent() {
                 redirect: search.redirect,
               },
             })
-          } else if (data.profile == null) {
-            router.history.push('/profile/create')
           } else {
             router.history.push(search.redirect ?? '/')
           }
