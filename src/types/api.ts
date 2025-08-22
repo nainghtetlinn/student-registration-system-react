@@ -1,12 +1,20 @@
 import type { TProfile } from './profile'
 import type { TUser } from './user'
 
+type Meta = {
+  method: string
+  endpoint: string
+  totalItems: number
+  totalPages: number
+  currentPage: number
+}
+
 export interface ApiResponse<T> {
   code: number
   duration: number
   message: string
   success: number
-  meta: { endpoint: string; method: string }
+  meta: Meta
   data: T
 }
 
@@ -33,3 +41,5 @@ export type VerifyOtpResponse = string
 export type ResetPasswordResponse = string
 
 export type RegisterResponse = string
+
+export type GetAllAccountsResponse = TUser[]
