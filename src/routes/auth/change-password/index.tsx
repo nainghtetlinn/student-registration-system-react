@@ -1,3 +1,4 @@
+import { useLogout } from '@/api/lib/auth'
 import { paths } from '@/config/paths'
 import { ChangePasswordForm } from '@/features/auth/components/change-password-form'
 import { ResetPasswordForm } from '@/features/auth/components/reset-password-form'
@@ -19,6 +20,8 @@ export const Route = createFileRoute('/auth/change-password/')({
 function RouteComponent() {
   const router = useRouter()
   const search = Route.useSearch()
+
+  const { mutate: logout } = useLogout()
 
   const [step, setStep] = useState(0)
   const [email, setEmail] = useState(search.email ?? '')
@@ -54,6 +57,7 @@ function RouteComponent() {
           email={email}
           onSuccess={(message) => {
             toast.success(message)
+            logout({})
             router.navigate({
               to: paths.auth.login.getHref(),
               search: { email, redirect: search.redirect },
