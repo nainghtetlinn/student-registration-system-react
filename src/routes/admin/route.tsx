@@ -22,7 +22,7 @@ function RouteComponent() {
     <SidebarProvider defaultOpen={true}>
       <AppSidebar variant='inset' />
 
-      <SidebarInset>
+      <SidebarInset className='overflow-x-hidden'>
         <AppHeader />
         <Outlet />
       </SidebarInset>
