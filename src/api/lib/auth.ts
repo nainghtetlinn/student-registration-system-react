@@ -36,12 +36,13 @@ const loginWithEmailAndPassword = (data: TLoginInput) => {
 export const useLogin = (
   options?: Omit<
     UseMutationOptions<LoginResponse, Error, TLoginInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    mutationKey: ['auth', 'login'],
     mutationFn: async (data) => {
       const response = await loginWithEmailAndPassword(data)
       return response.data.data
@@ -62,11 +63,15 @@ const logout = () => {
   return api.post<ApiResponse<LogoutResponse>>('/auth/logout')
 }
 export const useLogout = (
-  options?: UseMutationOptions<LogoutResponse, Error, unknown>,
+  options?: Omit<
+    UseMutationOptions<LogoutResponse, Error, unknown>,
+    'mutationKey' | 'mutationFn'
+  >,
 ) => {
   const queryClient = useQueryClient()
 
   return useMutation({
+    mutationKey: ['auth', 'logout'],
     mutationFn: async () => {
       const response = await logout()
       return response.data.data
@@ -115,7 +120,7 @@ export const useRefreshToken = (
   >,
 ) =>
   useMutation({
-    mutationKey: ['refresh-token'],
+    mutationKey: ['auth', 'refresh-token'],
     mutationFn: async () => {
       const response = await refreshToken()
       localStorage.setItem('access-token', response.data.data.accessToken)
@@ -133,10 +138,11 @@ export type TChangePasswordInput = z.infer<typeof changePasswordInputSchema>
 export const useChangePassword = (
   options?: Omit<
     UseMutationOptions<ChangePasswordResponse, Error, TChangePasswordInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) =>
   useMutation({
+    mutationKey: ['auth', 'change-password'],
     mutationFn: async (data) => {
       const response = await api.post<ApiResponse<ChangePasswordResponse>>(
         '/auth/change-password',
@@ -159,10 +165,11 @@ export type TVerifyOtpInput = z.infer<typeof verifyOtpInputSchema>
 export const useVerifyOtp = (
   options?: Omit<
     UseMutationOptions<VerifyOtpResponse, Error, TVerifyOtpInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) =>
   useMutation({
+    mutationKey: ['auth', 'verify-otp'],
     mutationFn: async (data) => {
       const response = await api.post<ApiResponse<VerifyOtpResponse>>(
         '/auth/verify-otp',
@@ -186,10 +193,11 @@ export type TResetPasswordInput = z.infer<typeof resetPasswordInputSchema>
 export const useResetPassword = (
   options?: Omit<
     UseMutationOptions<ResetPasswordResponse, Error, TResetPasswordInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) =>
   useMutation({
+    mutationKey: ['auth', 'reset-password'],
     mutationFn: async (data) => {
       const response = await api.post<ApiResponse<ResetPasswordResponse>>(
         '/auth/reset-password',
