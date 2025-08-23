@@ -11,11 +11,19 @@ import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
 import { Link, useLocation } from '@tanstack/react-router'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 export const AppHeader = () => {
   const { pathname } = useLocation()
-  const paths = pathname.split('/').filter((path) => path)
+  const paths = useMemo(() => {
+    const p = pathname.split('/').filter((path) => path)
+    const i = p.indexOf('accounts')
+    if (i > 0 && i + 1 == p.length - 1) {
+      p.pop()
+      p.push('details')
+    }
+    return p
+  }, [pathname])
 
   return (
     <header className='flex items-center border-b p-2'>
