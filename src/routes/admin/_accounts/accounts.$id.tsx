@@ -1,18 +1,22 @@
 import { Pending } from '@/components/layouts/shared/pending'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-
-import { getAllAccounts } from '@/api/admin/get-all-accounts'
-import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   AlertCircleIcon,
   BadgeCheckIcon,
   BadgeXIcon,
+  Loader2,
   SendIcon,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
+import { createFileRoute } from '@tanstack/react-router'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
+import { getAllAccounts } from '@/api/admin/get-all-accounts'
+import { useResendPassword } from '@/features/admin/hooks/useResendPassword'
 
 export const Route = createFileRoute('/admin/_accounts/accounts/$id')({
   component: RouteComponent,
@@ -36,6 +40,12 @@ export const Route = createFileRoute('/admin/_accounts/accounts/$id')({
 
 function RouteComponent() {
   const accountDetails = Route.useLoaderData()
+
+  const { mutate, isPending } = useResendPassword({
+    onSuccess: (message) => {
+      toast.success(message)
+    },
+  })
 
   return (
     <>
@@ -87,8 +97,17 @@ function RouteComponent() {
               <AlertDescription>
                 <p className='mr-12 mb-3'>You can resend email again.</p>
                 <div className='flex w-full justify-end'>
-                  <Button size='sm'>
-                    Resend <SendIcon />
+                  <Button
+                    size='sm'
+                    disabled={isPending}
+                    onClick={() => mutate({ email: accountDetails.email })}
+                  >
+                    Resend{' '}
+                    {isPending ? (
+                      <Loader2 className='animate-spin' />
+                    ) : (
+                      <SendIcon />
+                    )}
                   </Button>
                 </div>
               </AlertDescription>
