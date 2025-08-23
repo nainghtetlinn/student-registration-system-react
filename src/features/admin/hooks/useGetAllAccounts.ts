@@ -1,10 +1,12 @@
-import { getAllAccounts } from '@/api/admin/get-all-accounts'
-import type { TUser } from '@/types/user'
 import {
   useInfiniteQuery,
   type QueryKey,
   type UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
+
+import { getAllAccounts } from '@/api/admin/get-all-accounts'
+import type { TUser } from '@/types/user'
+import type { TFilterGetAccountsInput } from '../utils/schemas'
 
 type UsersPage = {
   users: TUser[]
@@ -16,10 +18,11 @@ export const useGetAllAccounts = (
     UseInfiniteQueryOptions<UsersPage, Error, TUser[], QueryKey, number>,
     'queryFn' | 'initialPageParam' | 'getPreviousPageParam' | 'getNextPageParam'
   >,
+  search?: Omit<TFilterGetAccountsInput, 'page'>,
 ) =>
   useInfiniteQuery({
     queryFn: async ({ pageParam }) => {
-      const response = await getAllAccounts({ page: pageParam })
+      const response = await getAllAccounts({ page: pageParam, ...search })
       const { currentPage, totalPages } = response.data.meta
       const current = currentPage - 1
       return {
