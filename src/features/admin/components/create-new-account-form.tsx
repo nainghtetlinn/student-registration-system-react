@@ -12,16 +12,14 @@ import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
 import { Loader2, UserRoundPlus } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
-import { useCreateNewAccount } from '../hooks/useCreateNewAccount'
-import { ACCOUNT_ROLES } from '../utils/constants'
 import {
+  ROLES,
+  useCreateNewAccount,
   createNewAccountInputSchema,
   type TCreateNewAccountInput,
-} from '../utils/schemas'
+} from '@/api/admin/create-new-account'
 
 export const CreateNewAccountForm = () => {
   const form = useForm({
@@ -33,13 +31,8 @@ export const CreateNewAccountForm = () => {
   })
 
   const { mutate, isPending } = useCreateNewAccount({
-    onSuccess: (message) => {
-      toast.success(message)
+    onSuccess: () => {
       form.reset()
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
     },
   })
 
@@ -74,7 +67,7 @@ export const CreateNewAccountForm = () => {
               name='role'
               label='Role'
               placeholder='Select role'
-              items={ACCOUNT_ROLES}
+              items={ROLES}
               keyExtractor={(item) => item}
             />
           </CardContent>
