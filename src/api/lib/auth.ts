@@ -87,27 +87,43 @@ const getme = () => {
 }
 export const useUser = (
   options?: Omit<
-    UseQueryOptions<GetMeResponse, Error, unknown, QueryKey>,
+    UseQueryOptions<GetMeResponse, Error, GetMeResponse, QueryKey>,
     'queryKey' | 'queryFn'
   >,
-) =>
-  useQuery({
+) => {
+  const { mutateAsync } = useRefreshToken()
+  return useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      await refreshToken()
+      await mutateAsync({})
       const response = await getme()
       return response.data.data
     },
     ...options,
   })
+}
 /********** Get Me **********/
 
-export const refreshToken = async () => {
-  const response =
-    await api.post<ApiResponse<RefreshTokenResponse>>('/auth/refresh')
-  localStorage.setItem('access-token', response.data.data.accessToken)
-  return response.data.data
+/********** Refresh Token **********/
+const refreshToken = async () => {
+  return api.post<ApiResponse<RefreshTokenResponse>>('/auth/refresh')
 }
+export const useRefreshToken = (
+  options?: Omit<
+    UseMutationOptions<RefreshTokenResponse, Error, unknown>,
+    'mutationKey' | 'mutationFn'
+  >,
+) =>
+  useMutation({
+    mutationKey: ['refresh-token'],
+    mutationFn: async () => {
+      const response = await refreshToken()
+      localStorage.setItem('access-token', response.data.data.accessToken)
+      return response.data.data
+    },
+    ...options,
+  })
+/********** Refresh Token **********/
 
 /********** Change Password **********/
 export const changePasswordInputSchema = z.object({ email: z.email() })
