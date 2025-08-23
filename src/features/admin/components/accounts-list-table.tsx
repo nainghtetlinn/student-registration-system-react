@@ -39,7 +39,6 @@ export const AccountsListTable = ({
   const { data, isPending, fetchNextPage, hasNextPage } = useGetAllAccounts(
     {
       queryKey,
-      staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
     },
     search,
