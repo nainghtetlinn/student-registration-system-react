@@ -23,8 +23,8 @@ export const paths = {
     },
     accounts: {
       details: {
-        path: '/accounts/',
-        getHref: (id: string | number) => `/admin/accounts/${id}`,
+        path: '/admin/accounts',
+        getHref: (email: string) => `/admin/accounts/${email}`,
       },
     },
     staffs: {

@@ -83,7 +83,9 @@ export const AccountsListTable = ({
                 data-state={row.getIsSelected() && 'selected'}
                 onClick={() => {
                   navigate({
-                    to: paths.admin.accounts.details.getHref(row.original.id),
+                    to: paths.admin.accounts.details.getHref(
+                      row.original.email,
+                    ),
                   })
                 }}
               >
