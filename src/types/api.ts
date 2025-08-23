@@ -43,3 +43,5 @@ export type ResetPasswordResponse = string
 export type RegisterResponse = string
 
 export type GetAllAccountsResponse = TUser[]
+
+export type ResendPasswordResponse = string
