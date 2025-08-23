@@ -21,6 +21,12 @@ export const paths = {
       path: '/admin',
       getHref: () => '/admin',
     },
+    accounts: {
+      details: {
+        path: '/accounts/',
+        getHref: (id: string | number) => `/admin/accounts/${id}`,
+      },
+    },
     staffs: {
       paths: '/admin/staffs',
       getHref: () => '/admin/staffs',
