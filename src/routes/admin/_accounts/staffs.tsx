@@ -1,4 +1,4 @@
-import { StaffsListTable } from '@/features/admin/components/staffs-list-table'
+import { AccountsListTable } from '@/features/admin/components/accounts-list-table'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/admin/_accounts/staffs')({
@@ -10,7 +10,7 @@ function RouteComponent() {
     <>
       <title>Admin | Staffs</title>
 
-      <StaffsListTable />
+      <AccountsListTable queryKey={['staffs']} />
     </>
   )
 }
