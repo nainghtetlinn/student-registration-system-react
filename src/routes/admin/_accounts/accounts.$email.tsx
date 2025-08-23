@@ -11,28 +11,30 @@ import {
   SendIcon,
 } from 'lucide-react'
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { getAllAccounts } from '@/api/admin/get-all-accounts'
 import { useResendPassword } from '@/features/admin/hooks/useResendPassword'
+import { paths } from '@/config/paths'
 
-export const Route = createFileRoute('/admin/_accounts/accounts/$id')({
+export const Route = createFileRoute('/admin/_accounts/accounts/$email')({
   component: RouteComponent,
   pendingComponent: () => <Pending />,
-  validateSearch: z.object({
-    email: z.email(),
-  }),
-  loaderDeps: ({ search }) => ({ search }),
-  loader: async ({ context, deps }) => {
+  beforeLoad: ({ params }) => {
+    const ok = z.email().safeParse(decodeURIComponent(params.email)).success
+    if (!ok) throw redirect({ to: paths.admin.root.getHref() })
+  },
+  loader: async ({ context, params }) => {
     const qc = context.queryClient
     const details = await qc.ensureQueryData({
-      queryKey: ['accounts', 'details', deps.search.email],
+      queryKey: ['accounts', 'details', params.email],
       queryFn: async () => {
-        const response = await getAllAccounts({ keyword: deps.search.email })
+        const response = await getAllAccounts({ keyword: params.email })
         return response.data.data
       },
+      revalidateIfStale: true,
     })
     return details[0]
   },
