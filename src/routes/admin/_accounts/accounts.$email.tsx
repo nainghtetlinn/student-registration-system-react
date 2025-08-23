@@ -12,11 +12,10 @@ import {
 } from 'lucide-react'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { getAllAccounts } from '@/api/admin/get-all-accounts'
-import { useResendPassword } from '@/features/admin/hooks/useResendPassword'
+import { useResendPassword } from '@/api/admin/resend-password'
 import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/admin/_accounts/accounts/$email')({
@@ -43,11 +42,7 @@ export const Route = createFileRoute('/admin/_accounts/accounts/$email')({
 function RouteComponent() {
   const accountDetails = Route.useLoaderData()
 
-  const { mutate, isPending } = useResendPassword({
-    onSuccess: (message) => {
-      toast.success(message)
-    },
-  })
+  const { mutate, isPending } = useResendPassword()
 
   return (
     <>

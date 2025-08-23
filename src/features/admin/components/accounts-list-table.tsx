@@ -18,11 +18,13 @@ import {
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import {
+  useGetAllAccounts,
+  type TFilterGetAccountsInput,
+} from '@/api/admin/get-all-accounts'
 import { paths } from '@/config/paths'
 import type { TUser } from '@/types/user'
-import { useGetAllAccounts } from '../hooks/useGetAllAccounts'
 import { accountsListColumns } from '../utils/accounts-list-columns'
-import type { TFilterGetAccountsInput } from '../utils/schemas'
 
 export const AccountsListTable = ({
   queryKey,
