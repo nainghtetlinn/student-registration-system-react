@@ -22,12 +22,13 @@ export const resendPassword = (data: TResendPasswordInput) => {
 export const useResendPassword = (
   options?: Omit<
     UseMutationOptions<ResendPasswordResponse, Error, TResendPasswordInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) => {
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
+    mutationKey: ['admin', 'resend password'],
     mutationFn: async (data) => {
       const response = await resendPassword(data)
       return response.data.message

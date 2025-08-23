@@ -24,12 +24,13 @@ export const createNewAccountWithEmailAndRole = (
 export const useCreateNewAccount = (
   options?: Omit<
     UseMutationOptions<RegisterResponse, Error, TCreateNewAccountInput>,
-    'mutationFn'
+    'mutationKey' | 'mutationFn'
   >,
 ) => {
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
+    mutationKey: ['admin', 'create account'],
     mutationFn: async (data) => {
       const response = await createNewAccountWithEmailAndRole(data)
       return response.data.message
