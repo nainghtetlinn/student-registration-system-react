@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge'
+import { BadgeCheckIcon, BadgeXIcon } from 'lucide-react'
 
 import { type ColumnDef } from '@tanstack/react-table'
 
@@ -17,9 +18,18 @@ export const accountsListColumns: ColumnDef<TUser>[] = [
     header: 'Status',
     cell: ({ getValue }) =>
       getValue() ? (
-        <Badge variant='secondary'>Verified</Badge>
+        <Badge
+          variant='secondary'
+          className='bg-blue-500 text-white dark:bg-blue-600'
+        >
+          <BadgeCheckIcon />
+          Verified
+        </Badge>
       ) : (
-        <Badge variant='outline'>Not Verified</Badge>
+        <Badge variant='secondary'>
+          <BadgeXIcon />
+          Not Verified
+        </Badge>
       ),
   },
 ]
