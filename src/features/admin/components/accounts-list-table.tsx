@@ -84,6 +84,9 @@ export const AccountsListTable = ({
                 onClick={() => {
                   navigate({
                     to: paths.admin.accounts.details.getHref(row.original.id),
+                    search: {
+                      email: row.original.email,
+                    },
                   })
                 }}
               >
