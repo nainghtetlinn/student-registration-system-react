@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useQuery,
   type QueryKey,
   type UseQueryOptions,
@@ -11,6 +12,15 @@ import { api } from '../lib/axios'
 export const getProfile = () => {
   return api.get<ApiResponse<TProfile>>('/staff/profile')
 }
+
+export const getProfileQuery = () =>
+  queryOptions({
+    queryKey: ['profile', 'get'],
+    queryFn: async () => {
+      const response = await getProfile()
+      return response.data
+    },
+  })
 
 export const useGetProfile = (
   options?: Omit<

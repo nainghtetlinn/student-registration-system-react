@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
+import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
 import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
@@ -50,6 +51,11 @@ const AuthChangePasswordIndexRoute = AuthChangePasswordIndexRouteImport.update({
   id: '/change-password/',
   path: '/change-password/',
   getParentRoute: () => AuthRouteRoute,
+} as any)
+const AdminProfileIndexRoute = AdminProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminDocumentsShortcutsRoute = AdminDocumentsShortcutsRouteImport.update({
   id: '/_documents/shortcuts',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/admin/_accounts/staffs': typeof AdminAccountsStaffsRoute
   '/admin/_accounts/students': typeof AdminAccountsStudentsRoute
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/admin/profile/': typeof AdminProfileIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
+    | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
+    | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/admin/_accounts/staffs'
     | '/admin/_accounts/students'
     | '/admin/_documents/shortcuts'
+    | '/admin/profile/'
     | '/auth/change-password/'
     | '/auth/login/'
     | '/admin/_accounts/accounts/$email'
@@ -208,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthChangePasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/admin/profile/': {
+      id: '/admin/profile/'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/_documents/shortcuts': {
       id: '/admin/_documents/shortcuts'
       path: '/shortcuts'
@@ -252,6 +271,7 @@ interface AdminRouteRouteChildren {
   AdminAccountsStaffsRoute: typeof AdminAccountsStaffsRoute
   AdminAccountsStudentsRoute: typeof AdminAccountsStudentsRoute
   AdminDocumentsShortcutsRoute: typeof AdminDocumentsShortcutsRoute
+  AdminProfileIndexRoute: typeof AdminProfileIndexRoute
   AdminAccountsAccountsEmailRoute: typeof AdminAccountsAccountsEmailRoute
 }
 
@@ -261,6 +281,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAccountsStaffsRoute: AdminAccountsStaffsRoute,
   AdminAccountsStudentsRoute: AdminAccountsStudentsRoute,
   AdminDocumentsShortcutsRoute: AdminDocumentsShortcutsRoute,
+  AdminProfileIndexRoute: AdminProfileIndexRoute,
   AdminAccountsAccountsEmailRoute: AdminAccountsAccountsEmailRoute,
 }
 
