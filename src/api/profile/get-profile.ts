@@ -15,26 +15,25 @@ export const getProfile = () => {
 
 export const getProfileQuery = () =>
   queryOptions({
-    queryKey: ['profile', 'get'],
+    queryKey: ['profile'],
     queryFn: async () => {
       const response = await getProfile()
-      return response.data
+      return response.data.data
     },
   })
 
 export const useGetProfile = (
   options?: Omit<
-    UseQueryOptions<ApiResponse<TProfile>, Error, TProfile, QueryKey>,
+    UseQueryOptions<TProfile, Error, TProfile, QueryKey>,
     'queryKey' | 'queryFn'
   >,
 ) => {
   return useQuery({
-    queryKey: ['profile', 'get'],
+    queryKey: ['profile'],
     queryFn: async () => {
       const response = await getProfile()
-      return response.data
+      return response.data.data
     },
-    select: (response) => response.data,
     ...options,
   })
 }
