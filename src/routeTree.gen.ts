@@ -20,6 +20,8 @@ import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_doc
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
 import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
 import { Route as AdminAccountsRegisterRouteImport } from './routes/admin/_accounts/register'
+import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/profile/update/index'
+import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -77,6 +79,16 @@ const AdminAccountsRegisterRoute = AdminAccountsRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminProfileUpdateIndexRoute = AdminProfileUpdateIndexRouteImport.update({
+  id: '/profile/update/',
+  path: '/profile/update/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminProfileCreateIndexRoute = AdminProfileCreateIndexRouteImport.update({
+  id: '/profile/create/',
+  path: '/profile/create/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAccountsAccountsEmailRoute =
   AdminAccountsAccountsEmailRouteImport.update({
     id: '/_accounts/accounts/$email',
@@ -97,6 +109,8 @@ export interface FileRoutesByFullPath {
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/profile/create': typeof AdminProfileCreateIndexRoute
+  '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +124,8 @@ export interface FileRoutesByTo {
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/profile/create': typeof AdminProfileCreateIndexRoute
+  '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +141,8 @@ export interface FileRoutesById {
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
+  '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +159,8 @@ export interface FileRouteTypes {
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
+    | '/admin/profile/create'
+    | '/admin/profile/update'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -154,6 +174,8 @@ export interface FileRouteTypes {
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
+    | '/admin/profile/create'
+    | '/admin/profile/update'
   id:
     | '__root__'
     | '/'
@@ -168,6 +190,8 @@ export interface FileRouteTypes {
     | '/auth/change-password/'
     | '/auth/login/'
     | '/admin/_accounts/accounts/$email'
+    | '/admin/profile/create/'
+    | '/admin/profile/update/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -255,6 +279,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAccountsRegisterRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/profile/update/': {
+      id: '/admin/profile/update/'
+      path: '/profile/update'
+      fullPath: '/admin/profile/update'
+      preLoaderRoute: typeof AdminProfileUpdateIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/profile/create/': {
+      id: '/admin/profile/create/'
+      path: '/profile/create'
+      fullPath: '/admin/profile/create'
+      preLoaderRoute: typeof AdminProfileCreateIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/_accounts/accounts/$email': {
       id: '/admin/_accounts/accounts/$email'
       path: '/accounts/$email'
@@ -273,6 +311,8 @@ interface AdminRouteRouteChildren {
   AdminDocumentsShortcutsRoute: typeof AdminDocumentsShortcutsRoute
   AdminProfileIndexRoute: typeof AdminProfileIndexRoute
   AdminAccountsAccountsEmailRoute: typeof AdminAccountsAccountsEmailRoute
+  AdminProfileCreateIndexRoute: typeof AdminProfileCreateIndexRoute
+  AdminProfileUpdateIndexRoute: typeof AdminProfileUpdateIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
@@ -283,6 +323,8 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDocumentsShortcutsRoute: AdminDocumentsShortcutsRoute,
   AdminProfileIndexRoute: AdminProfileIndexRoute,
   AdminAccountsAccountsEmailRoute: AdminAccountsAccountsEmailRoute,
+  AdminProfileCreateIndexRoute: AdminProfileCreateIndexRoute,
+  AdminProfileUpdateIndexRoute: AdminProfileUpdateIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
