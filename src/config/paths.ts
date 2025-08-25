@@ -21,6 +21,20 @@ export const paths = {
       path: '/admin',
       getHref: () => '/admin',
     },
+    profile: {
+      root: {
+        path: '/admin/profile',
+        getHref: () => '/admin/profile',
+      },
+      create: {
+        path: '/admin/profile/create',
+        getHref: () => '/admin/profile/create',
+      },
+      update: {
+        path: '/admin/profile/update',
+        getHref: () => '/admin/profile/update',
+      },
+    },
     accounts: {
       details: {
         path: '/admin/accounts',
