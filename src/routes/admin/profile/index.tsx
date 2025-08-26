@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { UploadProfilePhoto } from '@/features/profile/components/upload-profile-photo'
 import { Edit2 } from 'lucide-react'
 
 import {
@@ -37,7 +38,10 @@ function RouteComponent() {
       <div className='flex items-center justify-center'>
         <div className='flex flex-col items-center gap-2 pt-6'>
           <Avatar className='mx-auto h-[100px] w-[100px]'>
-            <AvatarImage src='/shadcn.jpg' />
+            <AvatarImage
+              src={profile.photoUrl ?? '/shadcn.jpg'}
+              alt={profile.engName}
+            />
             <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
           </Avatar>
 
@@ -50,7 +54,8 @@ function RouteComponent() {
             </p>
           </div>
 
-          <div>
+          <div className='flex gap-2'>
+            <UploadProfilePhoto />
             <Button
               variant='secondary'
               asChild
