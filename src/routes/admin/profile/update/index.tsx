@@ -33,6 +33,9 @@ function RouteComponent() {
               to: paths.admin.profile.root.getHref(),
             })
           }}
+          onCancel={() => {
+            router.history.back()
+          }}
         />
       </div>
     </>

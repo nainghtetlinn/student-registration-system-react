@@ -22,15 +22,17 @@ import {
   type TUpdateProfileInput,
 } from '@/api/profile/update-profile'
 import { NrcInput } from '@/components/nrc-input'
-import type { TProfile } from '@/types/profile'
 import { nrcStringToObject } from '@/lib/utils'
+import type { TProfile } from '@/types/profile'
 
 export const UpdateProfileForm = ({
   old,
   onSuccess,
+  onCancel,
 }: {
   old: TProfile
   onSuccess: () => void
+  onCancel: () => void
 }) => {
   const form = useForm({
     resolver: zodResolver(updateProfileInputSchema),
@@ -92,7 +94,14 @@ export const UpdateProfileForm = ({
               nrcNumberName='nrc.nrcNumber'
             />
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <Button
+              type='button'
+              variant='secondary'
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
             <Button disabled={isPending}>
               Update{' '}
               {isPending ? <Loader2 className='animate-spin' /> : <User2 />}
