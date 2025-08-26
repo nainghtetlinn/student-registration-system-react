@@ -49,10 +49,9 @@ export const useGetAllAccounts = (
     queryFn: async ({ pageParam }) => {
       const response = await getAllAccounts({ page: pageParam, ...search })
       const { currentPage, totalPages } = response.data.meta
-      const current = currentPage - 1
       return {
         users: response.data.data,
-        nextPage: current < totalPages ? current + 1 : null,
+        nextPage: currentPage === totalPages ? null : pageParam + 1,
       }
     },
     select: (data) => data.pages.flatMap((p) => p.users),
