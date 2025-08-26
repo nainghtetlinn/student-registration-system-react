@@ -13,12 +13,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { EllipsisVertical, Loader2, LogOut } from 'lucide-react'
+import { EllipsisVertical, Loader2, LogOut, UserCircle2 } from 'lucide-react'
 
 import { useLogout } from '@/api/lib/auth'
 import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import type { TUser } from '@/types/user'
+import { paths } from '@/config/paths'
 
 export const AppSidebarFooter = () => {
   const { isMobile } = useSidebar()
@@ -91,6 +92,12 @@ export const AppSidebarFooter = () => {
 
             <DropdownMenuSeparator />
 
+            <DropdownMenuItem asChild>
+              <Link to={paths.admin.profile.root.getHref()}>
+                <UserCircle2 />
+                Profile
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => logout.mutate({})}
               disabled={logout.isPending}
