@@ -99,7 +99,10 @@ export const UploadProfilePhoto = () => {
             </Dropzone>
           ) : (
             <Avatar className='mx-auto h-[150px] w-[150px]'>
-              <AvatarImage src={fileLocalUrl} />
+              <AvatarImage
+                src={fileLocalUrl}
+                className='object-cover'
+              />
             </Avatar>
           )}
         </div>

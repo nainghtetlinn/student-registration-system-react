@@ -50,6 +50,7 @@ function RouteComponent() {
                 <AvatarImage
                   src={fileUrl ?? '/shadcn.jpg'}
                   alt={profile.engName}
+                  className='object-cover'
                 />
                 <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
               </Avatar>
