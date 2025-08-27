@@ -53,8 +53,11 @@ export const UploadProfilePhoto = () => {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant='secondary'>
-          Upload <Upload />
+        <Button
+          variant='secondary'
+          size='icon'
+        >
+          <Upload />
         </Button>
       </DialogTrigger>
       <DialogContent>
