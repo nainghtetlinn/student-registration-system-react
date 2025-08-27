@@ -13,16 +13,17 @@ export const getFile = (url: string, type: 'Profile Photo' | 'Signature') => {
 
 export const useGetProfileFile = (url: string | null) => {
   const [fileUrl, setFileUrl] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    if (url)
+    if (url) {
+      setLoading(true)
+      setIsError(false)
       getFile(url, 'Profile Photo')
         .then((res) => {
           const blob = new Blob([res.data], { type: 'image/jpeg' })
           setFileUrl(URL.createObjectURL(blob))
-          setIsError(false)
         })
         .catch((err) => {
           console.log(err)
@@ -31,6 +32,9 @@ export const useGetProfileFile = (url: string | null) => {
         .finally(() => {
           setLoading(false)
         })
+    } else {
+      setFileUrl(null)
+    }
   }, [url])
 
   return { loading, isError, fileUrl }
