@@ -11,20 +11,34 @@ import {
 import { Loader2, Trash2 } from 'lucide-react'
 
 import { useDeleteProfileFile } from '@/api/profile/delete-file'
+import { useState } from 'react'
 
-export const DeleteProfilePhoto = () => {
-  const { mutate, isPending } = useDeleteProfileFile()
+export const DeleteProfilePhoto = ({ disable }: { disable: boolean }) => {
+  const [open, setOpen] = useState(false)
+
+  const { mutate, isPending } = useDeleteProfileFile({
+    onSuccess: () => {
+      setOpen(false)
+    },
+    onError: () => {
+      setOpen(false)
+    },
+  })
 
   const handleDelete = () => {
     mutate({})
   }
 
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DialogTrigger asChild>
         <Button
           variant='destructive'
           size='icon'
+          disabled={disable}
         >
           <Trash2 />
         </Button>

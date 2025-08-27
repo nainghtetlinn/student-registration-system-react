@@ -56,7 +56,7 @@ function RouteComponent() {
 
               <div className='flex justify-center gap-2'>
                 <UploadProfilePhoto />
-                <DeleteProfilePhoto />
+                <DeleteProfilePhoto disable={!profile.photoUrl} />
               </div>
             </div>
           )}
