@@ -19,6 +19,8 @@ import { useEffect } from 'react'
 
 import { getProfileQuery } from '@/api/profile/get-profile'
 import { paths } from '@/config/paths'
+import { useGetProfileFile } from '@/api/profile/get-file'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const Route = createFileRoute('/admin/profile/')({
   component: RouteComponent,
@@ -31,19 +33,25 @@ export const Route = createFileRoute('/admin/profile/')({
 function RouteComponent() {
   const { data: profile } = useSuspenseQuery(getProfileQuery())
 
+  const { fileUrl, loading } = useGetProfileFile(profile.photoUrl)
+
   return (
     <>
       <title>Profile</title>
 
       <div className='flex items-center justify-center'>
         <div className='flex flex-col items-center gap-2 pt-6'>
-          <Avatar className='mx-auto h-[100px] w-[100px]'>
-            <AvatarImage
-              src={profile.photoUrl ?? '/shadcn.jpg'}
-              alt={profile.engName}
-            />
-            <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
-          </Avatar>
+          {loading ? (
+            <Skeleton className='mx-auto h-[100px] w-[100px] rounded-full' />
+          ) : (
+            <Avatar className='mx-auto h-[100px] w-[100px]'>
+              <AvatarImage
+                src={fileUrl ?? '/shadcn.jpg'}
+                alt={profile.engName}
+              />
+              <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
+            </Avatar>
+          )}
 
           <div>
             <h1 className='text-center text-2xl font-bold'>
