@@ -52,7 +52,7 @@ export const useUploadProfile = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['upload-file', 'profile'],
+    mutationKey: ['upload-file', 'profile-photo'],
     mutationFn: async (file: File) => {
       const response = await uploadFile(file, 'Profile Photo')
       return response.data.data

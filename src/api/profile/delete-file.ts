@@ -26,7 +26,7 @@ export const useDeleteProfileFile = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['delete-file', 'profile'],
+    mutationKey: ['delete-file', 'profile-photo'],
     mutationFn: async () => {
       const response = await deleteFile('Profile Photo')
       return response.data.message
@@ -59,7 +59,7 @@ export const useDeleteProfileSignatureFile = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['delete-file', 'profile-signature'],
+    mutationKey: ['delete-file', 'signature'],
     mutationFn: async () => {
       const response = await deleteFile('Signature')
       return response.data.message
