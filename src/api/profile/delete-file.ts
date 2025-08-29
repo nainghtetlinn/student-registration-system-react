@@ -47,3 +47,36 @@ export const useDeleteProfileFile = (
     ...restOptions,
   })
 }
+
+export const useDeleteProfileSignatureFile = (
+  options?: Omit<
+    UseMutationOptions<string, Error, unknown>,
+    'mutationKey' | 'mutationFn'
+  >,
+) => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options ?? {}
+
+  return useMutation({
+    mutationKey: ['delete-file', 'profile-signature'],
+    mutationFn: async () => {
+      const response = await deleteFile('Signature')
+      return response.data.message
+    },
+    onSuccess: (response, ...restArgs) => {
+      toast.success(response)
+      queryClient.setQueryData(['profile'], (old: TProfile) => ({
+        ...old,
+        signatureUrl: null,
+      }))
+      onSuccess?.(response, ...restArgs)
+    },
+    onError: (error, ...restArgs) => {
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data?.message || error.message)
+      onError?.(error, ...restArgs)
+    },
+    ...restOptions,
+  })
+}
