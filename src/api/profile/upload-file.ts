@@ -73,3 +73,36 @@ export const useUploadProfile = (
     ...restOptions,
   })
 }
+
+export const useUploadSignature = (
+  options?: Omit<
+    UseMutationOptions<string, Error, File>,
+    'mutationKey' | 'mutationFn'
+  >,
+) => {
+  const queryClient = useQueryClient()
+
+  const { onSuccess, onError, ...restOptions } = options ?? {}
+
+  return useMutation({
+    mutationKey: ['upload-file', 'signature'],
+    mutationFn: async (file: File) => {
+      const response = await uploadFile(file, 'Signature')
+      return response.data.data
+    },
+    onSuccess: (response, ...restArgs) => {
+      toast.success('Signature uploaded successfully')
+      queryClient.setQueryData(['profile'], (old: TProfile) => ({
+        ...old,
+        signatureUrl: response,
+      }))
+      onSuccess?.(response, ...restArgs)
+    },
+    onError: (error, ...restArgs) => {
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data?.message || error.message)
+      onError?.(error, ...restArgs)
+    },
+    ...restOptions,
+  })
+}
