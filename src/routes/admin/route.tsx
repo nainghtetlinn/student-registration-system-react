@@ -17,15 +17,23 @@ export const Route = createFileRoute('/admin')({
       shouldRedirect = true
     }
 
+    let user
     try {
-      const user = await context.queryClient.ensureQueryData(getUserQuery())
-
-      if (!user) {
-        shouldRedirect = true
-      }
+      user = await context.queryClient.ensureQueryData(getUserQuery())
     } catch (error) {
       console.log(error)
       shouldRedirect = true
+    }
+    if (!user) {
+      shouldRedirect = true
+    } else if (user.updatedAt == null) {
+      throw redirect({
+        to: paths.auth.changePassword.getHref(),
+        search: {
+          redirect: location.href,
+          email: user.email,
+        },
+      })
     }
 
     if (shouldRedirect) {
