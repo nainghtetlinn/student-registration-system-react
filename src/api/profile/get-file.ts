@@ -11,7 +11,10 @@ export const getFile = (url: string, type: 'Profile Photo' | 'Signature') => {
   })
 }
 
-export const useGetProfileFile = (url: string | null) => {
+export const useGetFile = (
+  url: string | null,
+  type: 'Profile Photo' | 'Signature',
+) => {
   const [fileUrl, setFileUrl] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -20,7 +23,7 @@ export const useGetProfileFile = (url: string | null) => {
     if (url) {
       setLoading(true)
       setIsError(false)
-      getFile(url, 'Profile Photo')
+      getFile(url, type)
         .then((res) => {
           const blob = new Blob([res.data], { type: 'image/jpeg' })
           setFileUrl(URL.createObjectURL(blob))

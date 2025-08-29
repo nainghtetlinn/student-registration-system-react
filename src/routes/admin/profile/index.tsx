@@ -18,10 +18,11 @@ import {
 import { AxiosError } from 'axios'
 import { useEffect } from 'react'
 
-import { useGetProfileFile } from '@/api/profile/get-file'
+import { useGetFile } from '@/api/profile/get-file'
 import { getProfileQuery } from '@/api/profile/get-profile'
 import { Skeleton } from '@/components/ui/skeleton'
 import { paths } from '@/config/paths'
+import { UploadSignature } from '@/features/profile/components/upload-signature'
 
 export const Route = createFileRoute('/admin/profile/')({
   component: RouteComponent,
@@ -34,7 +35,14 @@ export const Route = createFileRoute('/admin/profile/')({
 function RouteComponent() {
   const { data: profile } = useSuspenseQuery(getProfileQuery())
 
-  const { fileUrl, loading } = useGetProfileFile(profile.photoUrl)
+  const { fileUrl: photo, loading: photoLoading } = useGetFile(
+    profile.photoUrl,
+    'Profile Photo',
+  )
+  const { fileUrl: signature, loading: signatureLoading } = useGetFile(
+    profile.signatureUrl,
+    'Signature',
+  )
 
   return (
     <>
@@ -42,25 +50,49 @@ function RouteComponent() {
 
       <div className='flex items-center justify-center'>
         <div className='flex flex-col items-center gap-4 pt-6'>
-          {loading ? (
-            <Skeleton className='mx-auto h-[100px] w-[100px] rounded-full' />
-          ) : (
-            <div className='relative space-y-2'>
-              <Avatar className='mx-auto h-[100px] w-[100px]'>
-                <AvatarImage
-                  src={fileUrl ?? '/shadcn.jpg'}
-                  alt={profile.engName}
-                  className='object-cover'
-                />
-                <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
-              </Avatar>
+          <section className='flex items-center gap-4'>
+            {photoLoading ? (
+              <Skeleton className='mx-auto h-[100px] w-[100px] rounded-full' />
+            ) : (
+              <div className='relative space-y-2'>
+                <Avatar className='mx-auto h-[100px] w-[100px]'>
+                  <AvatarImage
+                    src={photo ?? '/shadcn.jpg'}
+                    alt={profile.engName}
+                    className='object-cover'
+                  />
+                  <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
+                </Avatar>
 
-              <div className='flex justify-center gap-2'>
-                <UploadProfilePhoto />
-                <DeleteProfilePhoto disable={!profile.photoUrl} />
+                <div className='absolute right-0 bottom-0'>
+                  {profile.photoUrl ? (
+                    <DeleteProfilePhoto />
+                  ) : (
+                    <UploadProfilePhoto />
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {signatureLoading ? (
+              <Skeleton className='mx-auto h-[100px] w-[100px] rounded-full' />
+            ) : (
+              <div className='relative space-y-2'>
+                <Avatar className='mx-auto h-[100px] w-[100px]'>
+                  <AvatarImage
+                    src={signature ?? '/shadcn.jpg'}
+                    alt={profile.engName}
+                    className='object-cover'
+                  />
+                  <AvatarFallback>{profile.engName.slice(0, 2)}</AvatarFallback>
+                </Avatar>
+
+                <div className='absolute right-0 bottom-0'>
+                  {!profile.signatureUrl && <UploadSignature />}
+                </div>
+              </div>
+            )}
+          </section>
 
           <div>
             <h1 className='text-center text-2xl font-bold'>

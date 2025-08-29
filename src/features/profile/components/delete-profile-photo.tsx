@@ -13,7 +13,7 @@ import { Loader2, Trash2 } from 'lucide-react'
 import { useDeleteProfileFile } from '@/api/profile/delete-file'
 import { useState } from 'react'
 
-export const DeleteProfilePhoto = ({ disable }: { disable: boolean }) => {
+export const DeleteProfilePhoto = () => {
   const [open, setOpen] = useState(false)
 
   const { mutate, isPending } = useDeleteProfileFile({
@@ -38,7 +38,7 @@ export const DeleteProfilePhoto = ({ disable }: { disable: boolean }) => {
         <Button
           variant='destructive'
           size='icon'
-          disabled={disable}
+          className='border-background h-6 w-6 rounded-full border-2'
         >
           <Trash2 />
         </Button>

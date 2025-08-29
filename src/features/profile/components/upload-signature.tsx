@@ -11,18 +11,18 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Loader2, Upload } from 'lucide-react'
 import Dropzone from 'react-dropzone'
 
-import { imageSchema, useUploadProfile } from '@/api/profile/upload-file'
+import { imageSchema, useUploadSignature } from '@/api/profile/upload-file'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-export const UploadProfilePhoto = () => {
+export const UploadSignature = () => {
   const [fileLoading, setFileLoading] = useState(false)
   const [file, setFile] = useState<File | null>(null)
   const [fileLocalUrl, setFileLocalUrl] = useState('')
 
-  const { mutate, isPending } = useUploadProfile()
+  const { mutate, isPending } = useUploadSignature()
 
   const handleDrop = async (acceptedFiles: File[]) => {
     setFileLoading(true)
@@ -62,7 +62,7 @@ export const UploadProfilePhoto = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Upload Profile Photo</DialogTitle>
+          <DialogTitle>Upload Signature</DialogTitle>
         </DialogHeader>
         <div>
           {fileLoading ? (
