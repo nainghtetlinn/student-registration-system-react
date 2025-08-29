@@ -32,7 +32,7 @@ export const AppSidebarFooter = () => {
     },
   })
 
-  const user = queryClient.getQueryData(['user']) as TUser
+  const user = queryClient.getQueryData(['auth', 'user']) as TUser
 
   return (
     <SidebarMenu>

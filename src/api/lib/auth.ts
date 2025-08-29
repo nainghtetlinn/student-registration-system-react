@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   useQuery,
   useQueryClient,
@@ -49,7 +50,7 @@ export const useLogin = (
     },
     ...options,
     onSuccess: (responseData, ...rest) => {
-      queryClient.setQueryData(['user'], responseData.user)
+      queryClient.setQueryData(['auth', 'user'], responseData.user)
       queryClient.setQueryData(['profile'], responseData.profile)
       localStorage.setItem('access-token', responseData.token.accessToken)
       options?.onSuccess?.(responseData, ...rest)
@@ -78,7 +79,7 @@ export const useLogout = (
     },
     ...options,
     onSuccess: (...args) => {
-      queryClient.setQueryData(['user'], null)
+      queryClient.setQueryData(['auth', 'user'], null)
       localStorage.removeItem('access-token')
       options?.onSuccess?.(...args)
     },
@@ -90,17 +91,23 @@ export const useLogout = (
 const getme = () => {
   return api.get<ApiResponse<GetMeResponse>>('/auth/me')
 }
+export const getUserQuery = () =>
+  queryOptions({
+    queryKey: ['auth', 'user'],
+    queryFn: async () => {
+      const response = await getme()
+      return response.data.data
+    },
+  })
 export const useUser = (
   options?: Omit<
     UseQueryOptions<GetMeResponse, Error, GetMeResponse, QueryKey>,
     'queryKey' | 'queryFn'
   >,
 ) => {
-  const { mutateAsync } = useRefreshToken()
   return useQuery({
-    queryKey: ['user'],
+    queryKey: ['auth', 'user'],
     queryFn: async () => {
-      await mutateAsync({})
       const response = await getme()
       return response.data.data
     },
@@ -115,13 +122,18 @@ const refreshToken = async () => {
 }
 export const useRefreshToken = (
   options?: Omit<
-    UseMutationOptions<RefreshTokenResponse, Error, unknown>,
-    'mutationKey' | 'mutationFn'
+    UseQueryOptions<
+      RefreshTokenResponse,
+      Error,
+      RefreshTokenResponse,
+      QueryKey
+    >,
+    'queryKey' | 'queryFn'
   >,
 ) =>
-  useMutation({
-    mutationKey: ['auth', 'refresh-token'],
-    mutationFn: async () => {
+  useQuery({
+    queryKey: ['auth', 'refresh-token'],
+    queryFn: async () => {
       const response = await refreshToken()
       localStorage.setItem('access-token', response.data.data.accessToken)
       return response.data.data

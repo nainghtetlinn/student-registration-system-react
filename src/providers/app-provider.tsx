@@ -6,24 +6,26 @@ import { Loader2 } from 'lucide-react'
 
 import { ThemeProvider } from './theme-provider'
 import * as TanStackQueryProvider from '@/providers/query-provider.tsx'
-import { useUser } from '@/api/lib/auth'
+import { useRefreshToken, useUser } from '@/api/lib/auth'
+import { useGetProfile } from '@/api/profile/get-profile'
 
 function InnerApp({ children }: { children: React.ReactNode }) {
-  const { isPending } = useUser({
-    retry: 0,
+  useRefreshToken({
+    retry: false,
     staleTime: 1000 * 60 * 10,
-    refetchOnWindowFocus: false,
+    refetchInterval: 1000 * 60 * 10,
+    refetchIntervalInBackground: true,
   })
 
-  if (isPending)
-    return (
-      <div className='flex h-screen w-screen items-center justify-center'>
-        <Loader2
-          size={40}
-          className='animate-spin'
-        />
-      </div>
-    )
+  useUser({
+    retry: false,
+    staleTime: Infinity,
+  })
+
+  useGetProfile({
+    retry: false,
+    staleTime: Infinity,
+  })
 
   return children
 }
