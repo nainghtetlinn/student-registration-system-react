@@ -42,7 +42,10 @@ export const LoginForm = ({
   const [show, setShow] = useState(false)
 
   const { mutate: login, isPending } = useLogin({
-    onSuccess,
+    onSuccess: (data) => {
+      toast.success('Logged in')
+      onSuccess(data)
+    },
     onError: (error) => {
       if (error instanceof AxiosError)
         toast.error(error.response?.data?.message || error.message)
