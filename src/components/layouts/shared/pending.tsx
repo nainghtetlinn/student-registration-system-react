@@ -2,8 +2,11 @@ import { Loader2 } from 'lucide-react'
 
 export const Pending = () => {
   return (
-    <div className='flex h-full w-full items-center justify-center'>
-      <Loader2 className='animate-spin' />
+    <div className='flex h-screen w-screen items-center justify-center'>
+      <Loader2
+        size={40}
+        className='animate-spin'
+      />
     </div>
   )
 }
