@@ -13,13 +13,18 @@ export const Route = createFileRoute('/admin')({
 
     const status = context.queryClient.getQueryState(['auth', 'user'])?.status
 
-    if (!(status == 'success' || status == 'pending')) {
+    if (!status || status == 'error') {
       shouldRedirect = true
     }
 
-    const user = await context.queryClient.ensureQueryData(getUserQuery())
+    try {
+      const user = await context.queryClient.ensureQueryData(getUserQuery())
 
-    if (!user) {
+      if (!user) {
+        shouldRedirect = true
+      }
+    } catch (error) {
+      console.log(error)
       shouldRedirect = true
     }
 
