@@ -20,11 +20,13 @@ function InnerApp({ children }: { children: React.ReactNode }) {
   useUser({
     retry: false,
     staleTime: Infinity,
+    refetchOnWindowFocus: false,
   })
 
   useGetProfile({
     retry: false,
     staleTime: Infinity,
+    refetchOnWindowFocus: false,
   })
 
   return children

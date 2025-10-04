@@ -3,6 +3,7 @@ export const paths = {
     path: '/',
     getHref: () => '/',
   },
+
   auth: {
     login: {
       path: '/auth/login',
@@ -56,6 +57,29 @@ export const paths = {
     shortcuts: {
       path: '/admin/shortcuts',
       getHref: () => '/admin/shortcuts',
+    },
+  },
+
+  student: {
+    entranceForm: {
+      root: {
+        path: '/student/entrance-form',
+        getHref: () => '/student/entrance-form',
+      },
+      update: {
+        root: { path: '/student/update', getHref: () => '/student/update' },
+        success: {
+          path: '/student/update/success',
+          getHref: () => '/student/update/success',
+        },
+      },
+      register: {
+        root: { path: '/student/register', getHref: () => '/student/register' },
+        success: {
+          path: '/student/register/success',
+          getHref: () => '/student/register/success',
+        },
+      },
     },
   },
 } as const

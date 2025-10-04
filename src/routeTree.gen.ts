@@ -9,13 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudentRouteRouteImport } from './routes/student/route'
 import { Route as AuthRouteRouteImport } from './routes/auth/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as StudentUpdateIndexRouteImport } from './routes/student/update/index'
+import { Route as StudentRegisterIndexRouteImport } from './routes/student/register/index'
+import { Route as StudentEntranceFormIndexRouteImport } from './routes/student/entrance-form/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
+import { Route as StudentUpdateSuccessRouteImport } from './routes/student/update/success'
+import { Route as StudentRegisterSuccessRouteImport } from './routes/student/register/success'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
 import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
@@ -24,6 +30,11 @@ import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/prof
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
 
+const StudentRouteRoute = StudentRouteRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -44,6 +55,22 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const StudentUpdateIndexRoute = StudentUpdateIndexRouteImport.update({
+  id: '/update/',
+  path: '/update/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
+const StudentRegisterIndexRoute = StudentRegisterIndexRouteImport.update({
+  id: '/register/',
+  path: '/register/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
+const StudentEntranceFormIndexRoute =
+  StudentEntranceFormIndexRouteImport.update({
+    id: '/entrance-form/',
+    path: '/entrance-form/',
+    getParentRoute: () => StudentRouteRoute,
+  } as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
@@ -58,6 +85,16 @@ const AdminProfileIndexRoute = AdminProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
   getParentRoute: () => AdminRouteRoute,
+} as any)
+const StudentUpdateSuccessRoute = StudentUpdateSuccessRouteImport.update({
+  id: '/update/success',
+  path: '/update/success',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
+const StudentRegisterSuccessRoute = StudentRegisterSuccessRouteImport.update({
+  id: '/register/success',
+  path: '/register/success',
+  getParentRoute: () => StudentRouteRoute,
 } as any)
 const AdminDocumentsShortcutsRoute = AdminDocumentsShortcutsRouteImport.update({
   id: '/_documents/shortcuts',
@@ -100,14 +137,20 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
+  '/student': typeof StudentRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/admin/register': typeof AdminAccountsRegisterRoute
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/student/register/success': typeof StudentRegisterSuccessRoute
+  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
+  '/student/entrance-form': typeof StudentEntranceFormIndexRoute
+  '/student/register': typeof StudentRegisterIndexRoute
+  '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
@@ -115,14 +158,20 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteRouteWithChildren
+  '/student': typeof StudentRouteRouteWithChildren
   '/admin': typeof AdminIndexRoute
   '/admin/register': typeof AdminAccountsRegisterRoute
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/student/register/success': typeof StudentRegisterSuccessRoute
+  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
+  '/student/entrance-form': typeof StudentEntranceFormIndexRoute
+  '/student/register': typeof StudentRegisterIndexRoute
+  '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
@@ -132,14 +181,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
+  '/student': typeof StudentRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/admin/_accounts/register': typeof AdminAccountsRegisterRoute
   '/admin/_accounts/staffs': typeof AdminAccountsStaffsRoute
   '/admin/_accounts/students': typeof AdminAccountsStudentsRoute
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
+  '/student/register/success': typeof StudentRegisterSuccessRoute
+  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/profile/': typeof AdminProfileIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
+  '/student/entrance-form/': typeof StudentEntranceFormIndexRoute
+  '/student/register/': typeof StudentRegisterIndexRoute
+  '/student/update/': typeof StudentUpdateIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
@@ -150,14 +205,20 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/student'
     | '/admin/'
     | '/admin/register'
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
+    | '/student/register/success'
+    | '/student/update/success'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
+    | '/student/entrance-form'
+    | '/student/register'
+    | '/student/update'
     | '/admin/accounts/$email'
     | '/admin/profile/create'
     | '/admin/profile/update'
@@ -165,14 +226,20 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/student'
     | '/admin'
     | '/admin/register'
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
+    | '/student/register/success'
+    | '/student/update/success'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
+    | '/student/entrance-form'
+    | '/student/register'
+    | '/student/update'
     | '/admin/accounts/$email'
     | '/admin/profile/create'
     | '/admin/profile/update'
@@ -181,14 +248,20 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/student'
     | '/admin/'
     | '/admin/_accounts/register'
     | '/admin/_accounts/staffs'
     | '/admin/_accounts/students'
     | '/admin/_documents/shortcuts'
+    | '/student/register/success'
+    | '/student/update/success'
     | '/admin/profile/'
     | '/auth/change-password/'
     | '/auth/login/'
+    | '/student/entrance-form/'
+    | '/student/register/'
+    | '/student/update/'
     | '/admin/_accounts/accounts/$email'
     | '/admin/profile/create/'
     | '/admin/profile/update/'
@@ -198,10 +271,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  StudentRouteRoute: typeof StudentRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/student': {
+      id: '/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof StudentRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -230,6 +311,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/student/update/': {
+      id: '/student/update/'
+      path: '/update'
+      fullPath: '/student/update'
+      preLoaderRoute: typeof StudentUpdateIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
+    '/student/register/': {
+      id: '/student/register/'
+      path: '/register'
+      fullPath: '/student/register'
+      preLoaderRoute: typeof StudentRegisterIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
+    '/student/entrance-form/': {
+      id: '/student/entrance-form/'
+      path: '/entrance-form'
+      fullPath: '/student/entrance-form'
+      preLoaderRoute: typeof StudentEntranceFormIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
     '/auth/login/': {
       id: '/auth/login/'
       path: '/login'
@@ -250,6 +352,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/profile'
       preLoaderRoute: typeof AdminProfileIndexRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/student/update/success': {
+      id: '/student/update/success'
+      path: '/update/success'
+      fullPath: '/student/update/success'
+      preLoaderRoute: typeof StudentUpdateSuccessRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
+    '/student/register/success': {
+      id: '/student/register/success'
+      path: '/register/success'
+      fullPath: '/student/register/success'
+      preLoaderRoute: typeof StudentRegisterSuccessRouteImport
+      parentRoute: typeof StudentRouteRoute
     }
     '/admin/_documents/shortcuts': {
       id: '/admin/_documents/shortcuts'
@@ -345,10 +461,31 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface StudentRouteRouteChildren {
+  StudentRegisterSuccessRoute: typeof StudentRegisterSuccessRoute
+  StudentUpdateSuccessRoute: typeof StudentUpdateSuccessRoute
+  StudentEntranceFormIndexRoute: typeof StudentEntranceFormIndexRoute
+  StudentRegisterIndexRoute: typeof StudentRegisterIndexRoute
+  StudentUpdateIndexRoute: typeof StudentUpdateIndexRoute
+}
+
+const StudentRouteRouteChildren: StudentRouteRouteChildren = {
+  StudentRegisterSuccessRoute: StudentRegisterSuccessRoute,
+  StudentUpdateSuccessRoute: StudentUpdateSuccessRoute,
+  StudentEntranceFormIndexRoute: StudentEntranceFormIndexRoute,
+  StudentRegisterIndexRoute: StudentRegisterIndexRoute,
+  StudentUpdateIndexRoute: StudentUpdateIndexRoute,
+}
+
+const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
+  StudentRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  StudentRouteRoute: StudentRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

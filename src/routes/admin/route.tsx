@@ -38,18 +38,20 @@ export const Route = createFileRoute('/admin')({
       })
     }
 
-    let shouldProfileCreate = false
-    try {
-      const profile =
-        await context.queryClient.ensureQueryData(getProfileQuery())
-      if (!profile) shouldProfileCreate = true
-    } catch (error) {
-      console.log(error)
-      shouldProfileCreate = true
+    if (shouldRedirect) {
+      throw redirect({
+        to: paths.auth.login.getHref(location.href),
+      })
     }
 
+    let profile
+    try {
+      profile = await context.queryClient.ensureQueryData(getProfileQuery())
+    } catch (error) {
+      console.log(error)
+    }
     if (
-      shouldProfileCreate &&
+      !profile &&
       !location.href.includes(paths.admin.profile.create.getHref())
     ) {
       // redirect profile/create if profile is undefined
@@ -58,20 +60,6 @@ export const Route = createFileRoute('/admin')({
         search: {
           redirect: location.href,
         },
-      })
-    } else if (
-      !shouldProfileCreate &&
-      location.href.includes(paths.admin.profile.create.getHref())
-    ) {
-      // redirect if profile created and trying to go to profile/create route
-      throw redirect({
-        to: paths.admin.profile.root.getHref(),
-      })
-    }
-
-    if (shouldRedirect) {
-      throw redirect({
-        to: paths.auth.login.getHref(location.href),
       })
     }
   },

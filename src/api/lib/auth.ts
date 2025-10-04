@@ -52,6 +52,7 @@ export const useLogin = (
     onSuccess: (responseData, ...rest) => {
       queryClient.setQueryData(['auth', 'user'], responseData.user)
       queryClient.setQueryData(['profile'], responseData.profile)
+      queryClient.setQueryData(['auth', 'refresh-token'], responseData.token)
       localStorage.setItem('access-token', responseData.token.accessToken)
       options?.onSuccess?.(responseData, ...rest)
     },
@@ -80,6 +81,8 @@ export const useLogout = (
     ...options,
     onSuccess: (...args) => {
       queryClient.setQueryData(['auth', 'user'], null)
+      queryClient.setQueryData(['profile'], null)
+      queryClient.setQueryData(['auth', 'refresh-token'], null)
       localStorage.removeItem('access-token')
       options?.onSuccess?.(...args)
     },

@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import type { TNrcSchema } from './schema'
+import type { TNrcSchema, TRollNoSchema } from './schema'
 import { nrcStates, nrcTownships, nrcTypes } from '@/assets/NRC_Data.min.json'
 
 export function cn(...inputs: ClassValue[]) {
@@ -28,6 +28,7 @@ export function nrcObjectToString(nrc: TNrcSchema): string {
 export function nrcStringToObject(nrcString: string): TNrcSchema | null {
   const nrcPattern =
     /^([1-9]|1[0-3])\/([A-Za-z]{1,6})\((N|E|P|T|Y|S)\)([0-9၀၁၂၃၄၅၆၇၈၉]{6})$/
+
   const match = nrcString.match(nrcPattern)
 
   if (!match) return null
@@ -45,5 +46,25 @@ export function nrcStringToObject(nrcString: string): TNrcSchema | null {
     townshipCode,
     nrcType,
     nrcNumber,
+  }
+}
+
+export function rollNoObjectToString(rollNo: TRollNoSchema): string {
+  return `${rollNo.year}${rollNo.major}-${rollNo.no}`
+}
+
+export function rollNoStringToObject(
+  rollNoString: string,
+): TRollNoSchema | null {
+  const rollNoPattern = /^([1-6])(CIVIL|MN|MECH|EC|EP|CEIT)-(\d+)$/
+
+  const match = rollNoString.match(rollNoPattern)
+
+  if (!match) return null
+
+  return {
+    year: parseInt(match[1], 10),
+    major: match[2],
+    no: parseInt(match[3], 10),
   }
 }
