@@ -27,6 +27,10 @@ export const Route = createFileRoute('/admin')({
     }
     if (!user) {
       shouldRedirect = true
+    } else if (user.role.toLowerCase() == 'student') {
+      throw redirect({
+        to: paths.home.getHref(),
+      })
     } else if (user.updatedAt == null) {
       // user is logged in but haven't changed his password
       throw redirect({
