@@ -1,9 +1,9 @@
-import { ModeToggle } from '@/components/mode-toggle'
 import { Pending } from '@/components/layouts/shared/pending'
 
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { getUserQuery } from '@/api/lib/auth'
+import { Header } from '@/components/layouts/student/Header'
 import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student')({
@@ -46,10 +46,8 @@ export const Route = createFileRoute('/student')({
 function RouteComponent() {
   return (
     <div>
+      <Header />
       <Outlet />
-      <div className='absolute top-4 right-4'>
-        <ModeToggle />
-      </div>
     </div>
   )
 }

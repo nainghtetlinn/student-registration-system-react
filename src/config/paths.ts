@@ -61,24 +61,22 @@ export const paths = {
   },
 
   student: {
-    entranceForm: {
-      root: {
-        path: '/student/entrance-form',
-        getHref: () => '/student/entrance-form',
+    root: {
+      path: '/student',
+      getHref: () => '/student',
+    },
+    update: {
+      root: { path: '/student/update', getHref: () => '/student/update' },
+      success: {
+        path: '/student/update/success',
+        getHref: () => '/student/update/success',
       },
-      update: {
-        root: { path: '/student/update', getHref: () => '/student/update' },
-        success: {
-          path: '/student/update/success',
-          getHref: () => '/student/update/success',
-        },
-      },
-      register: {
-        root: { path: '/student/register', getHref: () => '/student/register' },
-        success: {
-          path: '/student/register/success',
-          getHref: () => '/student/register/success',
-        },
+    },
+    register: {
+      root: { path: '/student/register', getHref: () => '/student/register' },
+      success: {
+        path: '/student/register/success',
+        getHref: () => '/student/register/success',
       },
     },
   },

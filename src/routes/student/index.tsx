@@ -7,7 +7,7 @@ import {
   useGetEntranceForm,
 } from '@/api/student/get-entrance-form'
 
-export const Route = createFileRoute('/student/entrance-form/')({
+export const Route = createFileRoute('/student/')({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(getEntranceFormQuery())
   },

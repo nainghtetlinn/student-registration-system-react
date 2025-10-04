@@ -13,10 +13,10 @@ import { Route as StudentRouteRouteImport } from './routes/student/route'
 import { Route as AuthRouteRouteImport } from './routes/auth/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudentIndexRouteImport } from './routes/student/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as StudentUpdateIndexRouteImport } from './routes/student/update/index'
 import { Route as StudentRegisterIndexRouteImport } from './routes/student/register/index'
-import { Route as StudentEntranceFormIndexRouteImport } from './routes/student/entrance-form/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
@@ -50,6 +50,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -65,12 +70,6 @@ const StudentRegisterIndexRoute = StudentRegisterIndexRouteImport.update({
   path: '/register/',
   getParentRoute: () => StudentRouteRoute,
 } as any)
-const StudentEntranceFormIndexRoute =
-  StudentEntranceFormIndexRouteImport.update({
-    id: '/entrance-form/',
-    path: '/entrance-form/',
-    getParentRoute: () => StudentRouteRoute,
-  } as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
@@ -139,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteRouteWithChildren
   '/student': typeof StudentRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/admin/register': typeof AdminAccountsRegisterRoute
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
@@ -148,7 +148,6 @@ export interface FileRoutesByFullPath {
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
-  '/student/entrance-form': typeof StudentEntranceFormIndexRoute
   '/student/register': typeof StudentRegisterIndexRoute
   '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -158,8 +157,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteRouteWithChildren
-  '/student': typeof StudentRouteRouteWithChildren
   '/admin': typeof AdminIndexRoute
+  '/student': typeof StudentIndexRoute
   '/admin/register': typeof AdminAccountsRegisterRoute
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
@@ -169,7 +168,6 @@ export interface FileRoutesByTo {
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
-  '/student/entrance-form': typeof StudentEntranceFormIndexRoute
   '/student/register': typeof StudentRegisterIndexRoute
   '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -183,6 +181,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteRouteWithChildren
   '/student': typeof StudentRouteRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/student/': typeof StudentIndexRoute
   '/admin/_accounts/register': typeof AdminAccountsRegisterRoute
   '/admin/_accounts/staffs': typeof AdminAccountsStaffsRoute
   '/admin/_accounts/students': typeof AdminAccountsStudentsRoute
@@ -192,7 +191,6 @@ export interface FileRoutesById {
   '/admin/profile/': typeof AdminProfileIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
-  '/student/entrance-form/': typeof StudentEntranceFormIndexRoute
   '/student/register/': typeof StudentRegisterIndexRoute
   '/student/update/': typeof StudentUpdateIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
@@ -207,6 +205,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/student'
     | '/admin/'
+    | '/student/'
     | '/admin/register'
     | '/admin/staffs'
     | '/admin/students'
@@ -216,7 +215,6 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
-    | '/student/entrance-form'
     | '/student/register'
     | '/student/update'
     | '/admin/accounts/$email'
@@ -226,8 +224,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/student'
     | '/admin'
+    | '/student'
     | '/admin/register'
     | '/admin/staffs'
     | '/admin/students'
@@ -237,7 +235,6 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
-    | '/student/entrance-form'
     | '/student/register'
     | '/student/update'
     | '/admin/accounts/$email'
@@ -250,6 +247,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/student'
     | '/admin/'
+    | '/student/'
     | '/admin/_accounts/register'
     | '/admin/_accounts/staffs'
     | '/admin/_accounts/students'
@@ -259,7 +257,6 @@ export interface FileRouteTypes {
     | '/admin/profile/'
     | '/auth/change-password/'
     | '/auth/login/'
-    | '/student/entrance-form/'
     | '/student/register/'
     | '/student/update/'
     | '/admin/_accounts/accounts/$email'
@@ -304,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/': {
+      id: '/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -323,13 +327,6 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/student/register'
       preLoaderRoute: typeof StudentRegisterIndexRouteImport
-      parentRoute: typeof StudentRouteRoute
-    }
-    '/student/entrance-form/': {
-      id: '/student/entrance-form/'
-      path: '/entrance-form'
-      fullPath: '/student/entrance-form'
-      preLoaderRoute: typeof StudentEntranceFormIndexRouteImport
       parentRoute: typeof StudentRouteRoute
     }
     '/auth/login/': {
@@ -462,17 +459,17 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 )
 
 interface StudentRouteRouteChildren {
+  StudentIndexRoute: typeof StudentIndexRoute
   StudentRegisterSuccessRoute: typeof StudentRegisterSuccessRoute
   StudentUpdateSuccessRoute: typeof StudentUpdateSuccessRoute
-  StudentEntranceFormIndexRoute: typeof StudentEntranceFormIndexRoute
   StudentRegisterIndexRoute: typeof StudentRegisterIndexRoute
   StudentUpdateIndexRoute: typeof StudentUpdateIndexRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
+  StudentIndexRoute: StudentIndexRoute,
   StudentRegisterSuccessRoute: StudentRegisterSuccessRoute,
   StudentUpdateSuccessRoute: StudentUpdateSuccessRoute,
-  StudentEntranceFormIndexRoute: StudentEntranceFormIndexRoute,
   StudentRegisterIndexRoute: StudentRegisterIndexRoute,
   StudentUpdateIndexRoute: StudentUpdateIndexRoute,
 }
