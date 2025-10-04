@@ -42,4 +42,5 @@ export const defaultEntranceFormInput: TEntranceFormInput = {
   phoneNumber: '',
   permanentAddress: '',
   permanentPhoneNumber: '',
+  acknowledged: false,
 }

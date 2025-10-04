@@ -12,35 +12,18 @@ import type {
 import { api } from '../lib/axios'
 
 export const createEntranceForm = (data: TEntranceFormInput) => {
+  const { acknowledged, ...payload } = data
+  if (!acknowledged) throw new Error('Acknowledgement required.')
+
   const transformedData: TRegisterEntranceFormRequest = {
+    ...payload,
     academicYear:
-      data.academicYear ||
+      payload.academicYear ||
       `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
-    rollNumber: data.rollNumber,
-    studentNameMm: data.studentNameMm,
-    studentNameEng: data.studentNameEng,
-    studentNrc: nrcObjectToString(data.studentNrc),
-    ethnicity: data.ethnicity,
-    religion: data.religion,
-    dob: data.dob.toISOString().split('T')[0],
-
-    matriculationPassedYear: data.matriculationPassedYear,
-    department: data.department,
-
-    fatherNameMm: data.fatherNameMm,
-    fatherNameEng: data.fatherNameEng,
-    fatherNrc: nrcObjectToString(data.fatherNrc),
-    fatherJob: data.fatherJob,
-
-    motherNameMm: data.motherNameMm,
-    motherNameEng: data.motherNameEng,
-    motherNrc: nrcObjectToString(data.motherNrc),
-    motherJob: data.motherJob,
-
-    address: data.address,
-    phoneNumber: data.phoneNumber,
-    permanentAddress: data.permanentAddress,
-    permanentPhoneNumber: data.permanentPhoneNumber,
+    studentNrc: nrcObjectToString(payload.studentNrc),
+    dob: payload.dob.toISOString().split('T')[0],
+    fatherNrc: nrcObjectToString(payload.fatherNrc),
+    motherNrc: nrcObjectToString(payload.motherNrc),
   }
   return api.post<ApiResponse<TRegisterEntranceFormResponse>>(
     '/student/entranceForm',

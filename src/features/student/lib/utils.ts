@@ -10,6 +10,7 @@ export function entranceFormToFormInput(
     ...defaultEntranceFormInput,
     ...data,
     academicYear: '',
+    acknowledged: false,
     dob: data.dob ? new Date(data.dob) : ('' as unknown as Date),
     studentNrc: nrcStringToObject(data.studentNrc) || {
       stateCode: '',

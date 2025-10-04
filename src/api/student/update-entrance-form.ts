@@ -12,8 +12,11 @@ import type {
 import { api } from '../lib/axios'
 
 const updateEntranceForm = (data: TEntranceFormInput) => {
+  const { acknowledged, ...payload } = data
+  if (!acknowledged) throw new Error('Acknowledgement required.')
+
   const transformedData: TUpdateEntranceFormRequest = {
-    ...data,
+    ...payload,
     academicYear: data.academicYear ? data.academicYear : undefined,
     dob: data.dob ? data.dob.toISOString().split('T')[0] : undefined,
     studentNrc: data.studentNrc

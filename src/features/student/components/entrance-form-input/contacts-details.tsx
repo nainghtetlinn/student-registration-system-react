@@ -1,4 +1,4 @@
-import { FormInputField } from '@/components/ui/form-fields'
+import { FormCheckboxField, FormInputField } from '@/components/ui/form-fields'
 
 import { useFormContext } from 'react-hook-form'
 
@@ -28,6 +28,11 @@ export const ContactsDetails = () => {
         control={form.control}
         name='permanentPhoneNumber'
         label='အမြဲတမ်းဖုန်းနံပါတ်'
+      />
+      <FormCheckboxField
+        control={form.control}
+        name='acknowledged'
+        label='အထက်ပါအချက်အလက်များအားမှန်ကန်စွာဖြည့်စွက်ထားကြောင်းဝန်ခံပါသည်။'
       />
     </div>
   )

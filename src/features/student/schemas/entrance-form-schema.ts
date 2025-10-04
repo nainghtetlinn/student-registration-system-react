@@ -33,6 +33,12 @@ export const entranceFormInputSchema = z.object({
   phoneNumber: z.string().min(1),
   permanentAddress: z.string().min(1),
   permanentPhoneNumber: z.string().min(1),
+  acknowledged: z
+    .boolean()
+    .refine(
+      (val) => val === true,
+      'You must acknowledge that the information you provided is correct.',
+    ),
 })
 
 export type TEntranceFormInput = z.infer<typeof entranceFormInputSchema>
