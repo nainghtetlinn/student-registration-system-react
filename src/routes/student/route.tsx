@@ -3,7 +3,7 @@ import { Pending } from '@/components/layouts/shared/pending'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { getUserQuery } from '@/api/lib/auth'
-import { Header } from '@/components/layouts/student/Header'
+import { Header } from '@/components/layouts/shared/header'
 import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student')({
