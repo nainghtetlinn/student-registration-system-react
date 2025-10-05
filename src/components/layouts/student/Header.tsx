@@ -2,13 +2,16 @@ import Logo from '@/assets/tutgi-logo.png'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Button } from '@/components/ui/button'
 import { paths } from '@/config/paths'
+import type { TUser } from '@/types/user'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
+import { UserAvatar } from './UserAvatar'
 
 export const Header = () => {
   const qc = useQueryClient()
 
   const submitted = qc.getQueryData(['entrance form'])
+  const user = qc.getQueryData(['auth', 'user']) as TUser
 
   return (
     <header className='body-font text-foreground'>
@@ -51,7 +54,10 @@ export const Header = () => {
             </Button>
           )}
         </nav>
-        <ModeToggle />
+        <div className='flex items-center gap-2'>
+          <ModeToggle />
+          <UserAvatar user={user} />
+        </div>
       </div>
     </header>
   )

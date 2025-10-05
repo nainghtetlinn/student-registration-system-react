@@ -44,7 +44,7 @@ function RouteComponent() {
     onSuccess: () => {
       form.reset()
       router.navigate({
-        to: paths.student.entranceForm.register.success.getHref(),
+        to: paths.student.register.success.getHref(),
       })
     },
   })

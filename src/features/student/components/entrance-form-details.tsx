@@ -20,9 +20,11 @@ export const EntranceFormDetails = ({ data }: { data: TEntranceForm }) => {
         <Button
           className='absolute top-3 right-3'
           asChild
+          variant='outline'
+          size='icon'
         >
-          <Link to={paths.student.entranceForm.update.root.getHref()}>
-            Update <Edit2 />
+          <Link to={paths.student.update.root.getHref()}>
+            <Edit2 />
           </Link>
         </Button>
         <CardTitle className='text-2xl'>Entrance Form Details</CardTitle>

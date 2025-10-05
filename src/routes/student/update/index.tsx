@@ -49,7 +49,7 @@ function RouteComponent() {
     onSuccess: () => {
       form.reset()
       router.navigate({
-        to: paths.student.entranceForm.update.success.getHref(),
+        to: paths.student.update.success.getHref(),
       })
     },
   })
