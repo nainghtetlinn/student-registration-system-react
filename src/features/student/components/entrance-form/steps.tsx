@@ -1,5 +1,5 @@
 import type { TStep } from '@/components/multistep-form'
-import type { TUniversityEntranceFormSchema } from '../../schemas/university-entrance-form-schema'
+import type { TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
 import { Acknowledgement } from './acknowledgement'
 import { ContactsDetails } from './contacts-details'
 import { ParentsDetails } from './parents-details'

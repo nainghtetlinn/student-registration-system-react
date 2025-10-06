@@ -8,32 +8,40 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
+import { Spinner } from '@/components/ui/spinner'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import { useCreateEntranceForm } from '@/api/student/create-entrance-form'
 import { useMultistep } from '@/hooks/use-multistep'
 import {
-  universityEntranceFormDefaults,
-  universityEntranceFormSchema,
-  type TUniversityEntranceFormSchema,
-} from '../../schemas/university-entrance-form-schema'
+  entranceFormDefaults,
+  entranceFormSchema,
+  type TEntranceFormSchema,
+} from '../../schemas/entrance-form-schema'
 import { steps } from './steps'
 
 type Props = {
-  onSubmit: (data: TUniversityEntranceFormSchema) => void
-  defaultValues?: TUniversityEntranceFormSchema
+  onSuccess: () => void
+  defaultValues?: TEntranceFormSchema
 }
 
-export const UniversityEntranceForm = ({ onSubmit, defaultValues }: Props) => {
+export const EntranceForm = ({ onSuccess, defaultValues }: Props) => {
   const form = useForm({
-    resolver: zodResolver(universityEntranceFormSchema),
-    defaultValues: defaultValues ?? universityEntranceFormDefaults,
+    resolver: zodResolver(entranceFormSchema),
+    defaultValues: defaultValues ?? entranceFormDefaults,
+  })
+
+  const { mutate, isPending } = useCreateEntranceForm({
+    onSuccess: () => {
+      form.reset()
+      onSuccess()
+    },
   })
 
   const { current, next, previous } = useMultistep({
     totalSteps: steps.length,
-    start: 3,
   })
 
   const handleNext = async () => {
@@ -42,6 +50,10 @@ export const UniversityEntranceForm = ({ onSubmit, defaultValues }: Props) => {
       return // Stop progression if validation fails
     }
     next()
+  }
+
+  const handleSubmit = (data: TEntranceFormSchema) => {
+    mutate(data)
   }
 
   return (
@@ -81,9 +93,10 @@ export const UniversityEntranceForm = ({ onSubmit, defaultValues }: Props) => {
             {current == steps.length - 1 && (
               <Button
                 type='button'
-                onClick={form.handleSubmit(onSubmit)}
+                onClick={form.handleSubmit(handleSubmit)}
+                disabled={isPending}
               >
-                Submit
+                Submit {isPending && <Spinner />}
               </Button>
             )}
           </CardFooter>

@@ -1,21 +1,14 @@
-import { MultistepForm } from '@/components/multistep-form'
+import { EntranceForm } from '@/features/student/components/entrance-form'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { useForm } from 'react-hook-form'
 
-import { useCreateEntranceForm } from '@/api/student/create-entrance-form'
 import { getEntranceFormQuery } from '@/api/student/get-entrance-form'
 import { paths } from '@/config/paths'
-import { steps } from '@/features/student/components/entrance-form-input/steps'
-import { defaultEntranceFormInput } from '@/features/student/lib/constants'
-import { entranceFormInputSchema } from '@/features/student/schemas/entrance-form-schema'
 
 export const Route = createFileRoute('/student/register/')({
   component: RouteComponent,
   beforeLoad: async ({ context }) => {
     let shouldRedirect = false
-
     try {
       const data = await context.queryClient.ensureQueryData(
         getEntranceFormQuery(),
@@ -24,7 +17,6 @@ export const Route = createFileRoute('/student/register/')({
     } catch (error) {
       console.log(error)
     }
-
     if (shouldRedirect)
       throw redirect({
         to: paths.home.getHref(),
@@ -35,32 +27,64 @@ export const Route = createFileRoute('/student/register/')({
 function RouteComponent() {
   const router = useRouter()
 
-  const form = useForm({
-    resolver: zodResolver(entranceFormInputSchema),
-    defaultValues: defaultEntranceFormInput,
-  })
-
-  const { mutate, isPending } = useCreateEntranceForm({
-    onSuccess: () => {
-      form.reset()
-      router.navigate({
-        to: paths.student.register.success.getHref(),
-      })
-    },
-  })
-
   return (
     <>
       <title>Register entrance form</title>
 
-      <div className='w-full py-12'>
-        <MultistepForm
-          title='ကျောင်းဝင်မှတ်ပုံတင်ခွင့်ပုံစံ'
-          description={`${new Date().getFullYear()}-${new Date().getFullYear() + 1} ပညာသင်နှစ်`}
-          form={form}
-          steps={steps}
-          onSubmit={mutate}
-          isPending={isPending}
+      <div className='flex justify-center pt-4'>
+        <EntranceForm
+          onSuccess={() => {
+            router.navigate({
+              to: paths.student.register.success.getHref(),
+            })
+          }}
+          defaultValues={{
+            student: {
+              nameEn: 'Mg Mg',
+              nameMm: 'mgmg',
+              ethnicity: 'a',
+              religion: 'a',
+              nrc: {
+                stateCode: 'a',
+                townshipCode: 'a',
+                nrcType: 'a',
+                nrcNumber: '123123',
+              },
+              dob: new Date(),
+              matriculationPassedYear: '2020-2021',
+              matriculationRollNo: 'a',
+              matriculationDepartment: 'a',
+            },
+            father: {
+              nameEn: 'U Ba',
+              nameMm: 'uba',
+              nrc: {
+                stateCode: 'a',
+                townshipCode: 'a',
+                nrcType: 'a',
+                nrcNumber: '123123',
+              },
+              job: 'b',
+            },
+            mother: {
+              nameEn: 'Daw Chaw',
+              nameMm: 'dawchaw',
+              nrc: {
+                stateCode: 'a',
+                townshipCode: 'a',
+                nrcType: 'a',
+                nrcNumber: '123123',
+              },
+              job: 'c',
+            },
+            contact: {
+              address: 'd',
+              phoneNumber: 'd',
+              permanentAddress: 'e',
+              permanentPhoneNumber: 'e',
+            },
+            acknowledged: true,
+          }}
         />
       </div>
     </>

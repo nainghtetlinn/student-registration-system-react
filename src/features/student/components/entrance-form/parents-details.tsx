@@ -3,67 +3,63 @@ import { NrcInput } from '@/components/nrc-input'
 
 import { useFormContext } from 'react-hook-form'
 
-import { type TEntranceFormInput } from '@/features/student/schemas/entrance-form-schema'
+import { type TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
+import { Separator } from '@/components/ui/separator'
 
-export const FatherDetails = () => {
-  const form = useFormContext<TEntranceFormInput>()
+export const ParentsDetails = () => {
+  const form = useFormContext<TUniversityEntranceFormSchema>()
 
   return (
     <div className='flex min-h-[550px] flex-col gap-4'>
       <FormInputField
         control={form.control}
-        name='fatherNameEng'
+        name='father.nameEn'
         label='အဘအမည် (အင်္ဂလိပ်)'
         placeholder='Eg- U Mg'
       />
       <FormInputField
         control={form.control}
-        name='fatherNameMm'
+        name='father.nameMm'
         label='အဘအမည် (မြန်မာ)'
         placeholder='Eg- ဦးမောင်'
       />
       <NrcInput
         control={form.control}
-        stateCodeName='fatherNrc.stateCode'
-        townshipCodeName='fatherNrc.townshipCode'
-        nrcTypeName='fatherNrc.nrcType'
-        nrcNumberName='fatherNrc.nrcNumber'
+        stateCodeName='father.nrc.stateCode'
+        townshipCodeName='father.nrc.townshipCode'
+        nrcTypeName='father.nrc.nrcType'
+        nrcNumberName='father.nrc.nrcNumber'
       />
       <FormInputField
         control={form.control}
-        name='fatherJob'
+        name='father.job'
         label='အလုပ်အကိုင်'
       />
-    </div>
-  )
-}
-export const MotherDetails = () => {
-  const form = useFormContext<TEntranceFormInput>()
 
-  return (
-    <div className='flex min-h-[550px] flex-col gap-4'>
+      <Separator />
+
       <FormInputField
         control={form.control}
-        name='motherNameEng'
+        name='mother.nameEn'
         label='အမိအမည် (အင်္ဂလိပ်)'
         placeholder='Eg- Daw Mg'
       />
       <FormInputField
         control={form.control}
-        name='motherNameMm'
+        name='mother.nameMm'
         label='အမိအမည် (မြန်မာ)'
         placeholder='Eg- ဒေါ်မောင်'
       />
       <NrcInput
         control={form.control}
-        stateCodeName='motherNrc.stateCode'
-        townshipCodeName='motherNrc.townshipCode'
-        nrcTypeName='motherNrc.nrcType'
-        nrcNumberName='motherNrc.nrcNumber'
+        stateCodeName='mother.nrc.stateCode'
+        townshipCodeName='mother.nrc.townshipCode'
+        nrcTypeName='mother.nrc.nrcType'
+        nrcNumberName='mother.nrc.nrcNumber'
       />
       <FormInputField
         control={form.control}
-        name='motherJob'
+        name='mother.job'
         label='အလုပ်အကိုင်'
       />
     </div>

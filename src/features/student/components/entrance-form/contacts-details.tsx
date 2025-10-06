@@ -2,7 +2,7 @@ import { FormInputField } from '@/components/ui/form-fields'
 
 import { useFormContext } from 'react-hook-form'
 
-import { type TUniversityEntranceFormSchema } from '../../schemas/university-entrance-form-schema'
+import { type TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
 
 export const ContactsDetails = () => {
   const form = useFormContext<TUniversityEntranceFormSchema>()

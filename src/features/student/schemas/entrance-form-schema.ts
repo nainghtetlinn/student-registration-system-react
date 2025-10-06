@@ -1,44 +1,75 @@
-import { academicYearSchema, nrcSchema } from '@/lib/schema'
+import { academicYearSchema, nrcDefaults, nrcSchema } from '@/lib/schema'
 import { z } from 'zod'
 
-export const entranceFormInputSchema = z.object({
-  academicYear: z.string().optional(),
-  studentNameMm: z.string().min(1),
-  studentNameEng: z.string().min(1),
-  studentNrc: nrcSchema,
+const studentSchema = z.object({
+  nameEn: z.string().min(1),
+  nameMm: z.string().min(1),
   ethnicity: z.string().min(1),
   religion: z.string().min(1),
+  nrc: nrcSchema,
   dob: z.coerce
     .date()
     .refine(
       (date) => date < new Date(),
       'Date of birth cannot be in the future',
     ),
-
   matriculationPassedYear: academicYearSchema,
-  rollNumber: z.string().min(1),
-  department: z.string().min(1),
+  matriculationRollNo: z.string().min(1),
+  matriculationDepartment: z.string().min(1),
+})
 
-  fatherNameMm: z.string().min(1),
-  fatherNameEng: z.string().min(1),
-  fatherNrc: nrcSchema,
-  fatherJob: z.string().min(1),
+const parentSchema = z.object({
+  nameEn: z.string().min(1),
+  nameMm: z.string().min(1),
+  nrc: nrcSchema,
+  job: z.string().min(1),
+})
 
-  motherNameMm: z.string().min(1),
-  motherNameEng: z.string().min(1),
-  motherNrc: nrcSchema,
-  motherJob: z.string().min(1),
-
+const contactSchema = z.object({
   address: z.string().min(1),
   phoneNumber: z.string().min(1),
   permanentAddress: z.string().min(1),
   permanentPhoneNumber: z.string().min(1),
-  acknowledged: z
-    .boolean()
-    .refine(
-      (val) => val === true,
-      'You must acknowledge that the information you provided is correct.',
-    ),
 })
 
-export type TEntranceFormInput = z.infer<typeof entranceFormInputSchema>
+export const entranceFormSchema = z.object({
+  student: studentSchema,
+  father: parentSchema,
+  mother: parentSchema,
+  contact: contactSchema,
+  acknowledged: z
+    .boolean()
+    .refine((val) => val === true, 'Acknowledgement required.'),
+})
+
+export type TEntranceFormSchema = z.infer<typeof entranceFormSchema>
+
+const parentDefaults: z.infer<typeof parentSchema> = {
+  nameEn: '',
+  nameMm: '',
+  nrc: nrcDefaults,
+  job: '',
+}
+
+export const entranceFormDefaults: TEntranceFormSchema = {
+  student: {
+    nameEn: '',
+    nameMm: '',
+    ethnicity: '',
+    religion: '',
+    nrc: nrcDefaults,
+    dob: '' as unknown as Date,
+    matriculationPassedYear: '',
+    matriculationDepartment: '',
+    matriculationRollNo: '',
+  },
+  father: parentDefaults,
+  mother: parentDefaults,
+  contact: {
+    address: '',
+    phoneNumber: '',
+    permanentAddress: '',
+    permanentPhoneNumber: '',
+  },
+  acknowledged: false,
+}
