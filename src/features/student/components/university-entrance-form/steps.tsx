@@ -1,5 +1,6 @@
 import type { TStep } from '@/components/multistep-form'
 import type { TUniversityEntranceFormSchema } from '../../schemas/university-entrance-form-schema'
+import { Acknowledgement } from './acknowledgement'
 import { ContactsDetails } from './contacts-details'
 import { ParentsDetails } from './parents-details'
 import { StudentDetails } from './student-details'
@@ -17,11 +18,16 @@ export const steps: TStep<TUniversityEntranceFormSchema>[] = [
     fields: ['father', 'mother'],
     component: <ParentsDetails />,
   },
-
   {
     position: 3,
     title: 'ဆက်သွယ်ရန်အချက်အလက်',
     fields: ['contact'],
     component: <ContactsDetails />,
+  },
+  {
+    position: 4,
+    title: '',
+    fields: ['acknowledged'],
+    component: <Acknowledgement />,
   },
 ]

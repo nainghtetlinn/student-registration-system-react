@@ -31,7 +31,10 @@ export const UniversityEntranceForm = ({ onSubmit, defaultValues }: Props) => {
     defaultValues: defaultValues ?? universityEntranceFormDefaults,
   })
 
-  const { current, next, previous } = useMultistep({ totalSteps: steps.length })
+  const { current, next, previous } = useMultistep({
+    totalSteps: steps.length,
+    start: 3,
+  })
 
   const handleNext = async () => {
     const isValid = await form.trigger(steps[current].fields)
