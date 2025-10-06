@@ -1,10 +1,8 @@
-import type { TRegisterEntranceFormRequest } from '@/types/student'
+import { nrcObjectToString, nrcStringToObject } from '@/lib/utils'
+import type { TEntranceForm } from '@/types/student'
 import type { TEntranceFormSchema } from '../schemas/entrance-form-schema'
-import { nrcObjectToString } from '@/lib/utils'
 
-export function toRequestDto(
-  data: TEntranceFormSchema,
-): TRegisterEntranceFormRequest {
+export function toDto(data: TEntranceFormSchema): TEntranceForm {
   return {
     academicYear: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
     studentNameEng: data.student.nameEn,
@@ -28,5 +26,40 @@ export function toRequestDto(
     phoneNumber: data.contact.phoneNumber,
     permanentAddress: data.contact.permanentAddress,
     permanentPhoneNumber: data.contact.permanentPhoneNumber,
+  }
+}
+
+export function fromDto(data: TEntranceForm): TEntranceFormSchema {
+  return {
+    student: {
+      nameEn: data.studentNameEng,
+      nameMm: data.studentNameMm,
+      ethnicity: data.ethnicity,
+      religion: data.religion,
+      nrc: nrcStringToObject(data.studentNrc),
+      dob: new Date(data.dob),
+      matriculationPassedYear: data.matriculationPassedYear,
+      matriculationDepartment: data.department,
+      matriculationRollNo: data.rollNumber,
+    },
+    father: {
+      nameEn: data.fatherNameEng,
+      nameMm: data.fatherNameMm,
+      nrc: nrcStringToObject(data.fatherNrc),
+      job: data.fatherJob,
+    },
+    mother: {
+      nameEn: data.motherNameEng,
+      nameMm: data.motherNameMm,
+      nrc: nrcStringToObject(data.motherNrc),
+      job: data.motherJob,
+    },
+    contact: {
+      address: data.address,
+      phoneNumber: data.phoneNumber,
+      permanentAddress: data.permanentAddress,
+      permanentPhoneNumber: data.permanentPhoneNumber,
+    },
+    acknowledged: false,
   }
 }

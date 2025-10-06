@@ -2,10 +2,10 @@ import { FormInputField } from '@/components/ui/form-fields'
 
 import { useFormContext } from 'react-hook-form'
 
-import { type TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
+import { type TEntranceFormSchema } from '../../schemas/entrance-form-schema'
 
 export const ContactsDetails = () => {
-  const form = useFormContext<TUniversityEntranceFormSchema>()
+  const form = useFormContext<TEntranceFormSchema>()
 
   return (
     <div className='flex min-h-[550px] flex-col gap-4'>

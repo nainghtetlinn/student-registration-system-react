@@ -7,12 +7,12 @@ import { Trash2 } from 'lucide-react'
 import { useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { type TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
+import { type TEntranceFormSchema } from '../../schemas/entrance-form-schema'
 
 export const Acknowledgement = () => {
   const photoRef = useRef<TDropPhoto>(null)
   const signRef = useRef<TDropPhoto>(null)
-  const form = useFormContext<TUniversityEntranceFormSchema>()
+  const form = useFormContext<TEntranceFormSchema>()
 
   const onDrop = (file: File) => {
     console.log(file)

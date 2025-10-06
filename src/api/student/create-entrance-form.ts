@@ -2,7 +2,7 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { toRequestDto } from '@/features/student/lib/entrance-form-dto'
+import { toDto } from '@/features/student/lib/entrance-form-dto'
 import { type TEntranceFormSchema } from '@/features/student/schemas/entrance-form-schema'
 import type { ApiResponse } from '@/types/api'
 import type {
@@ -14,7 +14,7 @@ import { api } from '../lib/axios'
 export const createEntranceForm = (data: TEntranceFormSchema) => {
   if (!data.acknowledged) throw new Error('Acknowledgement required.')
 
-  const transformedData: TRegisterEntranceFormRequest = toRequestDto(data)
+  const transformedData: TRegisterEntranceFormRequest = toDto(data)
 
   return api.post<ApiResponse<TRegisterEntranceFormResponse>>(
     '/student/entranceForm',

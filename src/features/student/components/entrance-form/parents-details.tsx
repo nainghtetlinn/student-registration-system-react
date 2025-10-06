@@ -3,11 +3,11 @@ import { NrcInput } from '@/components/nrc-input'
 
 import { useFormContext } from 'react-hook-form'
 
-import { type TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
+import { type TEntranceFormSchema } from '../../schemas/entrance-form-schema'
 import { Separator } from '@/components/ui/separator'
 
 export const ParentsDetails = () => {
-  const form = useFormContext<TUniversityEntranceFormSchema>()
+  const form = useFormContext<TEntranceFormSchema>()
 
   return (
     <div className='flex min-h-[550px] flex-col gap-4'>

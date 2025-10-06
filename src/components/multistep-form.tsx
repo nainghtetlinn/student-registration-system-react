@@ -1,17 +1,9 @@
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
-import { Loader2, Send } from 'lucide-react'
+import { Spinner } from '@/components/ui/spinner'
 
 // import { AnimatePresence, motion, Variants } from 'motion/react'
-import { useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import {
   type FieldPath,
   type FieldValues,
@@ -43,33 +35,39 @@ export type TStep<
   fields: TFieldPath[]
 }
 
+const multistepContext = createContext<{
+  steps: TStep[]
+  current: number
+  total: number
+  next: () => void
+  previous: () => void
+}>({ steps: [], current: 0, total: 0, next: () => {}, previous: () => {} })
+
+const useMultistep = () => useContext(multistepContext)
+
 export const MultistepForm = <
   TFieldValues extends FieldValues = FieldValues,
   TContext = unknown,
   TTransformedValues = TFieldValues,
 >({
-  title,
-  description,
   steps,
   form,
   onSubmit,
-  isPending,
+  children,
 }: {
-  title: string
-  description: string
   steps: TStep<TFieldValues>[]
   form: UseFormReturn<TFieldValues, TContext, TTransformedValues>
   onSubmit: (data: TTransformedValues) => void
-  isPending: boolean
+  children: React.ReactNode
 }) => {
   const [active, setActive] = useState(0)
-  const currentStep = steps[active]
 
   const handleNext = async () => {
-    const isValid = await form.trigger(currentStep.fields)
+    const isValid = await form.trigger(steps[active].fields)
     if (!isValid) {
       return // Stop progression if validation fails
     }
+
     if (active < steps.length - 1) {
       setActive((prev) => prev + 1)
     }
@@ -81,64 +79,76 @@ export const MultistepForm = <
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className='h-full'
+    <>
+      <multistepContext.Provider
+        value={{
+          steps,
+          current: active,
+          total: steps.length,
+          next: handleNext,
+          previous: handlePrevious,
+        }}
       >
-        <Card className='mx-auto h-full w-full max-w-lg'>
-          <CardHeader className='text-center'>
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
-            <h3 className='text-center text-lg font-bold'>
-              {currentStep.title}
-            </h3>
-          </CardHeader>
-          <CardContent className='grow overflow-auto'>
-            {/* <AnimatePresence mode='wait'> */}
-            {/* <motion.div
-                key={active}
-                variants={tabContentVariants}
-                initial='initial'
-                animate='enter'
-                exit='exit'
-                transition={{
-                  duration: 0.2,
-                }}
-              > */}
-            {currentStep.component}
-            {/* </motion.div> */}
-            {/* </AnimatePresence> */}
-          </CardContent>
-          <CardFooter className='flex justify-end gap-2'>
-            {active > 0 && (
-              <Button
-                type='button'
-                onClick={handlePrevious}
-              >
-                Previous
-              </Button>
-            )}
-            {active < steps.length - 1 && (
-              <Button
-                type='button'
-                onClick={handleNext}
-              >
-                Next
-              </Button>
-            )}
-            {active == steps.length - 1 && (
-              <Button
-                type='submit'
-                disabled={isPending}
-              >
-                Submit{' '}
-                {isPending ? <Loader2 className='animate-spin' /> : <Send />}
-              </Button>
-            )}
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+        <Form {...form}>
+          <form
+            className='w-full'
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            {children}
+          </form>
+        </Form>
+      </multistepContext.Provider>
+    </>
+  )
+}
+
+export const MultistepFormCurrent = () => {
+  const { current, steps } = useMultistep()
+
+  return steps[current].component
+}
+
+export const MultistepFormPrevious = () => {
+  const { current, previous } = useMultistep()
+
+  return (
+    <>
+      {current > 0 ? (
+        <Button
+          type='button'
+          onClick={previous}
+        >
+          Previous
+        </Button>
+      ) : null}
+    </>
+  )
+}
+
+export const MultistepFormNext = () => {
+  const { current, total, next } = useMultistep()
+
+  return (
+    <>
+      {current < total - 1 ? (
+        <Button
+          type='button'
+          onClick={next}
+        >
+          Next
+        </Button>
+      ) : null}
+    </>
+  )
+}
+
+export const MultistepFormSubmit = ({ isPending }: { isPending: boolean }) => {
+  const { current, total } = useMultistep()
+  return (
+    <>
+      {current == total - 1 ? (
+        <Button disabled={isPending}>Submit {isPending && <Spinner />}</Button>
+      ) : null}
+    </>
   )
 }

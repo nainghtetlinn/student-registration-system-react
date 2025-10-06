@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import type { TNrcSchema, TRollNoSchema } from './schema'
+import { nrcDefaults, type TNrcSchema, type TRollNoSchema } from './schema'
 import { nrcStates, nrcTownships, nrcTypes } from '@/assets/NRC_Data.min.json'
 
 export function cn(...inputs: ClassValue[]) {
@@ -8,12 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function nrcObjectToString(nrc: TNrcSchema): string {
-  const transformedNrc: TNrcSchema = {
-    nrcNumber: '',
-    nrcType: '',
-    townshipCode: '',
-    stateCode: '',
-  }
+  const transformedNrc: TNrcSchema = nrcDefaults
   transformedNrc.stateCode =
     nrcStates.find((v) => v.id == nrc.stateCode)?.number.en || ''
   transformedNrc.townshipCode =
@@ -25,13 +20,13 @@ export function nrcObjectToString(nrc: TNrcSchema): string {
   return `${transformedNrc.stateCode}/${transformedNrc.townshipCode}(${transformedNrc.nrcType})${transformedNrc.nrcNumber}`
 }
 
-export function nrcStringToObject(nrcString: string): TNrcSchema | null {
+export function nrcStringToObject(nrcString: string): TNrcSchema {
   const nrcPattern =
     /^([1-9]|1[0-3])\/([A-Za-z]{1,6})\((N|E|P|T|Y|S)\)([0-9၀၁၂၃၄၅၆၇၈၉]{6})$/
 
   const match = nrcString.match(nrcPattern)
 
-  if (!match) return null
+  if (!match) return nrcDefaults
 
   const stateCode = nrcStates.find((v) => v.number.en === match[1])?.id || ''
   const townshipCode =
@@ -39,7 +34,7 @@ export function nrcStringToObject(nrcString: string): TNrcSchema | null {
   const nrcType = nrcTypes.find((v) => v.name.en === match[3])?.id || ''
   const nrcNumber = match[4]
 
-  if (!stateCode || !townshipCode || !nrcType) return null
+  if (!stateCode || !townshipCode || !nrcType) return nrcDefaults
 
   return {
     stateCode,

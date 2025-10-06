@@ -2,8 +2,8 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import type { TEntranceFormInput } from '@/features/student/schemas/entrance-form-schema'
-import { nrcObjectToString } from '@/lib/utils'
+import { toDto } from '@/features/student/lib/entrance-form-dto'
+import { type TEntranceFormSchema } from '@/features/student/schemas/entrance-form-schema'
 import type { ApiResponse } from '@/types/api'
 import type {
   TUpdateEntranceFormRequest,
@@ -11,20 +11,10 @@ import type {
 } from '@/types/student'
 import { api } from '../lib/axios'
 
-const updateEntranceForm = (data: TEntranceFormInput) => {
-  const { acknowledged, ...payload } = data
-  if (!acknowledged) throw new Error('Acknowledgement required.')
+const updateEntranceForm = (data: TEntranceFormSchema) => {
+  if (!data.acknowledged) throw new Error('Acknowledgement required.')
 
-  const transformedData: TUpdateEntranceFormRequest = {
-    ...payload,
-    academicYear: data.academicYear ? data.academicYear : undefined,
-    dob: data.dob ? data.dob.toISOString().split('T')[0] : undefined,
-    studentNrc: data.studentNrc
-      ? nrcObjectToString(data.studentNrc)
-      : undefined,
-    fatherNrc: data.fatherNrc ? nrcObjectToString(data.fatherNrc) : undefined,
-    motherNrc: data.motherNrc ? nrcObjectToString(data.motherNrc) : undefined,
-  }
+  const transformedData: TUpdateEntranceFormRequest = toDto(data)
 
   return api.patch<ApiResponse<TUpdateEntranceFormResponse>>(
     '/student/entranceForm',
@@ -34,7 +24,7 @@ const updateEntranceForm = (data: TEntranceFormInput) => {
 
 export const useUpdateEntranceForm = (
   options?: Omit<
-    UseMutationOptions<TUpdateEntranceFormResponse, Error, TEntranceFormInput>,
+    UseMutationOptions<TUpdateEntranceFormResponse, Error, TEntranceFormSchema>,
     'mutationKey' | 'mutationFn'
   >,
 ) => {

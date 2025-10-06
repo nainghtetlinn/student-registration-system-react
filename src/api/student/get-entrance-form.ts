@@ -5,6 +5,8 @@ import {
   type UseQueryOptions,
 } from '@tanstack/react-query'
 
+import { fromDto } from '@/features/student/lib/entrance-form-dto'
+import type { TEntranceFormSchema } from '@/features/student/schemas/entrance-form-schema'
 import type { ApiResponse } from '@/types/api'
 import type { TGetEntranceFormResponse } from '@/types/student'
 import { api } from '../lib/axios'
@@ -18,18 +20,13 @@ export const getEntranceFormQuery = () =>
     queryKey: ['entrance form'],
     queryFn: async () => {
       const response = await getEntranceForm()
-      return response.data.data
+      return fromDto(response.data.data)
     },
   })
 
 export const useGetEntranceForm = (
   options?: Omit<
-    UseQueryOptions<
-      TGetEntranceFormResponse,
-      Error,
-      TGetEntranceFormResponse,
-      QueryKey
-    >,
+    UseQueryOptions<TEntranceFormSchema, Error, TEntranceFormSchema, QueryKey>,
     'queryKey' | 'queryFn'
   >,
 ) => {
@@ -37,7 +34,7 @@ export const useGetEntranceForm = (
     queryKey: ['entrance form'],
     queryFn: async () => {
       const response = await getEntranceForm()
-      return response.data.data
+      return fromDto(response.data.data)
     },
     ...options,
   })

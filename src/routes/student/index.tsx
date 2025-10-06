@@ -8,11 +8,11 @@ import {
 } from '@/api/student/get-entrance-form'
 
 export const Route = createFileRoute('/student/')({
+  pendingComponent: () => <div>Loading</div>,
+  component: RouteComponent,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(getEntranceFormQuery())
   },
-  pendingComponent: () => <div>Loading</div>,
-  component: RouteComponent,
 })
 
 function RouteComponent() {

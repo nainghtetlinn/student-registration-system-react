@@ -1,11 +1,11 @@
 import type { TStep } from '@/components/multistep-form'
-import type { TUniversityEntranceFormSchema } from '../../schemas/entrance-form-schema'
+import type { TEntranceFormSchema } from '../../schemas/entrance-form-schema'
 import { Acknowledgement } from './acknowledgement'
 import { ContactsDetails } from './contacts-details'
 import { ParentsDetails } from './parents-details'
 import { StudentDetails } from './student-details'
 
-export const steps: TStep<TUniversityEntranceFormSchema>[] = [
+export const steps: TStep<TEntranceFormSchema>[] = [
   {
     position: 1,
     title: 'ကျောင်းသားကိုယ်ရေးအချက်အလက်',

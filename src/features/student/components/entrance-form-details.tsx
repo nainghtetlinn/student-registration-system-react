@@ -11,9 +11,14 @@ import { Edit2 } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 import { paths } from '@/config/paths'
-import type { TEntranceForm } from '@/types/student'
+import { type TEntranceFormSchema } from '../schemas/entrance-form-schema'
+import { nrcObjectToString } from '@/lib/utils'
 
-export const EntranceFormDetails = ({ data }: { data: TEntranceForm }) => {
+export const EntranceFormDetails = ({
+  data,
+}: {
+  data: TEntranceFormSchema
+}) => {
   return (
     <Card className='relative w-full max-w-2xl'>
       <CardHeader className='text-center'>
@@ -34,91 +39,91 @@ export const EntranceFormDetails = ({ data }: { data: TEntranceForm }) => {
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Academic Year'
-            value={data.academicYear}
-          />
-          <Info
-            label='Roll Number'
-            value={data.rollNumber}
+            value={`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`}
           />
           <Info
             label='Student Name (MM)'
-            value={data.studentNameMm}
+            value={data.student.nameMm}
           />
           <Info
             label='Student Name (Eng)'
-            value={data.studentNameEng}
+            value={data.student.nameEn}
           />
           <Info
             label='NRC'
-            value={data.studentNrc}
+            value={nrcObjectToString(data.student.nrc)}
           />
           <Info
             label='Ethnicity'
-            value={data.ethnicity}
+            value={data.student.ethnicity}
           />
           <Info
             label='Religion'
-            value={data.religion}
+            value={data.student.religion}
           />
           <Info
             label='Date of Birth'
-            value={data.dob}
+            value={data.student.dob.toISOString().split('T')[0]}
           />
           <Info
             label='Matriculation Passed Year'
-            value={data.matriculationPassedYear}
+            value={data.student.matriculationPassedYear}
           />
           <Info
-            label='Department'
-            value={data.department}
+            label='Matriculation Department'
+            value={data.student.matriculationDepartment}
+          />
+          <Info
+            label='Matriculation Roll Number'
+            value={data.student.matriculationRollNo}
           />
           <Info
             label='Father Name (MM)'
-            value={data.fatherNameMm}
+            value={data.father.nameMm}
           />
           <Info
             label='Father Name (Eng)'
-            value={data.fatherNameEng}
+            value={data.father.nameEn}
           />
           <Info
             label='Father NRC'
-            value={data.fatherNrc}
+            value={nrcObjectToString(data.father.nrc)}
           />
           <Info
             label='Father Job'
-            value={data.fatherJob}
+            value={data.father.job}
           />
           <Info
             label='Mother Name (MM)'
-            value={data.motherNameMm}
+            value={data.mother.nameMm}
           />
           <Info
             label='Mother Name (Eng)'
-            value={data.motherNameEng}
+            value={data.mother.nameEn}
           />
           <Info
             label='Mother NRC'
-            value={data.motherNrc}
+            value={nrcObjectToString(data.mother.nrc)}
           />
           <Info
             label='Mother Job'
-            value={data.motherJob}
+            value={data.mother.job}
           />
           <Info
             label='Address'
-            value={data.address}
+            value={data.contact.address}
           />
           <Info
             label='Phone Number'
-            value={data.phoneNumber}
+            value={data.contact.phoneNumber}
           />
           <Info
             label='Permanent Address'
-            value={data.permanentAddress}
+            value={data.contact.permanentAddress}
           />
           <Info
             label='Permanent Phone Number'
-            value={data.permanentPhoneNumber}
+            value={data.contact.permanentPhoneNumber}
           />
         </div>
       </CardContent>
