@@ -12,6 +12,13 @@ export const nrcSchema = z.object({
 
 export type TNrcSchema = z.infer<typeof nrcSchema>
 
+export const nrcDefaults: TNrcSchema = {
+  stateCode: '',
+  townshipCode: '',
+  nrcType: '',
+  nrcNumber: '',
+}
+
 export const rollNoSchema = z.object({
   year: z.coerce.number().min(1).max(6),
   major: z
