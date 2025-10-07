@@ -10,23 +10,25 @@ import { useRefreshToken, useUser } from '@/api/lib/auth'
 import { useGetProfile } from '@/api/profile/get-profile'
 
 function InnerApp({ children }: { children: React.ReactNode }) {
-  useRefreshToken({
+  const { data: token } = useRefreshToken({
     retry: false,
     staleTime: 1000 * 60 * 10,
     refetchInterval: 1000 * 60 * 10,
     refetchIntervalInBackground: true,
   })
 
-  useUser({
+  const { data: user } = useUser({
     retry: false,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
+    enabled: !!token,
   })
 
   useGetProfile({
     retry: false,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
+    enabled: !!user && user.role.toLowerCase() !== 'student',
   })
 
   return children
