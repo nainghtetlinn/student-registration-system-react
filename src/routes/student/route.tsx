@@ -7,6 +7,8 @@ import { Header } from '@/components/layouts/shared/header'
 import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student')({
+  pendingComponent: Pending,
+  component: RouteComponent,
   beforeLoad: async ({ location, context }) => {
     let shouldRedirect = false
 
@@ -39,8 +41,6 @@ export const Route = createFileRoute('/student')({
       })
     }
   },
-  pendingComponent: Pending,
-  component: RouteComponent,
 })
 
 function RouteComponent() {

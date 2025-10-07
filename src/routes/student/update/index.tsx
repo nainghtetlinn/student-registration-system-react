@@ -8,23 +8,10 @@ import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student/update/')({
   component: RouteComponent,
-  beforeLoad: async ({ context }) => {
-    let shouldRedirect = false
-
-    try {
-      const data = await context.queryClient.ensureQueryData(
-        getEntranceFormQuery(),
-      )
-      if (!data) shouldRedirect = true
-    } catch (error) {
-      console.log(error)
-      shouldRedirect = true
-    }
-
-    if (shouldRedirect)
-      throw redirect({
-        to: paths.home.getHref(),
-      })
+  onError: () => {
+    throw redirect({
+      to: paths.home.getHref(),
+    })
   },
   loader: async ({ context }) => {
     return await context.queryClient.ensureQueryData(getEntranceFormQuery())
