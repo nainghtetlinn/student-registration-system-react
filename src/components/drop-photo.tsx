@@ -46,7 +46,7 @@ export const DropPhoto = ({
               />
               <div
                 className={cn(
-                  'bg-secondary border-primary flex h-[200px] w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed',
+                  'bg-secondary border-primary flex h-[200px] w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed dark:border-white',
                   isDragActive && 'bg-primary/30',
                 )}
               >
@@ -58,7 +58,9 @@ export const DropPhoto = ({
                   <p className='text-center font-bold'>
                     Drag & drop to upload photo
                   </p>
-                  <p className='text-primary text-center text-sm'>or browse</p>
+                  <p className='text-primary text-center text-sm dark:text-white'>
+                    or browse
+                  </p>
                 </div>
               </div>
             </div>
