@@ -26,7 +26,7 @@ import { type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 export const FormRadioGroupField = <
   TItem,
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   items,
   keyExtractor,
@@ -58,11 +58,15 @@ export const FormRadioGroupField = <
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
             <RadioGroup
+              ref={field.ref}
+              name={field.name}
               value={field.value}
+              disabled={field.disabled}
               onValueChange={field.onChange}
+              onBlur={field.onBlur}
               {...props}
             >
-              {items.map(item => {
+              {items.map((item) => {
                 const key = keyExtractor(item)
                 return (
                   <FormItem
@@ -92,7 +96,7 @@ export const FormRadioGroupField = <
 
 export const FormCheckboxField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,
@@ -116,8 +120,12 @@ export const FormCheckboxField = <
           <div className='flex items-start gap-3'>
             <FormControl>
               <Checkbox
+                ref={field.ref}
+                name={field.name}
                 checked={field.value}
+                disabled={field.disabled}
                 onCheckedChange={field.onChange}
+                onBlur={field.onBlur}
                 {...props}
               />
             </FormControl>
@@ -135,7 +143,7 @@ export const FormCheckboxField = <
 
 export const FormInputField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,
@@ -174,7 +182,7 @@ export const FormInputField = <
 export const FormSelectField = <
   TItem,
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   items,
   keyExtractor,
@@ -217,7 +225,7 @@ export const FormSelectField = <
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {items.map(item => {
+              {items.map((item) => {
                 const key = keyExtractor(item)
 
                 return (
