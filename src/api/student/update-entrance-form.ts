@@ -6,25 +6,26 @@ import { toDto } from '@/features/student/lib/entrance-form-dto'
 import { type TEntranceFormSchema } from '@/features/student/schemas/entrance-form-schema'
 import type { ApiResponse } from '@/types/api'
 import type {
+  TUpdateEntranceFormErrorResponse,
   TUpdateEntranceFormRequest,
   TUpdateEntranceFormResponse,
 } from '@/types/student'
 import { api } from '../lib/axios'
 
-const updateEntranceForm = (data: TEntranceFormSchema) => {
-  if (!data.acknowledged) throw new Error('Acknowledgement required.')
-
-  const transformedData: TUpdateEntranceFormRequest = toDto(data)
-
+const updateEntranceForm = (data: TUpdateEntranceFormRequest) => {
   return api.patch<ApiResponse<TUpdateEntranceFormResponse>>(
     '/student/entranceForm',
-    transformedData,
+    data,
   )
 }
 
 export const useUpdateEntranceForm = (
   options?: Omit<
-    UseMutationOptions<TUpdateEntranceFormResponse, Error, TEntranceFormSchema>,
+    UseMutationOptions<
+      TUpdateEntranceFormResponse,
+      AxiosError<ApiResponse<TUpdateEntranceFormErrorResponse>>,
+      TEntranceFormSchema
+    >,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -33,7 +34,9 @@ export const useUpdateEntranceForm = (
   return useMutation({
     mutationKey: ['entrance form', 'create'],
     mutationFn: async (data) => {
-      const response = await updateEntranceForm(data)
+      if (!data.acknowledged) throw new Error('Acknowledgement required.')
+      const transformedData = toDto(data)
+      const response = await updateEntranceForm(transformedData)
       return response.data.data
     },
     onSuccess: (response, ...restArgs) => {
@@ -41,8 +44,7 @@ export const useUpdateEntranceForm = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,

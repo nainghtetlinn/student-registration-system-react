@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { Spinner } from '@/components/ui/spinner'
 
 // import { AnimatePresence, motion, Variants } from 'motion/react'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext } from 'react'
 import {
   type FieldPath,
   type FieldValues,
@@ -50,18 +49,20 @@ export const MultistepForm = <
   TContext = unknown,
   TTransformedValues = TFieldValues,
 >({
+  active,
+  setActive,
   steps,
   form,
   onSubmit,
   children,
 }: {
+  active: number
+  setActive: React.Dispatch<React.SetStateAction<number>>
   steps: TStep<TFieldValues>[]
   form: UseFormReturn<TFieldValues, TContext, TTransformedValues>
   onSubmit: (data: TTransformedValues) => void
   children: React.ReactNode
 }) => {
-  const [active, setActive] = useState(0)
-
   const handleNext = async () => {
     const isValid = await form.trigger(steps[active].fields)
     if (!isValid) {
@@ -108,7 +109,12 @@ export const MultistepFormCurrent = () => {
   return steps[current].component
 }
 
-export const MultistepFormPrevious = () => {
+export const MultistepFormPrevious = ({
+  children,
+  ...props
+}: Omit<React.ComponentProps<'button'>, 'type' | 'onClick'> & {
+  children: React.ReactNode
+}) => {
   const { current, previous } = useMultistep()
 
   return (
@@ -117,15 +123,21 @@ export const MultistepFormPrevious = () => {
         <Button
           type='button'
           onClick={previous}
+          {...props}
         >
-          Previous
+          {children}
         </Button>
       ) : null}
     </>
   )
 }
 
-export const MultistepFormNext = () => {
+export const MultistepFormNext = ({
+  children,
+  ...props
+}: Omit<React.ComponentProps<'button'>, 'type' | 'onClick'> & {
+  children: React.ReactNode
+}) => {
   const { current, total, next } = useMultistep()
 
   return (
@@ -134,21 +146,23 @@ export const MultistepFormNext = () => {
         <Button
           type='button'
           onClick={next}
+          {...props}
         >
-          Next
+          {children}
         </Button>
       ) : null}
     </>
   )
 }
 
-export const MultistepFormSubmit = ({ isPending }: { isPending: boolean }) => {
+export const MultistepFormSubmit = ({
+  children,
+  ...props
+}: Omit<React.ComponentProps<'button'>, 'type' | 'onClick'> & {
+  children: React.ReactNode
+}) => {
   const { current, total } = useMultistep()
   return (
-    <>
-      {current == total - 1 ? (
-        <Button disabled={isPending}>Submit {isPending && <Spinner />}</Button>
-      ) : null}
-    </>
+    <>{current == total - 1 ? <Button {...props}>{children}</Button> : null}</>
   )
 }

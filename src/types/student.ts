@@ -23,8 +23,14 @@ export type TEntranceForm = {
   permanentPhoneNumber: string
 }
 
+export type TEntranceFormError = {
+  field: keyof TEntranceForm
+  message: string
+}[]
+
 export type TRegisterEntranceFormRequest = TEntranceForm
 export type TRegisterEntranceFormResponse = string
+export type TRegisterEntranceFormErrorResponse = TEntranceFormError
 
 export type TGetEntranceFormResponse = TEntranceForm
 
@@ -53,3 +59,4 @@ export type TUpdateEntranceFormRequest = {
   permanentPhoneNumber?: string
 }
 export type TUpdateEntranceFormResponse = string
+export type TUpdateEntranceFormErrorResponse = TEntranceFormError

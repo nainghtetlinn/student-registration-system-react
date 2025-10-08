@@ -13,10 +13,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import type { TEntranceFormError } from '@/types/student'
+import { fromErrorDto } from '../../lib/entrance-form-dto'
 import {
   entranceFormDefaults,
   entranceFormSchema,
@@ -26,19 +30,35 @@ import { steps } from './steps'
 
 type Props = {
   isPending: boolean
+  errors: TEntranceFormError
   onSubmit: (data: TEntranceFormSchema) => void
   defaultValues?: TEntranceFormSchema
 }
 
-export const EntranceForm = ({ isPending, onSubmit, defaultValues }: Props) => {
+export const EntranceForm = ({
+  isPending,
+  errors,
+  onSubmit,
+  defaultValues,
+}: Props) => {
+  const [active, setActive] = useState(0)
+
   const form = useForm({
     resolver: zodResolver(entranceFormSchema),
     defaultValues: defaultValues ?? entranceFormDefaults,
   })
 
+  useEffect(() => {
+    fromErrorDto(errors).forEach((e) =>
+      form.setError(e.field, { message: e.message }),
+    )
+  }, [errors])
+
   return (
     <>
       <MultistepForm
+        active={active}
+        setActive={setActive}
         form={form}
         steps={steps}
         onSubmit={onSubmit}
@@ -60,9 +80,11 @@ export const EntranceForm = ({ isPending, onSubmit, defaultValues }: Props) => {
             <MultistepFormCurrent />
           </CardContent>
           <CardFooter className='flex items-center justify-end gap-2'>
-            <MultistepFormPrevious />
-            <MultistepFormNext />
-            <MultistepFormSubmit isPending={isPending} />
+            <MultistepFormPrevious>Previous</MultistepFormPrevious>
+            <MultistepFormNext>Next</MultistepFormNext>
+            <MultistepFormSubmit disabled={isPending}>
+              Submit {isPending && <Spinner />}
+            </MultistepFormSubmit>
           </CardFooter>
         </Card>
       </MultistepForm>

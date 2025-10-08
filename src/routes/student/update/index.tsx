@@ -22,7 +22,7 @@ function RouteComponent() {
   const router = useRouter()
   const formData = Route.useLoaderData()
 
-  const { mutate, isPending } = useUpdateEntranceForm({
+  const { mutate, isPending, error } = useUpdateEntranceForm({
     onSuccess: () => {
       router.navigate({
         to: paths.student.update.success.getHref(),
@@ -37,6 +37,7 @@ function RouteComponent() {
       <div className='flex justify-center pt-4'>
         <EntranceForm
           isPending={isPending}
+          errors={error?.response?.data.data || []}
           onSubmit={mutate}
           defaultValues={formData}
         />
