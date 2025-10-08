@@ -64,7 +64,9 @@ export const MultistepForm = <
   children: React.ReactNode
 }) => {
   const handleNext = async () => {
-    const isValid = await form.trigger(steps[active].fields)
+    const isValid = await form.trigger(steps[active].fields, {
+      shouldFocus: true,
+    })
     if (!isValid) {
       return // Stop progression if validation fails
     }
@@ -106,7 +108,18 @@ export const MultistepForm = <
 export const MultistepFormCurrent = () => {
   const { current, steps } = useMultistep()
 
-  return steps[current].component
+  return (
+    <>
+      {steps.map((s, i) => (
+        <div
+          key={s.position}
+          style={{ display: i == current ? 'block' : 'none' }}
+        >
+          {s.component}
+        </div>
+      ))}
+    </>
+  )
 }
 
 export const MultistepFormPrevious = ({
