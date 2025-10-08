@@ -30,7 +30,7 @@ import { steps } from './steps'
 
 type Props = {
   isPending: boolean
-  errors: TEntranceFormError
+  errors: TEntranceFormError | null
   onSubmit: (data: TEntranceFormSchema) => void
   defaultValues?: TEntranceFormSchema
 }
@@ -49,9 +49,20 @@ export const EntranceForm = ({
   })
 
   useEffect(() => {
-    fromErrorDto(errors).forEach((e) =>
-      form.setError(e.field, { message: e.message }),
-    )
+    if (errors) {
+      let index = -1
+      fromErrorDto(errors).forEach((e) => {
+        if (index < 0) {
+          steps.forEach((s, i) => {
+            s.fields.forEach((f) => {
+              if (e.field.startsWith(f)) index = i
+            })
+          })
+        }
+        form.setError(e.field, { message: e.message })
+      })
+      setActive(index < 0 ? 0 : index)
+    }
   }, [errors])
 
   return (

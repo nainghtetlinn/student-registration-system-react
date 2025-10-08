@@ -31,7 +31,7 @@ export const Route = createFileRoute('/student/register/')({
 function RouteComponent() {
   const router = useRouter()
 
-  const { mutate, isPending } = useCreateEntranceForm({
+  const { mutate, isPending, error } = useCreateEntranceForm({
     onSuccess: () => {
       router.navigate({
         to: paths.student.register.success.getHref(),
@@ -46,6 +46,7 @@ function RouteComponent() {
       <div className='flex justify-center pt-4'>
         <EntranceForm
           isPending={isPending}
+          errors={error?.response?.data.data || null}
           onSubmit={mutate}
           defaultValues={entranceFormDefaults}
         />

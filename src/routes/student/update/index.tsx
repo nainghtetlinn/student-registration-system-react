@@ -37,7 +37,7 @@ function RouteComponent() {
       <div className='flex justify-center pt-4'>
         <EntranceForm
           isPending={isPending}
-          errors={error?.response?.data.data || []}
+          errors={error?.response?.data.data || null}
           onSubmit={mutate}
           defaultValues={formData}
         />
