@@ -23,11 +23,22 @@ import { useLogout } from '@/api/lib/auth'
 import { paths } from '@/config/paths'
 import { useTheme } from '@/providers/theme-provider'
 import type { TUser } from '@/types/user'
+import { useEffect, useState } from 'react'
 
 export const Header = () => {
   const router = useRouter()
   const qc = useQueryClient()
   const { theme, setTheme } = useTheme()
+  const [user, setUser] = useState<TUser | undefined | null>(() =>
+    qc.getQueryData(['auth', 'user']),
+  )
+
+  useEffect(() => {
+    const unsubscribe = qc.getQueryCache().subscribe(() => {
+      setUser(qc.getQueryData(['auth', 'user']))
+    })
+    return unsubscribe
+  }, [qc])
 
   const logout = useLogout({
     onSuccess: () => {
@@ -37,8 +48,6 @@ export const Header = () => {
       })
     },
   })
-
-  const user = qc.getQueryData(['auth', 'user']) as TUser | undefined | null
 
   const handleLogout = () => logout.mutate({})
 
