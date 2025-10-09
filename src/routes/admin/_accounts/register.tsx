@@ -10,7 +10,7 @@ function RouteComponent() {
     <>
       <title>Create Account</title>
 
-      <div className='flex items-center justify-center'>
+      <div className='flex justify-center p-2'>
         <CreateNewAccountForm />
       </div>
     </>

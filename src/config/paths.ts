@@ -22,6 +22,26 @@ export const paths = {
       path: '/admin',
       getHref: () => '/admin',
     },
+
+    forms: {
+      root: {
+        path: '/admin/forms',
+        getHref: () => '/admin/forms',
+      },
+      create: {
+        path: '/admin/forms/create',
+        getHref: () => '/admin/forms/create',
+      },
+      form: {
+        path: '/admin/forms/:id',
+        getHref: (id: string) => `/admin/forms/${id}`,
+      },
+      update: {
+        path: '/admin/forms/:id/update',
+        getHref: (id: string) => `/admin/forms/${id}/update`,
+      },
+    },
+
     profile: {
       root: {
         path: '/admin/profile',
@@ -36,24 +56,29 @@ export const paths = {
         getHref: () => '/admin/profile/update',
       },
     },
+
     accounts: {
       details: {
-        path: '/admin/accounts',
+        path: '/admin/accounts/:email',
         getHref: (email: string) => `/admin/accounts/${email}`,
       },
     },
+
     staffs: {
       paths: '/admin/staffs',
       getHref: () => '/admin/staffs',
     },
+
     students: {
       paths: '/admin/students',
       getHref: () => '/admin/students',
     },
+
     register: {
       paths: '/admin/register',
       getHref: () => '/admin/register',
     },
+
     shortcuts: {
       path: '/admin/shortcuts',
       getHref: () => '/admin/shortcuts',

@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/sidebar'
 import {
   ChartPie,
+  File,
+  FilePlus2,
   SquareSlash,
   User2,
   UserRoundCog,
@@ -35,6 +37,19 @@ const contents = {
       name: 'Register',
       href: paths.admin.register.getHref(),
       icon: UserRoundPlus,
+    },
+  ],
+
+  forms: [
+    {
+      name: 'Forms',
+      href: paths.admin.forms.root.getHref(),
+      icon: File,
+    },
+    {
+      name: 'Create',
+      href: paths.admin.forms.create.getHref(),
+      icon: FilePlus2,
     },
   ],
 
@@ -83,6 +98,10 @@ export const AppSidebar = ({
         <AppSidebarGroup
           label='Accounts'
           items={contents.accounts}
+        />
+        <AppSidebarGroup
+          label='Forms'
+          items={contents.forms}
         />
         <AppSidebarGroup
           label='Management'
