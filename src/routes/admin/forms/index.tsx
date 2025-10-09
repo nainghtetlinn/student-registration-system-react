@@ -1,3 +1,4 @@
+import { FormsListTable } from '@/features/form/components/forms-list-table'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/admin/forms/')({
@@ -5,5 +6,11 @@ export const Route = createFileRoute('/admin/forms/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/admin/forms/"!</div>
+  return (
+    <>
+      <title>Forms</title>
+
+      <FormsListTable />
+    </>
+  )
 }
