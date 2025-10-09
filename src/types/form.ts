@@ -20,7 +20,6 @@ export type TUpdateFormRequest = {
   academicYear: string
   number: string
   code: string
-  isOpen: boolean
 }
 export type TUpdateFormResponse = string
 
