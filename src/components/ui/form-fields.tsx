@@ -16,11 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 
-import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import * as SelectPrimitive from '@radix-ui/react-select'
+import * as SwitchPrimitive from '@radix-ui/react-switch'
+import * as React from 'react'
 import { type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 
 export const FormRadioGroupField = <
@@ -87,6 +89,53 @@ export const FormRadioGroupField = <
             </RadioGroup>
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
+          {!hideErrorMessage && <FormMessage />}
+        </FormItem>
+      )}
+    />
+  )
+}
+
+export const FormSwitchField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+  control,
+  name,
+  label,
+  description,
+  hideErrorMessage = false,
+  ...props
+}: {
+  control: Control<TFieldValues>
+  name: TName
+  label?: string
+  description?: string
+  hideErrorMessage?: boolean
+} & React.ComponentProps<typeof SwitchPrimitive.Root>) => {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <div className='flex items-center justify-between gap-3'>
+            <div className='space-y-0.5'>
+              {label && <FormLabel>{label}</FormLabel>}
+              {description && <FormDescription>{description}</FormDescription>}
+            </div>
+            <FormControl>
+              <Switch
+                ref={field.ref}
+                name={field.name}
+                checked={field.value}
+                disabled={field.disabled}
+                onCheckedChange={field.onChange}
+                onBlur={field.onBlur}
+                {...props}
+              />
+            </FormControl>
+          </div>
           {!hideErrorMessage && <FormMessage />}
         </FormItem>
       )}
