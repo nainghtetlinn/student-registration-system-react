@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -22,13 +23,14 @@ import {
   Hash,
   Upload,
 } from 'lucide-react'
+import { InitiateClosureBtn } from './ui/initiate-closure-btn'
 
 import { useUploadStamp } from '@/api/form/upload-stamp'
+import { Spinner } from '@/components/ui/spinner'
 import type { TForm } from '@/types/form'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
 import { useRef, useState } from 'react'
-import { Spinner } from '@/components/ui/spinner'
 
 export const FormDetails = ({ data: form }: { data: TForm }) => {
   const stampRef = useRef<TDropPhoto>(null)
@@ -184,6 +186,9 @@ export const FormDetails = ({ data: form }: { data: TForm }) => {
           <div>Uploaded stamp here</div>
         )}
       </CardContent>
+      <CardFooter>
+        <InitiateClosureBtn id={form.id} />
+      </CardFooter>
     </Card>
   )
 }

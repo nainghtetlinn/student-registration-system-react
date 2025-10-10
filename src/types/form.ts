@@ -28,3 +28,5 @@ export type TGetFormsResponse = TForm[]
 export type TGetFormResponse = TForm
 
 export type TUploadStampResponse = string
+
+export type TInitiateClosureResponse = string
