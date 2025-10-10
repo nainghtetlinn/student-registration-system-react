@@ -8,9 +8,11 @@ import { cn } from '@/lib/utils'
 export type TDropPhoto = { remove: () => void }
 
 export const DropPhoto = ({
+  photoName = 'photo',
   ref,
   onDrop,
 }: {
+  photoName?: string
   ref: Ref<TDropPhoto>
   onDrop: (file: File) => void
 }) => {
@@ -56,7 +58,7 @@ export const DropPhoto = ({
                     className='mx-auto'
                   />
                   <p className='text-center font-bold'>
-                    Drag & drop to upload photo
+                    Drag & drop to upload {photoName}
                   </p>
                   <p className='text-primary text-center text-sm dark:text-white'>
                     or browse
