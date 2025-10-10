@@ -75,7 +75,7 @@ export const EntranceFormDetails = ({
           />
           <Info
             label='Matriculation Roll Number'
-            value={data.student.matriculationRollNo}
+            value={data.student.enrollmentNumber}
           />
           <Info
             label='Father Name (MM)'

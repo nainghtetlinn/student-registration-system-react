@@ -14,8 +14,8 @@ const studentSchema = z.object({
       'Date of birth cannot be in the future',
     ),
   matriculationPassedYear: academicYearSchema,
-  matriculationRollNo: z.string().min(1),
   matriculationDepartment: z.string().min(1),
+  enrollmentNumber: z.string().min(1),
 })
 
 const parentSchema = z.object({
@@ -33,6 +33,7 @@ const contactSchema = z.object({
 })
 
 export const entranceFormSchema = z.object({
+  formId: z.coerce.number(),
   student: studentSchema,
   father: parentSchema,
   mother: parentSchema,
@@ -52,6 +53,7 @@ const parentDefaults: z.infer<typeof parentSchema> = {
 }
 
 export const entranceFormDefaults: TEntranceFormSchema = {
+  formId: '' as unknown as number,
   student: {
     nameEn: '',
     nameMm: '',
@@ -61,7 +63,7 @@ export const entranceFormDefaults: TEntranceFormSchema = {
     dob: '' as unknown as Date,
     matriculationPassedYear: '',
     matriculationDepartment: '',
-    matriculationRollNo: '',
+    enrollmentNumber: '',
   },
   father: parentDefaults,
   mother: parentDefaults,

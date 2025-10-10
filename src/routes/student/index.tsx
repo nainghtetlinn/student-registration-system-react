@@ -1,3 +1,4 @@
+import { Pending } from '@/components/layouts/shared/pending'
 import { Button } from '@/components/ui/button'
 import {
   Empty,
@@ -12,44 +13,74 @@ import { File } from 'lucide-react'
 
 import { createFileRoute, Link } from '@tanstack/react-router'
 
+import { useGetOpenedForms } from '@/api/form/get-opened-forms'
 import { useGetEntranceForm } from '@/api/student/get-entrance-form'
-import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { data } = useGetEntranceForm({
+  const openedFormsResult = useGetOpenedForms()
+
+  const entranceFormResult = useGetEntranceForm({
     retry: 0,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   })
 
-  if (data) {
+  if (openedFormsResult.isPending) return <Pending />
+
+  if (!openedFormsResult.data)
     return (
-      <div className='flex min-h-screen items-center justify-center py-12'>
-        <EntranceFormDetails data={data} />
-      </div>
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant='icon'>
+            <File />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>No Form Available</EmptyTitle>
+        <EmptyDescription>
+          There are currently no forms to be filled out. Please check back later
+          or contact the administrator if you believe this is an error.
+        </EmptyDescription>
+        <EmptyContent>
+          <Button asChild>
+            <Link to='/'>Home</Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
+    )
+
+  if (!entranceFormResult.data) {
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant='icon'>
+            <File />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>You aren&apos;t registered</EmptyTitle>
+        <EmptyDescription>
+          You haven&apos;t created or submitted an entrance form yet.
+        </EmptyDescription>
+        <EmptyContent>
+          <Button asChild>
+            <Link
+              to='/student/register/entrance-form/$id'
+              params={{ id: openedFormsResult.data[0].id }}
+            >
+              Register
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
     )
   }
 
   return (
-    <Empty>
-      <EmptyHeader>
-        <EmptyMedia variant='icon'>
-          <File />
-        </EmptyMedia>
-      </EmptyHeader>
-      <EmptyTitle>No Entrance Form Found</EmptyTitle>
-      <EmptyDescription>
-        You haven’t created or submitted an entrance form yet.
-      </EmptyDescription>
-      <EmptyContent>
-        <Button asChild>
-          <Link to={paths.student.register.root.getHref()}>Submit form</Link>
-        </Button>
-      </EmptyContent>
-    </Empty>
+    <div className='flex min-h-screen items-center justify-center py-12'>
+      <EntranceFormDetails data={entranceFormResult.data} />
+    </div>
   )
 }

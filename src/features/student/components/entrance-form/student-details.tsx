@@ -52,7 +52,7 @@ export const StudentDetails = () => {
       />
       <FormInputField
         control={form.control}
-        name='student.matriculationRollNo'
+        name='student.enrollmentNumber'
         label='တက္ကသိုလ်ဝင်စာမေးပွဲခုံနံပါတ်'
       />
       <FormInputField

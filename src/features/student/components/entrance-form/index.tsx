@@ -29,6 +29,7 @@ import {
 import { steps } from './steps'
 
 type Props = {
+  id: string
   isPending: boolean
   errors: TEntranceFormError | null
   onSubmit: (data: TEntranceFormSchema) => void
@@ -36,6 +37,7 @@ type Props = {
 }
 
 export const EntranceForm = ({
+  id,
   isPending,
   errors,
   onSubmit,
@@ -45,11 +47,17 @@ export const EntranceForm = ({
 
   const form = useForm({
     resolver: zodResolver(entranceFormSchema),
-    defaultValues: defaultValues ?? entranceFormDefaults,
+    defaultValues: defaultValues
+      ? { ...defaultValues, formId: parseInt(id) }
+      : {
+          ...entranceFormDefaults,
+          formId: parseInt(id),
+        },
   })
 
   useEffect(() => {
     if (errors) {
+      // this error comes form server
       let index = -1
       fromErrorDto(errors).forEach((e) => {
         if (index < 0) {
