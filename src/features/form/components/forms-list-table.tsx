@@ -88,7 +88,11 @@ export const FormsListTable = () => {
                 colSpan={formsListColumns.length}
                 className='h-24 text-center'
               >
-                {isPending ? <Spinner /> : <span>No results.</span>}
+                {isPending ? (
+                  <Spinner className='mx-auto' />
+                ) : (
+                  <span>No results.</span>
+                )}
               </TableCell>
             </TableRow>
           )}
