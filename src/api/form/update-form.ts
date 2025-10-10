@@ -24,7 +24,7 @@ export const useUpdateForm = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['form', 'create'],
+    mutationKey: ['form', 'update'],
     mutationFn: async ({ id, data }) => {
       const response = await updateForm(id, data)
       return response.data.data
