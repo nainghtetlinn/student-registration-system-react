@@ -12,20 +12,17 @@ const updateForm = (id: string, data: TUpdateFormRequest) => {
 }
 
 export const useUpdateForm = (
+  id: string,
   options?: Omit<
-    UseMutationOptions<
-      TUpdateFormResponse,
-      Error,
-      { data: TUpdateFormSchema; id: string }
-    >,
+    UseMutationOptions<TUpdateFormResponse, Error, TUpdateFormSchema>,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['form', 'update'],
-    mutationFn: async ({ id, data }) => {
+    mutationKey: ['form', 'update', id],
+    mutationFn: async (data) => {
       const response = await updateForm(id, data)
       return response.data.data
     },
