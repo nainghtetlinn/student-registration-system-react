@@ -56,7 +56,7 @@ export const useUpdateEntranceForm = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['entrance form', 'create'],
+    mutationKey: ['entrance form', 'update'],
     mutationFn: async (data) => {
       if (!data.acknowledged) throw new Error('Acknowledgement required.')
       const transformedData = toDto(data)
