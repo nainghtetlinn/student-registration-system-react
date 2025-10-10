@@ -5,6 +5,7 @@ import {
   MultistepFormPrevious,
   MultistepFormSubmit,
 } from '@/components/multistep-form'
+import { Stamp } from '@/components/stamp'
 import {
   Card,
   CardContent,
@@ -19,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import type { TForm } from '@/types/form'
 import type { TEntranceFormError } from '@/types/student'
 import { fromErrorDto } from '../../lib/entrance-form-dto'
 import {
@@ -29,7 +31,7 @@ import {
 import { steps } from './steps'
 
 type Props = {
-  id: string
+  formDetails: TForm
   isPending: boolean
   errors: TEntranceFormError | null
   onSubmit: (data: TEntranceFormSchema) => void
@@ -37,7 +39,7 @@ type Props = {
 }
 
 export const EntranceForm = ({
-  id,
+  formDetails,
   isPending,
   errors,
   onSubmit,
@@ -48,10 +50,10 @@ export const EntranceForm = ({
   const form = useForm({
     resolver: zodResolver(entranceFormSchema),
     defaultValues: defaultValues
-      ? { ...defaultValues, formId: parseInt(id) }
+      ? { ...defaultValues, formId: formDetails.id }
       : {
           ...entranceFormDefaults,
-          formId: parseInt(id),
+          formId: formDetails.id,
         },
   })
 
@@ -82,18 +84,22 @@ export const EntranceForm = ({
         steps={steps}
         onSubmit={onSubmit}
       >
-        <Card className='container mx-auto max-w-3xl'>
+        <Card className='relative container mx-auto max-w-3xl'>
           <CardHeader className='text-center'>
             <CardTitle className='leading-6'>
               နည်းပညာတက္ကသိုလ်(တောင်ကြီး)
             </CardTitle>
             <CardDescription className='text-card-foreground leading-6'>
-              ({new Date().getFullYear()}-{new Date().getFullYear() + 1}
-              )ပညာသင်နှစ်
+              ({formDetails.academicYear})ပညာသင်နှစ်
             </CardDescription>
             <CardTitle className='leading-6'>
               တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ
             </CardTitle>
+            <Stamp
+              url={formDetails.stampUrl}
+              id={formDetails.id.toString()}
+              className='absolute top-2 left-2'
+            />
           </CardHeader>
           <CardContent>
             <MultistepFormCurrent />

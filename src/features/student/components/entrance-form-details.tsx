@@ -10,14 +10,16 @@ import { Edit2 } from 'lucide-react'
 
 import { Link } from '@tanstack/react-router'
 
-import { paths } from '@/config/paths'
-import { type TEntranceFormSchema } from '../schemas/entrance-form-schema'
 import { nrcObjectToString } from '@/lib/utils'
+import { type TEntranceFormSchema } from '../schemas/entrance-form-schema'
+import type { TForm } from '@/types/form'
 
 export const EntranceFormDetails = ({
-  data,
+  formDetails,
+  formData,
 }: {
-  data: TEntranceFormSchema
+  formDetails: TForm
+  formData: TEntranceFormSchema
 }) => {
   return (
     <Card className='relative w-full max-w-2xl'>
@@ -28,7 +30,10 @@ export const EntranceFormDetails = ({
           variant='outline'
           size='icon'
         >
-          <Link to={paths.student.update.root.getHref()}>
+          <Link
+            to='/student/update/entrance-form/$id'
+            params={{ id: formDetails.id.toString() }}
+          >
             <Edit2 />
           </Link>
         </Button>
@@ -43,87 +48,87 @@ export const EntranceFormDetails = ({
           />
           <Info
             label='Student Name (MM)'
-            value={data.student.nameMm}
+            value={formData.student.nameMm}
           />
           <Info
             label='Student Name (Eng)'
-            value={data.student.nameEn}
+            value={formData.student.nameEn}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(data.student.nrc)}
+            value={nrcObjectToString(formData.student.nrc)}
           />
           <Info
             label='Ethnicity'
-            value={data.student.ethnicity}
+            value={formData.student.ethnicity}
           />
           <Info
             label='Religion'
-            value={data.student.religion}
+            value={formData.student.religion}
           />
           <Info
             label='Date of Birth'
-            value={data.student.dob.toISOString().split('T')[0]}
+            value={formData.student.dob.toISOString().split('T')[0]}
           />
           <Info
             label='Matriculation Passed Year'
-            value={data.student.matriculationPassedYear}
+            value={formData.student.matriculationPassedYear}
           />
           <Info
             label='Matriculation Department'
-            value={data.student.matriculationDepartment}
+            value={formData.student.matriculationDepartment}
           />
           <Info
             label='Matriculation Roll Number'
-            value={data.student.enrollmentNumber}
+            value={formData.student.enrollmentNumber}
           />
           <Info
             label='Father Name (MM)'
-            value={data.father.nameMm}
+            value={formData.father.nameMm}
           />
           <Info
             label='Father Name (Eng)'
-            value={data.father.nameEn}
+            value={formData.father.nameEn}
           />
           <Info
             label='Father NRC'
-            value={nrcObjectToString(data.father.nrc)}
+            value={nrcObjectToString(formData.father.nrc)}
           />
           <Info
             label='Father Job'
-            value={data.father.job}
+            value={formData.father.job}
           />
           <Info
             label='Mother Name (MM)'
-            value={data.mother.nameMm}
+            value={formData.mother.nameMm}
           />
           <Info
             label='Mother Name (Eng)'
-            value={data.mother.nameEn}
+            value={formData.mother.nameEn}
           />
           <Info
             label='Mother NRC'
-            value={nrcObjectToString(data.mother.nrc)}
+            value={nrcObjectToString(formData.mother.nrc)}
           />
           <Info
             label='Mother Job'
-            value={data.mother.job}
+            value={formData.mother.job}
           />
           <Info
             label='Address'
-            value={data.contact.address}
+            value={formData.contact.address}
           />
           <Info
             label='Phone Number'
-            value={data.contact.phoneNumber}
+            value={formData.contact.phoneNumber}
           />
           <Info
             label='Permanent Address'
-            value={data.contact.permanentAddress}
+            value={formData.contact.permanentAddress}
           />
           <Info
             label='Permanent Phone Number'
-            value={data.contact.permanentPhoneNumber}
+            value={formData.contact.permanentPhoneNumber}
           />
         </div>
       </CardContent>

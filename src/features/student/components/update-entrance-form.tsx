@@ -1,20 +1,21 @@
 import { EntranceForm } from './entrance-form'
 
 import { useUpdateEntranceForm } from '@/api/student/update-entrance-form'
+import type { TForm } from '@/types/form'
 import { type TEntranceFormSchema } from '../schemas/entrance-form-schema'
 
 export const UpdateEntranceForm = ({
-  id,
+  formDetails,
   formData,
 }: {
-  id: string
+  formDetails: TForm
   formData: TEntranceFormSchema
 }) => {
   const { mutate, isPending, error } = useUpdateEntranceForm()
 
   return (
     <EntranceForm
-      id={id}
+      formDetails={formDetails}
       isPending={isPending}
       errors={error?.response?.data.data || null}
       onSubmit={mutate}

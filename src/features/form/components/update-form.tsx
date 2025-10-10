@@ -31,7 +31,7 @@ export const UpdateForm = ({ data: formDetails }: { data: TForm }) => {
     },
   })
 
-  const { mutate, isPending } = useUpdateForm(formDetails.id)
+  const { mutate, isPending } = useUpdateForm(formDetails.id.toString())
 
   const onSubmit = (data: TUpdateFormSchema) => {
     mutate(data)

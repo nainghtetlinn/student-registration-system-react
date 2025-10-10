@@ -1,5 +1,5 @@
 export type TForm = {
-  id: string
+  id: number
   academicYear: string
   number: string
   code: string

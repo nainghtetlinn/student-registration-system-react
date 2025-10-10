@@ -1,7 +1,8 @@
+import { UpdateEntranceForm } from '@/features/student/components/update-entrance-form'
+
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/api/student/get-entrance-form'
-import { UpdateEntranceForm } from '@/features/student/components/update-entrance-form'
 
 export const Route = createFileRoute('/student/update/entrance-form/$id')({
   component: RouteComponent,
@@ -16,8 +17,7 @@ export const Route = createFileRoute('/student/update/entrance-form/$id')({
 })
 
 function RouteComponent() {
-  const { id } = Route.useParams()
-  const formData = Route.useLoaderData()
+  const { formDetails, formData } = Route.useLoaderData()
 
   return (
     <>
@@ -25,7 +25,7 @@ function RouteComponent() {
 
       <div className='flex justify-center pt-4'>
         <UpdateEntranceForm
-          id={id}
+          formDetails={formDetails}
           formData={formData}
         />
       </div>

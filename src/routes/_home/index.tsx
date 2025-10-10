@@ -29,7 +29,7 @@ function App() {
               size='lg'
               className='rounded-lg bg-green-600 text-lg font-semibold shadow hover:bg-green-700'
             >
-              <Link to='/student/register'>Register</Link>
+              <Link to='/student'>Register</Link>
             </Button>
           </CardContent>
         </Card>

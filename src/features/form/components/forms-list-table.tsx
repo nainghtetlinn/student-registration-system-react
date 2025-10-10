@@ -71,7 +71,7 @@ export const FormsListTable = () => {
                 onClick={() => {
                   navigate({
                     to: '/admin/forms/$id',
-                    params: { id: row.original.id },
+                    params: { id: row.original.id.toString() },
                   })
                 }}
               >

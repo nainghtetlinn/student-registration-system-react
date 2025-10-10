@@ -68,7 +68,7 @@ function RouteComponent() {
           <Button asChild>
             <Link
               to='/student/register/entrance-form/$id'
-              params={{ id: openedFormsResult.data[0].id }}
+              params={{ id: openedFormsResult.data[0].id.toString() }}
             >
               Register
             </Link>
@@ -80,7 +80,10 @@ function RouteComponent() {
 
   return (
     <div className='flex min-h-screen items-center justify-center py-12'>
-      <EntranceFormDetails data={entranceFormResult.data} />
+      <EntranceFormDetails
+        formDetails={entranceFormResult.data.formDetails}
+        formData={entranceFormResult.data.formData}
+      />
     </div>
   )
 }
