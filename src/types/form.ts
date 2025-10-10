@@ -30,3 +30,6 @@ export type TGetFormResponse = TForm
 export type TUploadStampResponse = string
 
 export type TInitiateClosureResponse = string
+
+export type TConfirmClosureRequest = { otp: string }
+export type TConfirmClosureResponse = string

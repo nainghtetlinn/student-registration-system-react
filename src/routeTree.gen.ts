@@ -33,6 +33,7 @@ import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/
 import { Route as AdminFormsIdIndexRouteImport } from './routes/admin/forms/$id/index'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
 import { Route as AdminFormsIdUpdateIndexRouteImport } from './routes/admin/forms/$id/update/index'
+import { Route as AdminFormsIdConfirmClosureIndexRouteImport } from './routes/admin/forms/$id/confirm-closure/index'
 
 const StudentRouteRoute = StudentRouteRouteImport.update({
   id: '/student',
@@ -155,6 +156,12 @@ const AdminFormsIdUpdateIndexRoute = AdminFormsIdUpdateIndexRouteImport.update({
   path: '/forms/$id/update/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminFormsIdConfirmClosureIndexRoute =
+  AdminFormsIdConfirmClosureIndexRouteImport.update({
+    id: '/forms/$id/confirm-closure/',
+    path: '/forms/$id/confirm-closure/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
@@ -180,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRoutesByTo {
@@ -204,6 +212,7 @@ export interface FileRoutesByTo {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRoutesById {
@@ -231,6 +240,7 @@ export interface FileRoutesById {
   '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure/': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update/': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRouteTypes {
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/forms/$id/confirm-closure'
     | '/admin/forms/$id/update'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/forms/$id/confirm-closure'
     | '/admin/forms/$id/update'
   id:
     | '__root__'
@@ -309,6 +321,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create/'
     | '/admin/profile/create/'
     | '/admin/profile/update/'
+    | '/admin/forms/$id/confirm-closure/'
     | '/admin/forms/$id/update/'
   fileRoutesById: FileRoutesById
 }
@@ -489,6 +502,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFormsIdUpdateIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/forms/$id/confirm-closure/': {
+      id: '/admin/forms/$id/confirm-closure/'
+      path: '/forms/$id/confirm-closure'
+      fullPath: '/admin/forms/$id/confirm-closure'
+      preLoaderRoute: typeof AdminFormsIdConfirmClosureIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
@@ -505,6 +525,7 @@ interface AdminRouteRouteChildren {
   AdminFormsCreateIndexRoute: typeof AdminFormsCreateIndexRoute
   AdminProfileCreateIndexRoute: typeof AdminProfileCreateIndexRoute
   AdminProfileUpdateIndexRoute: typeof AdminProfileUpdateIndexRoute
+  AdminFormsIdConfirmClosureIndexRoute: typeof AdminFormsIdConfirmClosureIndexRoute
   AdminFormsIdUpdateIndexRoute: typeof AdminFormsIdUpdateIndexRoute
 }
 
@@ -521,6 +542,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminFormsCreateIndexRoute: AdminFormsCreateIndexRoute,
   AdminProfileCreateIndexRoute: AdminProfileCreateIndexRoute,
   AdminProfileUpdateIndexRoute: AdminProfileUpdateIndexRoute,
+  AdminFormsIdConfirmClosureIndexRoute: AdminFormsIdConfirmClosureIndexRoute,
   AdminFormsIdUpdateIndexRoute: AdminFormsIdUpdateIndexRoute,
 }
 
