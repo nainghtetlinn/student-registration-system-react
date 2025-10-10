@@ -71,7 +71,7 @@ export const FormsListTable = () => {
                 onClick={() => {
                   navigate({
                     to: '/admin/forms/$id',
-                    params: { id: row.original.id },
+                    params: { id: row.original.id.toString() },
                   })
                 }}
               >
@@ -88,7 +88,11 @@ export const FormsListTable = () => {
                 colSpan={formsListColumns.length}
                 className='h-24 text-center'
               >
-                {isPending ? <Spinner /> : <span>No results.</span>}
+                {isPending ? (
+                  <Spinner className='mx-auto' />
+                ) : (
+                  <span>No results.</span>
+                )}
               </TableCell>
             </TableRow>
           )}

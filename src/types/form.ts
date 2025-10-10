@@ -1,5 +1,5 @@
 export type TForm = {
-  id: string
+  id: number
   academicYear: string
   number: string
   code: string
@@ -33,3 +33,5 @@ export type TInitiateClosureResponse = string
 
 export type TConfirmClosureRequest = { otp: string }
 export type TConfirmClosureResponse = string
+
+export type TGetOpenedFormsResponse = TForm[]

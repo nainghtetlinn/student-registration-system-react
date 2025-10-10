@@ -27,7 +27,7 @@ export const steps: TStep<TEntranceFormSchema>[] = [
   {
     position: 4,
     title: '',
-    fields: ['acknowledged'],
+    fields: ['acknowledged', 'formId'],
     component: <Acknowledgement />,
   },
 ]

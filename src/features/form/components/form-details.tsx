@@ -1,4 +1,5 @@
 import { DropPhoto, type TDropPhoto } from '@/components/drop-photo'
+import { Stamp } from '@/components/stamp'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 import {
   Tooltip,
   TooltipContent,
@@ -26,7 +28,6 @@ import {
 import { InitiateClosureBtn } from './ui/initiate-closure-btn'
 
 import { useUploadStamp } from '@/api/form/upload-stamp'
-import { Spinner } from '@/components/ui/spinner'
 import type { TForm } from '@/types/form'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
@@ -36,7 +37,7 @@ export const FormDetails = ({ data: form }: { data: TForm }) => {
   const stampRef = useRef<TDropPhoto>(null)
   const [uploadable, setUploadable] = useState(false)
 
-  const { mutate, isPending } = useUploadStamp(form.id)
+  const { mutate, isPending } = useUploadStamp(form.id.toString())
 
   const handleDrop = (file: File) => {
     if (file) setUploadable(true)
@@ -90,7 +91,7 @@ export const FormDetails = ({ data: form }: { data: TForm }) => {
               >
                 <Link
                   to='/admin/forms/$id/update'
-                  params={{ id: form.id }}
+                  params={{ id: form.id.toString() }}
                 >
                   <Edit />
                 </Link>
@@ -183,11 +184,16 @@ export const FormDetails = ({ data: form }: { data: TForm }) => {
             </div>
           </div>
         ) : (
-          <div>Uploaded stamp here</div>
+          <div className='flex justify-center py-4'>
+            <Stamp
+              url={form.stampUrl}
+              id={form.id.toString()}
+            />
+          </div>
         )}
       </CardContent>
       <CardFooter>
-        <InitiateClosureBtn id={form.id} />
+        <InitiateClosureBtn id={form.id.toString()} />
       </CardFooter>
     </Card>
   )

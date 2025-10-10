@@ -1,5 +1,8 @@
+import type { TForm } from './form'
+
 export type TEntranceForm = {
-  academicYear: string
+  formId: number
+  enrollmentNumber: string
   studentNameMm: string
   studentNameEng: string
   studentNrc: string
@@ -7,7 +10,6 @@ export type TEntranceForm = {
   religion: string
   dob: string
   matriculationPassedYear: string
-  rollNumber: string
   department: string
   fatherNameMm: string
   fatherNameEng: string
@@ -32,10 +34,12 @@ export type TRegisterEntranceFormRequest = TEntranceForm
 export type TRegisterEntranceFormResponse = string
 export type TRegisterEntranceFormErrorResponse = TEntranceFormError
 
-export type TGetEntranceFormResponse = TEntranceForm
+export type TGetEntranceFormResponse = Omit<TEntranceForm, 'formId'> & {
+  formData: TForm
+}
 
 export type TUpdateEntranceFormRequest = {
-  academicYear?: string
+  enrollmentNumber?: string
   studentNameMm?: string
   studentNameEng?: string
   studentNrc?: string
@@ -43,7 +47,6 @@ export type TUpdateEntranceFormRequest = {
   religion?: string
   dob?: string
   matriculationPassedYear?: string
-  rollNumber?: string
   department?: string
   fatherNameMm?: string
   fatherNameEng?: string
