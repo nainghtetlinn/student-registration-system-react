@@ -5,14 +5,16 @@ import Dropzone from 'react-dropzone'
 
 import { cn } from '@/lib/utils'
 
-export type TDropPhoto = { remove: () => void }
+export type TDropPhoto = { remove: () => void; get: () => File | null }
 
 export const DropPhoto = ({
+  photoName = 'photo',
   ref,
   onDrop,
 }: {
+  photoName?: string
   ref: Ref<TDropPhoto>
-  onDrop: (file: File) => void
+  onDrop?: (file: File) => void
 }) => {
   const [file, setFile] = useState<File | null>(null)
   const [fileLocalUrl, setFileLocalUrl] = useState('')
@@ -21,7 +23,7 @@ export const DropPhoto = ({
     const photo = acceptedFiles[0]
     setFile(photo)
     setFileLocalUrl(URL.createObjectURL(photo))
-    onDrop(photo)
+    onDrop?.(photo)
   }
 
   const handleRemove = () => {
@@ -29,9 +31,13 @@ export const DropPhoto = ({
     setFileLocalUrl('')
   }
 
+  const handleGetFile = () => {
+    return file
+  }
+
   useImperativeHandle(ref, () => {
-    return { remove: handleRemove }
-  }, [])
+    return { remove: handleRemove, get: handleGetFile }
+  }, [file])
 
   return (
     <>
@@ -56,7 +62,7 @@ export const DropPhoto = ({
                     className='mx-auto'
                   />
                   <p className='text-center font-bold'>
-                    Drag & drop to upload photo
+                    Drag & drop to upload {photoName}
                   </p>
                   <p className='text-primary text-center text-sm dark:text-white'>
                     or browse

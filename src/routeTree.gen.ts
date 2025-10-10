@@ -20,6 +20,7 @@ import { Route as StudentRegisterIndexRouteImport } from './routes/student/regis
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
+import { Route as AdminFormsIndexRouteImport } from './routes/admin/forms/index'
 import { Route as StudentUpdateSuccessRouteImport } from './routes/student/update/success'
 import { Route as StudentRegisterSuccessRouteImport } from './routes/student/register/success'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
@@ -28,7 +29,11 @@ import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_account
 import { Route as AdminAccountsRegisterRouteImport } from './routes/admin/_accounts/register'
 import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/profile/update/index'
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
+import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/create/index'
+import { Route as AdminFormsIdIndexRouteImport } from './routes/admin/forms/$id/index'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
+import { Route as AdminFormsIdUpdateIndexRouteImport } from './routes/admin/forms/$id/update/index'
+import { Route as AdminFormsIdConfirmClosureIndexRouteImport } from './routes/admin/forms/$id/confirm-closure/index'
 
 const StudentRouteRoute = StudentRouteRouteImport.update({
   id: '/student',
@@ -85,6 +90,11 @@ const AdminProfileIndexRoute = AdminProfileIndexRouteImport.update({
   path: '/profile/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminFormsIndexRoute = AdminFormsIndexRouteImport.update({
+  id: '/forms/',
+  path: '/forms/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const StudentUpdateSuccessRoute = StudentUpdateSuccessRouteImport.update({
   id: '/update/success',
   path: '/update/success',
@@ -125,10 +135,31 @@ const AdminProfileCreateIndexRoute = AdminProfileCreateIndexRouteImport.update({
   path: '/profile/create/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminFormsCreateIndexRoute = AdminFormsCreateIndexRouteImport.update({
+  id: '/forms/create/',
+  path: '/forms/create/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminFormsIdIndexRoute = AdminFormsIdIndexRouteImport.update({
+  id: '/forms/$id/',
+  path: '/forms/$id/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAccountsAccountsEmailRoute =
   AdminAccountsAccountsEmailRouteImport.update({
     id: '/_accounts/accounts/$email',
     path: '/accounts/$email',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminFormsIdUpdateIndexRoute = AdminFormsIdUpdateIndexRouteImport.update({
+  id: '/forms/$id/update/',
+  path: '/forms/$id/update/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminFormsIdConfirmClosureIndexRoute =
+  AdminFormsIdConfirmClosureIndexRouteImport.update({
+    id: '/forms/$id/confirm-closure/',
+    path: '/forms/$id/confirm-closure/',
     getParentRoute: () => AdminRouteRoute,
   } as any)
 
@@ -145,14 +176,19 @@ export interface FileRoutesByFullPath {
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/student/register/success': typeof StudentRegisterSuccessRoute
   '/student/update/success': typeof StudentUpdateSuccessRoute
+  '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/register': typeof StudentRegisterIndexRoute
   '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/forms/$id': typeof AdminFormsIdIndexRoute
+  '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
+  '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteRouteWithChildren
@@ -165,14 +201,19 @@ export interface FileRoutesByTo {
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/student/register/success': typeof StudentRegisterSuccessRoute
   '/student/update/success': typeof StudentUpdateSuccessRoute
+  '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/register': typeof StudentRegisterIndexRoute
   '/student/update': typeof StudentUpdateIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/forms/$id': typeof AdminFormsIdIndexRoute
+  '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
+  '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -188,14 +229,19 @@ export interface FileRoutesById {
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
   '/student/register/success': typeof StudentRegisterSuccessRoute
   '/student/update/success': typeof StudentUpdateSuccessRoute
+  '/admin/forms/': typeof AdminFormsIndexRoute
   '/admin/profile/': typeof AdminProfileIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/student/register/': typeof StudentRegisterIndexRoute
   '/student/update/': typeof StudentUpdateIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
+  '/admin/forms/$id/': typeof AdminFormsIdIndexRoute
+  '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
+  '/admin/forms/$id/confirm-closure/': typeof AdminFormsIdConfirmClosureIndexRoute
+  '/admin/forms/$id/update/': typeof AdminFormsIdUpdateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -212,14 +258,19 @@ export interface FileRouteTypes {
     | '/admin/shortcuts'
     | '/student/register/success'
     | '/student/update/success'
+    | '/admin/forms'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/register'
     | '/student/update'
     | '/admin/accounts/$email'
+    | '/admin/forms/$id'
+    | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/forms/$id/confirm-closure'
+    | '/admin/forms/$id/update'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
@@ -232,14 +283,19 @@ export interface FileRouteTypes {
     | '/admin/shortcuts'
     | '/student/register/success'
     | '/student/update/success'
+    | '/admin/forms'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/register'
     | '/student/update'
     | '/admin/accounts/$email'
+    | '/admin/forms/$id'
+    | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/forms/$id/confirm-closure'
+    | '/admin/forms/$id/update'
   id:
     | '__root__'
     | '/admin'
@@ -254,14 +310,19 @@ export interface FileRouteTypes {
     | '/admin/_documents/shortcuts'
     | '/student/register/success'
     | '/student/update/success'
+    | '/admin/forms/'
     | '/admin/profile/'
     | '/auth/change-password/'
     | '/auth/login/'
     | '/student/register/'
     | '/student/update/'
     | '/admin/_accounts/accounts/$email'
+    | '/admin/forms/$id/'
+    | '/admin/forms/create/'
     | '/admin/profile/create/'
     | '/admin/profile/update/'
+    | '/admin/forms/$id/confirm-closure/'
+    | '/admin/forms/$id/update/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -350,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProfileIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/forms/': {
+      id: '/admin/forms/'
+      path: '/forms'
+      fullPath: '/admin/forms'
+      preLoaderRoute: typeof AdminFormsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/student/update/success': {
       id: '/student/update/success'
       path: '/update/success'
@@ -406,11 +474,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProfileCreateIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/forms/create/': {
+      id: '/admin/forms/create/'
+      path: '/forms/create'
+      fullPath: '/admin/forms/create'
+      preLoaderRoute: typeof AdminFormsCreateIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/forms/$id/': {
+      id: '/admin/forms/$id/'
+      path: '/forms/$id'
+      fullPath: '/admin/forms/$id'
+      preLoaderRoute: typeof AdminFormsIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/_accounts/accounts/$email': {
       id: '/admin/_accounts/accounts/$email'
       path: '/accounts/$email'
       fullPath: '/admin/accounts/$email'
       preLoaderRoute: typeof AdminAccountsAccountsEmailRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/forms/$id/update/': {
+      id: '/admin/forms/$id/update/'
+      path: '/forms/$id/update'
+      fullPath: '/admin/forms/$id/update'
+      preLoaderRoute: typeof AdminFormsIdUpdateIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/forms/$id/confirm-closure/': {
+      id: '/admin/forms/$id/confirm-closure/'
+      path: '/forms/$id/confirm-closure'
+      fullPath: '/admin/forms/$id/confirm-closure'
+      preLoaderRoute: typeof AdminFormsIdConfirmClosureIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
   }
@@ -422,10 +518,15 @@ interface AdminRouteRouteChildren {
   AdminAccountsStaffsRoute: typeof AdminAccountsStaffsRoute
   AdminAccountsStudentsRoute: typeof AdminAccountsStudentsRoute
   AdminDocumentsShortcutsRoute: typeof AdminDocumentsShortcutsRoute
+  AdminFormsIndexRoute: typeof AdminFormsIndexRoute
   AdminProfileIndexRoute: typeof AdminProfileIndexRoute
   AdminAccountsAccountsEmailRoute: typeof AdminAccountsAccountsEmailRoute
+  AdminFormsIdIndexRoute: typeof AdminFormsIdIndexRoute
+  AdminFormsCreateIndexRoute: typeof AdminFormsCreateIndexRoute
   AdminProfileCreateIndexRoute: typeof AdminProfileCreateIndexRoute
   AdminProfileUpdateIndexRoute: typeof AdminProfileUpdateIndexRoute
+  AdminFormsIdConfirmClosureIndexRoute: typeof AdminFormsIdConfirmClosureIndexRoute
+  AdminFormsIdUpdateIndexRoute: typeof AdminFormsIdUpdateIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
@@ -434,10 +535,15 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAccountsStaffsRoute: AdminAccountsStaffsRoute,
   AdminAccountsStudentsRoute: AdminAccountsStudentsRoute,
   AdminDocumentsShortcutsRoute: AdminDocumentsShortcutsRoute,
+  AdminFormsIndexRoute: AdminFormsIndexRoute,
   AdminProfileIndexRoute: AdminProfileIndexRoute,
   AdminAccountsAccountsEmailRoute: AdminAccountsAccountsEmailRoute,
+  AdminFormsIdIndexRoute: AdminFormsIdIndexRoute,
+  AdminFormsCreateIndexRoute: AdminFormsCreateIndexRoute,
   AdminProfileCreateIndexRoute: AdminProfileCreateIndexRoute,
   AdminProfileUpdateIndexRoute: AdminProfileUpdateIndexRoute,
+  AdminFormsIdConfirmClosureIndexRoute: AdminFormsIdConfirmClosureIndexRoute,
+  AdminFormsIdUpdateIndexRoute: AdminFormsIdUpdateIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
