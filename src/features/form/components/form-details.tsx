@@ -1,3 +1,4 @@
+import { DropPhoto, type TDropPhoto } from '@/components/drop-photo'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,13 +20,37 @@ import {
   Edit,
   File,
   Hash,
+  Upload,
 } from 'lucide-react'
 
+import { useUploadStamp } from '@/api/form/upload-stamp'
 import type { TForm } from '@/types/form'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
+import { useRef, useState } from 'react'
+import { Spinner } from '@/components/ui/spinner'
 
 export const FormDetails = ({ data: form }: { data: TForm }) => {
+  const stampRef = useRef<TDropPhoto>(null)
+  const [uploadable, setUploadable] = useState(false)
+
+  const { mutate, isPending } = useUploadStamp(form.id)
+
+  const handleDrop = (file: File) => {
+    if (file) setUploadable(true)
+  }
+
+  const handleCancel = () => {
+    stampRef.current?.remove()
+    setUploadable(false)
+  }
+
+  const handleUpload = () => {
+    const file = stampRef.current?.get()
+    if (!file) return
+    mutate(file)
+  }
+
   return (
     <Card className='w-full max-w-lg'>
       <CardHeader>
@@ -73,64 +98,91 @@ export const FormDetails = ({ data: form }: { data: TForm }) => {
           </Tooltip>
         </div>
       </CardHeader>
-      <CardContent className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-        <div className='flex items-center gap-2'>
-          <Hash className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Code</div>
-            <div className='font-medium'>{form.code}</div>
+      <CardContent>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+          <div className='flex items-center gap-2'>
+            <Hash className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Code</div>
+              <div className='font-medium'>{form.code}</div>
+            </div>
           </div>
-        </div>
 
-        <div className='flex items-center gap-2'>
-          <Hash className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Full ID</div>
-            <div className='font-medium'>{form.id}</div>
+          <div className='flex items-center gap-2'>
+            <Hash className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Full ID</div>
+              <div className='font-medium'>{form.id}</div>
+            </div>
           </div>
-        </div>
 
-        <div className='flex items-center gap-2'>
-          <Hash className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Academic Year</div>
-            <div className='font-medium'>{form.academicYear}</div>
+          <div className='flex items-center gap-2'>
+            <Hash className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Academic Year</div>
+              <div className='font-medium'>{form.academicYear}</div>
+            </div>
           </div>
-        </div>
 
-        <div className='flex items-center gap-2'>
-          <Hash className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Status</div>
-            <div className='font-medium'>
-              {form.open
-                ? 'Accepting submissions'
-                : 'Not accepting submissions'}
+          <div className='flex items-center gap-2'>
+            <Hash className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Status</div>
+              <div className='font-medium'>
+                {form.open
+                  ? 'Accepting submissions'
+                  : 'Not accepting submissions'}
+              </div>
+            </div>
+          </div>
+
+          <div className='flex items-center gap-2'>
+            <Calendar className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Created</div>
+              <div className='font-medium'>
+                {format(form.createdAt, 'MMM dd, yyyy, h:mm a')}
+              </div>
+            </div>
+          </div>
+
+          <div className='flex items-center gap-2'>
+            <Calendar className='h-4 w-4' />
+            <div>
+              <div className='text-muted-foreground text-xs'>Updated</div>
+              <div className='font-medium'>
+                {form.updatedAt
+                  ? format(form.updatedAt, 'MMM dd, yyyy, h:mm a')
+                  : '-'}
+              </div>
             </div>
           </div>
         </div>
-
-        <div className='flex items-center gap-2'>
-          <Calendar className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Created</div>
-            <div className='font-medium'>
-              {format(form.createdAt, 'MMM dd, yyyy, h:mm a')}
+        {!form.stampUrl ? (
+          <div className='relative mt-4'>
+            <DropPhoto
+              photoName='stamp'
+              ref={stampRef}
+              onDrop={handleDrop}
+            />
+            <div className='mt-2 flex justify-end gap-2'>
+              <Button
+                variant={'secondary'}
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={isPending || !uploadable}
+                onClick={handleUpload}
+              >
+                Upload {isPending ? <Spinner /> : <Upload />}
+              </Button>
             </div>
           </div>
-        </div>
-
-        <div className='flex items-center gap-2'>
-          <Calendar className='h-4 w-4' />
-          <div>
-            <div className='text-muted-foreground text-xs'>Updated</div>
-            <div className='font-medium'>
-              {form.updatedAt
-                ? format(form.updatedAt, 'MMM dd, yyyy, h:mm a')
-                : '-'}
-            </div>
-          </div>
-        </div>
+        ) : (
+          <div>Uploaded stamp here</div>
+        )}
       </CardContent>
     </Card>
   )
