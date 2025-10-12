@@ -5,6 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormDescription,
   FormMessage,
 } from '@/components/ui/form'
 import {
@@ -23,10 +24,12 @@ export const DobPicker = <
 >({
   control,
   name,
+  description,
   hideErrorMessage = false,
 }: {
   control: Control<TFieldValues>
   name: TName
+  description?: string
   hideErrorMessage?: boolean
 }) => {
   const [open, setOpen] = useState(false)
@@ -70,6 +73,7 @@ export const DobPicker = <
               />
             </PopoverContent>
           </Popover>
+          {description && <FormDescription>{description}</FormDescription>}
           {!hideErrorMessage && <FormMessage />}
         </FormItem>
       )}
