@@ -1,13 +1,14 @@
+import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
+import { CreateSubjectChoiceForm } from '@/features/student/components/create-subject-choice-form'
+
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
-import { CreateSubjectChoiceForm } from '@/features/student/components/create-subject-choice-form'
 import { getEntranceFormQuery } from '@/api/student/get-entrance-form'
 
-export const Route = createFileRoute(
-  '/student/register/subject-choice-form/$id',
-)({
+export const Route = createFileRoute('/student/forms/subject-choice/create')({
   component: RouteComponent,
+  pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
       to: '/',

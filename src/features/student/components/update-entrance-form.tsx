@@ -1,5 +1,7 @@
 import { EntranceForm } from './entrance-form'
 
+import { useNavigate } from '@tanstack/react-router'
+
 import { useUpdateEntranceForm } from '@/api/student/update-entrance-form'
 import type { TForm } from '@/types/form'
 import { type TEntranceFormSchema } from '../schemas/entrance-form-schema'
@@ -11,7 +13,13 @@ export const UpdateEntranceForm = ({
   formDetails: TForm
   formData: TEntranceFormSchema
 }) => {
-  const { mutate, isPending, error } = useUpdateEntranceForm()
+  const navigate = useNavigate()
+
+  const { mutate, isPending, error } = useUpdateEntranceForm({
+    onSuccess: () => {
+      navigate({ to: '/student' })
+    },
+  })
 
   return (
     <EntranceForm

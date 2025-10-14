@@ -58,7 +58,7 @@ export const EntranceForm = ({
   })
 
   useEffect(() => {
-    if (errors) {
+    if (errors && typeof errors !== 'string') {
       // this error comes form server
       let index = -1
       fromErrorDto(errors).forEach((e) => {
