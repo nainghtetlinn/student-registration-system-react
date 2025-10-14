@@ -20,7 +20,7 @@ export const CreateSubjectChoiceForm = ({
       navigate({ to: '/student' })
     },
     onError: (error) => {
-      if (error?.response?.status === 500) {
+      if (error?.response?.status === 409) {
         navigate({ to: '/student' })
       }
     },
