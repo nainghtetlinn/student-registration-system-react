@@ -10,25 +10,26 @@ export const StudentDetails = () => {
   const form = useFormContext<TEntranceFormSchema>()
 
   return (
-    <div className='flex min-h-[550px] flex-col gap-4'>
+    <div className='min-h-[550px] space-y-4'>
+      <h2 className='mb-4 text-center leading-8 font-semibold'>
+        ကျောင်းသား/သူ
+      </h2>
+      <FormInputField
+        control={form.control}
+        name='student.enrollmentNumber'
+        label='ဝင်ခွင့်ရအမှတ်စဉ်'
+      />
       <FormInputField
         control={form.control}
         name='student.nameEn'
-        label='ကျောင်းသား/သူအမည် (အင်္ဂလိပ်)'
+        label='အမည် (အင်္ဂလိပ်)'
         placeholder='Eg- Mg Mg'
       />
       <FormInputField
         control={form.control}
         name='student.nameMm'
-        label='ကျောင်းသား/သူအမည် (မြန်မာ)'
+        label='အမည် (မြန်မာ)'
         placeholder='Eg- မောင်မောင်'
-      />
-      <NrcInput
-        control={form.control}
-        stateCodeName='student.nrc.stateCode'
-        townshipCodeName='student.nrc.townshipCode'
-        nrcTypeName='student.nrc.nrcType'
-        nrcNumberName='student.nrc.nrcNumber'
       />
       <FormInputField
         control={form.control}
@@ -40,6 +41,13 @@ export const StudentDetails = () => {
         name='student.religion'
         label='ကိုးကွယ်သည့်ဘာသာ'
       />
+      <NrcInput
+        control={form.control}
+        stateCodeName='student.nrc.stateCode'
+        townshipCodeName='student.nrc.townshipCode'
+        nrcTypeName='student.nrc.nrcType'
+        nrcNumberName='student.nrc.nrcNumber'
+      />
       <DobPicker
         control={form.control}
         name='student.dob'
@@ -49,11 +57,6 @@ export const StudentDetails = () => {
         name='student.matriculationPassedYear'
         label='တက္ကသိုလ်ဝင်စာမေးပွဲအောင်မြင်သောနှစ်'
         placeholder='Eg- 2020-2021'
-      />
-      <FormInputField
-        control={form.control}
-        name='student.enrollmentNumber'
-        label='တက္ကသိုလ်ဝင်စာမေးပွဲခုံနံပါတ်'
       />
       <FormInputField
         control={form.control}

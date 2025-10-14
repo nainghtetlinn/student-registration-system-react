@@ -16,7 +16,7 @@ export const StudentDetails = () => {
       </h2>
       <FormInputField
         control={form.control}
-        name='enrollmentNumber'
+        name='student.enrollmentNumber'
         label='ဝင်ခွင့်ရအမှတ်စဉ်'
       />
       <FormInputField

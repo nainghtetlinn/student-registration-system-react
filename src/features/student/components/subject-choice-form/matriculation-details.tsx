@@ -60,11 +60,6 @@ export const MatriculationDetails = () => {
         name='matriculation.other'
         label='ဇီဝ/ဘောဂ/သမိုင်း/ပထဝီ/စိတ်ကြိုက်မြန်မာ'
       />
-      <FormInputField
-        control={form.control}
-        name='matriculation.total'
-        label='အမှတ်ပေါင်း'
-      />
     </div>
   )
 }
