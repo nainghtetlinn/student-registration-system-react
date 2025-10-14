@@ -2,30 +2,36 @@ import type { TStep } from '@/components/multistep-form'
 import type { TEntranceFormSchema } from '../../schemas/entrance-form-schema'
 import { Acknowledgement } from './acknowledgement'
 import { ContactsDetails } from './contacts-details'
-import { ParentsDetails } from './parents-details'
+import { FatherDetails, MotherDetails } from './parents-details'
 import { StudentDetails } from './student-details'
 
 export const steps: TStep<TEntranceFormSchema>[] = [
   {
     position: 1,
-    title: 'ကျောင်းသားကိုယ်ရေးအချက်အလက်',
+    title: '',
     fields: ['student'],
     component: <StudentDetails />,
   },
   {
     position: 2,
-    title: 'အဖအချက်အလက်',
-    fields: ['father', 'mother'],
-    component: <ParentsDetails />,
+    title: '',
+    fields: ['father'],
+    component: <FatherDetails />,
   },
   {
     position: 3,
-    title: 'ဆက်သွယ်ရန်အချက်အလက်',
+    title: '',
+    fields: ['mother'],
+    component: <MotherDetails />,
+  },
+  {
+    position: 4,
+    title: '',
     fields: ['contact'],
     component: <ContactsDetails />,
   },
   {
-    position: 4,
+    position: 5,
     title: '',
     fields: ['acknowledged', 'formId'],
     component: <Acknowledgement />,

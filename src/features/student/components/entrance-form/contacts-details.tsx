@@ -8,7 +8,8 @@ export const ContactsDetails = () => {
   const form = useFormContext<TEntranceFormSchema>()
 
   return (
-    <div className='flex min-h-[550px] flex-col gap-4'>
+    <div className='min-h-[550px] space-y-4'>
+      <h2 className='mb-4 text-center leading-8 font-semibold'>ဆက်သွယ်ရန်</h2>
       <FormInputField
         control={form.control}
         name='contact.address'
