@@ -246,7 +246,7 @@ export const FormSelectField = <
   ...props
 }: {
   items: TItem[]
-  keyExtractor: (item: TItem) => string
+  keyExtractor: (item: TItem) => React.Key
   labelExtractor?: (item: TItem) => string
   valueExtractor?: (item: TItem) => string
   placeholder?: string
@@ -280,7 +280,9 @@ export const FormSelectField = <
                 return (
                   <SelectItem
                     key={key}
-                    value={valueExtractor ? valueExtractor(item) : key}
+                    value={
+                      valueExtractor ? valueExtractor(item) : key.toString()
+                    }
                   >
                     {labelExtractor ? labelExtractor(item) : key}
                   </SelectItem>
