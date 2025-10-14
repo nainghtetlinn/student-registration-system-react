@@ -8,15 +8,9 @@ import { StudentDetails } from './student-details'
 
 export const steps: TStep<TSubjectChoiceFormSchema>[] = [
   {
-    position: 6,
-    title: '',
-    fields: [],
-    component: <PhotoUpload />,
-  },
-  {
     position: 1,
     title: '',
-    fields: ['enrollmentNumber', 'student'],
+    fields: ['student'],
     component: <StudentDetails />,
   },
   {
@@ -42,5 +36,11 @@ export const steps: TStep<TSubjectChoiceFormSchema>[] = [
     title: '',
     fields: ['majorChoices', 'acknowledged'],
     component: <MajorChoices />,
+  },
+  {
+    position: 6,
+    title: '',
+    fields: [],
+    component: <PhotoUpload />,
   },
 ]

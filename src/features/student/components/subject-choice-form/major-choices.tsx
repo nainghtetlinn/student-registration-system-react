@@ -1,68 +1,150 @@
-import { MAJORS } from '@/lib/constants'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
+import { FormCheckboxField } from '@/components/ui/form-fields'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Skeleton } from '@/components/ui/skeleton'
 
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { useGetMajorData } from '@/api/lookup/get-major-data'
 import { type TSubjectChoiceFormSchema } from '../../schemas/subject-choice-form-schema'
-import { MajorSelectField } from '../ui/major-select-field'
-import { FormCheckboxField } from '@/components/ui/form-fields'
 
 export const MajorChoices = () => {
+  const { data: majors, isPending, isError } = useGetMajorData()
+
   const form = useFormContext<TSubjectChoiceFormSchema>()
+
+  useEffect(() => {
+    if (!majors || majors.length === 0) return
+    majors.forEach((_, i) => {
+      form.setValue(`majorChoices.${i}.priorityScore`, i + 1)
+    })
+  }, [majors])
+
+  if (isError) return <div>Something went wrong.</div>
 
   return (
     <div className='min-h-[550px] space-y-4'>
       <h2 className='mb-4 text-center leading-8 font-semibold'>
         နည်းပညာတက္ကသိုလ်(တောင်ကြီး)တွင်လျှောက်ထားနိုင်သည့်အထူးပြုဘာသာရပ်သင်တန်းများ
       </h2>
-      <div className='space-y-2'>
-        {MAJORS.map((m, i) => (
-          <div
-            key={m.id}
-            className='grid grid-cols-1 md:grid-cols-2'
-          >
-            <div>
-              {i + 1}. {m.name.en} ({m.short})
+      {isPending ? (
+        <div className='grid grid-cols-1 gap-2 md:grid-cols-2'>
+          {[...Array(12)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className='h-8 w-full'
+            />
+          ))}
+        </div>
+      ) : (
+        <div className='space-y-2'>
+          {majors.map((m, i) => (
+            <div
+              key={m.id}
+              className='grid grid-cols-1 md:grid-cols-2'
+            >
+              <div>
+                {i + 1}. {m.engName} ({m.shortName})
+              </div>
+              <div>{m.mmName}</div>
             </div>
-            <div>{m.name.mm}</div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <h2 className='mt-8 mb-4 text-center leading-8 font-semibold'>
         ဦးစားပေးသင်ကြားလိုသော အထူးပြုဘာသာရပ်(သင်တန်းများ)
       </h2>
-      <div className='grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2'>
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.first'
-          label='1.'
-        />
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.second'
-          label='2.'
-        />
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.third'
-          label='3.'
-        />
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.fourth'
-          label='4.'
-        />
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.fifth'
-          label='5.'
-        />
-        <MajorSelectField
-          control={form.control}
-          name='majorChoices.sixth'
-          label='6.'
-        />
-      </div>
+      {isPending ? (
+        <div className='grid grid-cols-1 gap-2 md:grid-cols-2'>
+          {[...Array(6)].map((_, i) => (
+            <Skeleton
+              key={i}
+              className='h-8 w-full'
+            />
+          ))}
+        </div>
+      ) : (
+        <div className='grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2'>
+          {[...Array(majors.length)].map((_, i) => {
+            return (
+              <React.Fragment key={i}>
+                <FormField
+                  control={form.control}
+                  name={`majorChoices.${i}.majorName`}
+                  render={({ field }) => (
+                    <FormItem className='flex items-center gap-2'>
+                      <FormLabel>{i + 1}.</FormLabel>
+                      <Select
+                        value={field.value}
+                        onValueChange={(newValue) => {
+                          const currentValues =
+                            form.getValues('majorChoices') || []
+                          const existingIndex = currentValues.findIndex(
+                            (item, idx) =>
+                              item.majorName === newValue && idx !== i,
+                          )
+
+                          const prevValue = currentValues[i]?.majorName
+
+                          if (existingIndex !== -1) {
+                            if (prevValue) {
+                              // Swap if current already has a value
+                              form.setValue(
+                                `majorChoices.${existingIndex}.majorName`,
+                                prevValue,
+                              )
+                            } else {
+                              // Clear previous field if current was empty
+                              form.setValue(
+                                `majorChoices.${existingIndex}.majorName`,
+                                '',
+                              )
+                            }
+                          }
+
+                          // Set new value for current field
+                          form.setValue(`majorChoices.${i}.majorName`, newValue)
+                        }}
+                      >
+                        <FormControl>
+                          <SelectTrigger className='w-full'>
+                            <SelectValue placeholder={'Major'} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {majors.map((m) => {
+                            return (
+                              <SelectItem
+                                key={m.id}
+                                value={m.shortName}
+                              >
+                                {m.engName}
+                              </SelectItem>
+                            )
+                          })}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+              </React.Fragment>
+            )
+          })}
+        </div>
+      )}
 
       <p className='font-semibold'>မှတ်ချက်။</p>
       <p>
