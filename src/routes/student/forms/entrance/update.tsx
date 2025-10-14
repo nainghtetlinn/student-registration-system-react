@@ -1,14 +1,16 @@
+import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
 import { UpdateEntranceForm } from '@/features/student/components/update-entrance-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/api/student/get-entrance-form'
 
-export const Route = createFileRoute('/student/update/entrance-form/$id')({
+export const Route = createFileRoute('/student/forms/entrance/update')({
   component: RouteComponent,
+  pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
-      to: '/',
+      to: '/student',
     })
   },
   loader: async ({ context }) => {
@@ -21,9 +23,9 @@ function RouteComponent() {
 
   return (
     <>
-      <title>Update Entrance Form</title>
+      <title>Entrance Form</title>
 
-      <div className='flex justify-center pt-4'>
+      <div className='pt-4'>
         <UpdateEntranceForm
           formDetails={formDetails}
           formData={formData}

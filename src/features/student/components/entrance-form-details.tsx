@@ -31,7 +31,7 @@ export const EntranceFormDetails = ({
           size='icon'
         >
           <Link
-            to='/student/update/entrance-form/$id'
+            to='/student/forms/entrance/update'
             params={{ id: formDetails.id.toString() }}
           >
             <Edit2 />

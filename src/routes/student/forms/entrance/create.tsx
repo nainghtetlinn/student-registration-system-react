@@ -1,14 +1,16 @@
+import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
 import { CreateEntranceForm } from '@/features/student/components/create-entrance-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
 
-export const Route = createFileRoute('/student/register/entrance-form/$id')({
+export const Route = createFileRoute('/student/forms/entrance/create')({
   component: RouteComponent,
+  pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
-      to: '/',
+      to: '/student',
     })
   },
   loader: async ({ context }) => {
@@ -16,19 +18,19 @@ export const Route = createFileRoute('/student/register/entrance-form/$id')({
       getOpenedFormsQuery(),
     )
     if (openedForms.length === 0) throw new Error('There is no opened form.')
-    return openedForms
+    return { formDetails: openedForms[0] }
   },
 })
 
 function RouteComponent() {
-  const openedForms = Route.useLoaderData()
+  const { formDetails } = Route.useLoaderData()
 
   return (
     <>
-      <title>Register Entrance Form</title>
+      <title>Entrance Form</title>
 
-      <div className='flex justify-center pt-4'>
-        <CreateEntranceForm formDetails={openedForms[0]} />
+      <div className='pt-4'>
+        <CreateEntranceForm formDetails={formDetails} />
       </div>
     </>
   )

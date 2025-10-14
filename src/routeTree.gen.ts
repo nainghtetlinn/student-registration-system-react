@@ -15,12 +15,11 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as StudentIndexRouteImport } from './routes/student/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as HomeIndexRouteImport } from './routes/_home/index'
+import { Route as StudentFormsRouteRouteImport } from './routes/student/forms/route'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
 import { Route as AdminFormsIndexRouteImport } from './routes/admin/forms/index'
-import { Route as StudentUpdateSuccessRouteImport } from './routes/student/update/success'
-import { Route as StudentRegisterSuccessRouteImport } from './routes/student/register/success'
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
 import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
@@ -29,9 +28,9 @@ import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/prof
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/create/index'
 import { Route as AdminFormsIdIndexRouteImport } from './routes/admin/forms/$id/index'
-import { Route as StudentUpdateEntranceFormIdRouteImport } from './routes/student/update/entrance-form/$id'
-import { Route as StudentRegisterSubjectChoiceFormIdRouteImport } from './routes/student/register/subject-choice-form/$id'
-import { Route as StudentRegisterEntranceFormIdRouteImport } from './routes/student/register/entrance-form/$id'
+import { Route as StudentFormsSubjectChoiceCreateRouteImport } from './routes/student/forms/subject-choice/create'
+import { Route as StudentFormsEntranceUpdateRouteImport } from './routes/student/forms/entrance/update'
+import { Route as StudentFormsEntranceCreateRouteImport } from './routes/student/forms/entrance/create'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
 import { Route as AdminFormsIdUpdateIndexRouteImport } from './routes/admin/forms/$id/update/index'
 import { Route as AdminFormsIdConfirmClosureIndexRouteImport } from './routes/admin/forms/$id/confirm-closure/index'
@@ -66,6 +65,11 @@ const HomeIndexRoute = HomeIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentFormsRouteRoute = StudentFormsRouteRouteImport.update({
+  id: '/forms',
+  path: '/forms',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
 const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
@@ -85,16 +89,6 @@ const AdminFormsIndexRoute = AdminFormsIndexRouteImport.update({
   id: '/forms/',
   path: '/forms/',
   getParentRoute: () => AdminRouteRoute,
-} as any)
-const StudentUpdateSuccessRoute = StudentUpdateSuccessRouteImport.update({
-  id: '/update/success',
-  path: '/update/success',
-  getParentRoute: () => StudentRouteRoute,
-} as any)
-const StudentRegisterSuccessRoute = StudentRegisterSuccessRouteImport.update({
-  id: '/register/success',
-  path: '/register/success',
-  getParentRoute: () => StudentRouteRoute,
 } as any)
 const AdminDocumentsShortcutsRoute = AdminDocumentsShortcutsRouteImport.update({
   id: '/_documents/shortcuts',
@@ -136,23 +130,23 @@ const AdminFormsIdIndexRoute = AdminFormsIdIndexRouteImport.update({
   path: '/forms/$id/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const StudentUpdateEntranceFormIdRoute =
-  StudentUpdateEntranceFormIdRouteImport.update({
-    id: '/update/entrance-form/$id',
-    path: '/update/entrance-form/$id',
-    getParentRoute: () => StudentRouteRoute,
+const StudentFormsSubjectChoiceCreateRoute =
+  StudentFormsSubjectChoiceCreateRouteImport.update({
+    id: '/subject-choice/create',
+    path: '/subject-choice/create',
+    getParentRoute: () => StudentFormsRouteRoute,
   } as any)
-const StudentRegisterSubjectChoiceFormIdRoute =
-  StudentRegisterSubjectChoiceFormIdRouteImport.update({
-    id: '/register/subject-choice-form/$id',
-    path: '/register/subject-choice-form/$id',
-    getParentRoute: () => StudentRouteRoute,
+const StudentFormsEntranceUpdateRoute =
+  StudentFormsEntranceUpdateRouteImport.update({
+    id: '/entrance/update',
+    path: '/entrance/update',
+    getParentRoute: () => StudentFormsRouteRoute,
   } as any)
-const StudentRegisterEntranceFormIdRoute =
-  StudentRegisterEntranceFormIdRouteImport.update({
-    id: '/register/entrance-form/$id',
-    path: '/register/entrance-form/$id',
-    getParentRoute: () => StudentRouteRoute,
+const StudentFormsEntranceCreateRoute =
+  StudentFormsEntranceCreateRouteImport.update({
+    id: '/entrance/create',
+    path: '/entrance/create',
+    getParentRoute: () => StudentFormsRouteRoute,
   } as any)
 const AdminAccountsAccountsEmailRoute =
   AdminAccountsAccountsEmailRouteImport.update({
@@ -176,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/student': typeof StudentRouteRouteWithChildren
+  '/student/forms': typeof StudentFormsRouteRouteWithChildren
   '/': typeof HomeIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -183,16 +178,14 @@ export interface FileRoutesByFullPath {
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
-  '/student/register/success': typeof StudentRegisterSuccessRoute
-  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
-  '/student/register/entrance-form/$id': typeof StudentRegisterEntranceFormIdRoute
-  '/student/register/subject-choice-form/$id': typeof StudentRegisterSubjectChoiceFormIdRoute
-  '/student/update/entrance-form/$id': typeof StudentUpdateEntranceFormIdRoute
+  '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/admin/forms/$id': typeof AdminFormsIdIndexRoute
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
@@ -202,6 +195,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteRouteWithChildren
+  '/student/forms': typeof StudentFormsRouteRouteWithChildren
   '/': typeof HomeIndexRoute
   '/admin': typeof AdminIndexRoute
   '/student': typeof StudentIndexRoute
@@ -209,16 +203,14 @@ export interface FileRoutesByTo {
   '/admin/staffs': typeof AdminAccountsStaffsRoute
   '/admin/students': typeof AdminAccountsStudentsRoute
   '/admin/shortcuts': typeof AdminDocumentsShortcutsRoute
-  '/student/register/success': typeof StudentRegisterSuccessRoute
-  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
-  '/student/register/entrance-form/$id': typeof StudentRegisterEntranceFormIdRoute
-  '/student/register/subject-choice-form/$id': typeof StudentRegisterSubjectChoiceFormIdRoute
-  '/student/update/entrance-form/$id': typeof StudentUpdateEntranceFormIdRoute
+  '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/admin/forms/$id': typeof AdminFormsIdIndexRoute
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
@@ -231,6 +223,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/student': typeof StudentRouteRouteWithChildren
+  '/student/forms': typeof StudentFormsRouteRouteWithChildren
   '/_home/': typeof HomeIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/student/': typeof StudentIndexRoute
@@ -238,16 +231,14 @@ export interface FileRoutesById {
   '/admin/_accounts/staffs': typeof AdminAccountsStaffsRoute
   '/admin/_accounts/students': typeof AdminAccountsStudentsRoute
   '/admin/_documents/shortcuts': typeof AdminDocumentsShortcutsRoute
-  '/student/register/success': typeof StudentRegisterSuccessRoute
-  '/student/update/success': typeof StudentUpdateSuccessRoute
   '/admin/forms/': typeof AdminFormsIndexRoute
   '/admin/profile/': typeof AdminProfileIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
-  '/student/register/entrance-form/$id': typeof StudentRegisterEntranceFormIdRoute
-  '/student/register/subject-choice-form/$id': typeof StudentRegisterSubjectChoiceFormIdRoute
-  '/student/update/entrance-form/$id': typeof StudentUpdateEntranceFormIdRoute
+  '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/admin/forms/$id/': typeof AdminFormsIdIndexRoute
   '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
@@ -261,6 +252,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/student'
+    | '/student/forms'
     | '/'
     | '/admin/'
     | '/student/'
@@ -268,16 +260,14 @@ export interface FileRouteTypes {
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
-    | '/student/register/success'
-    | '/student/update/success'
     | '/admin/forms'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
-    | '/student/register/entrance-form/$id'
-    | '/student/register/subject-choice-form/$id'
-    | '/student/update/entrance-form/$id'
+    | '/student/forms/entrance/create'
+    | '/student/forms/entrance/update'
+    | '/student/forms/subject-choice/create'
     | '/admin/forms/$id'
     | '/admin/forms/create'
     | '/admin/profile/create'
@@ -287,6 +277,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
+    | '/student/forms'
     | '/'
     | '/admin'
     | '/student'
@@ -294,16 +285,14 @@ export interface FileRouteTypes {
     | '/admin/staffs'
     | '/admin/students'
     | '/admin/shortcuts'
-    | '/student/register/success'
-    | '/student/update/success'
     | '/admin/forms'
     | '/admin/profile'
     | '/auth/change-password'
     | '/auth/login'
     | '/admin/accounts/$email'
-    | '/student/register/entrance-form/$id'
-    | '/student/register/subject-choice-form/$id'
-    | '/student/update/entrance-form/$id'
+    | '/student/forms/entrance/create'
+    | '/student/forms/entrance/update'
+    | '/student/forms/subject-choice/create'
     | '/admin/forms/$id'
     | '/admin/forms/create'
     | '/admin/profile/create'
@@ -315,6 +304,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/student'
+    | '/student/forms'
     | '/_home/'
     | '/admin/'
     | '/student/'
@@ -322,16 +312,14 @@ export interface FileRouteTypes {
     | '/admin/_accounts/staffs'
     | '/admin/_accounts/students'
     | '/admin/_documents/shortcuts'
-    | '/student/register/success'
-    | '/student/update/success'
     | '/admin/forms/'
     | '/admin/profile/'
     | '/auth/change-password/'
     | '/auth/login/'
     | '/admin/_accounts/accounts/$email'
-    | '/student/register/entrance-form/$id'
-    | '/student/register/subject-choice-form/$id'
-    | '/student/update/entrance-form/$id'
+    | '/student/forms/entrance/create'
+    | '/student/forms/entrance/update'
+    | '/student/forms/subject-choice/create'
     | '/admin/forms/$id/'
     | '/admin/forms/create/'
     | '/admin/profile/create/'
@@ -391,6 +379,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/forms': {
+      id: '/student/forms'
+      path: '/forms'
+      fullPath: '/student/forms'
+      preLoaderRoute: typeof StudentFormsRouteRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
     '/auth/login/': {
       id: '/auth/login/'
       path: '/login'
@@ -418,20 +413,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/forms'
       preLoaderRoute: typeof AdminFormsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/student/update/success': {
-      id: '/student/update/success'
-      path: '/update/success'
-      fullPath: '/student/update/success'
-      preLoaderRoute: typeof StudentUpdateSuccessRouteImport
-      parentRoute: typeof StudentRouteRoute
-    }
-    '/student/register/success': {
-      id: '/student/register/success'
-      path: '/register/success'
-      fullPath: '/student/register/success'
-      preLoaderRoute: typeof StudentRegisterSuccessRouteImport
-      parentRoute: typeof StudentRouteRoute
     }
     '/admin/_documents/shortcuts': {
       id: '/admin/_documents/shortcuts'
@@ -489,26 +470,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFormsIdIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/student/update/entrance-form/$id': {
-      id: '/student/update/entrance-form/$id'
-      path: '/update/entrance-form/$id'
-      fullPath: '/student/update/entrance-form/$id'
-      preLoaderRoute: typeof StudentUpdateEntranceFormIdRouteImport
-      parentRoute: typeof StudentRouteRoute
+    '/student/forms/subject-choice/create': {
+      id: '/student/forms/subject-choice/create'
+      path: '/subject-choice/create'
+      fullPath: '/student/forms/subject-choice/create'
+      preLoaderRoute: typeof StudentFormsSubjectChoiceCreateRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
     }
-    '/student/register/subject-choice-form/$id': {
-      id: '/student/register/subject-choice-form/$id'
-      path: '/register/subject-choice-form/$id'
-      fullPath: '/student/register/subject-choice-form/$id'
-      preLoaderRoute: typeof StudentRegisterSubjectChoiceFormIdRouteImport
-      parentRoute: typeof StudentRouteRoute
+    '/student/forms/entrance/update': {
+      id: '/student/forms/entrance/update'
+      path: '/entrance/update'
+      fullPath: '/student/forms/entrance/update'
+      preLoaderRoute: typeof StudentFormsEntranceUpdateRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
     }
-    '/student/register/entrance-form/$id': {
-      id: '/student/register/entrance-form/$id'
-      path: '/register/entrance-form/$id'
-      fullPath: '/student/register/entrance-form/$id'
-      preLoaderRoute: typeof StudentRegisterEntranceFormIdRouteImport
-      parentRoute: typeof StudentRouteRoute
+    '/student/forms/entrance/create': {
+      id: '/student/forms/entrance/create'
+      path: '/entrance/create'
+      fullPath: '/student/forms/entrance/create'
+      preLoaderRoute: typeof StudentFormsEntranceCreateRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
     }
     '/admin/_accounts/accounts/$email': {
       id: '/admin/_accounts/accounts/$email'
@@ -586,23 +567,29 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface StudentFormsRouteRouteChildren {
+  StudentFormsEntranceCreateRoute: typeof StudentFormsEntranceCreateRoute
+  StudentFormsEntranceUpdateRoute: typeof StudentFormsEntranceUpdateRoute
+  StudentFormsSubjectChoiceCreateRoute: typeof StudentFormsSubjectChoiceCreateRoute
+}
+
+const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
+  StudentFormsEntranceCreateRoute: StudentFormsEntranceCreateRoute,
+  StudentFormsEntranceUpdateRoute: StudentFormsEntranceUpdateRoute,
+  StudentFormsSubjectChoiceCreateRoute: StudentFormsSubjectChoiceCreateRoute,
+}
+
+const StudentFormsRouteRouteWithChildren =
+  StudentFormsRouteRoute._addFileChildren(StudentFormsRouteRouteChildren)
+
 interface StudentRouteRouteChildren {
+  StudentFormsRouteRoute: typeof StudentFormsRouteRouteWithChildren
   StudentIndexRoute: typeof StudentIndexRoute
-  StudentRegisterSuccessRoute: typeof StudentRegisterSuccessRoute
-  StudentUpdateSuccessRoute: typeof StudentUpdateSuccessRoute
-  StudentRegisterEntranceFormIdRoute: typeof StudentRegisterEntranceFormIdRoute
-  StudentRegisterSubjectChoiceFormIdRoute: typeof StudentRegisterSubjectChoiceFormIdRoute
-  StudentUpdateEntranceFormIdRoute: typeof StudentUpdateEntranceFormIdRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
+  StudentFormsRouteRoute: StudentFormsRouteRouteWithChildren,
   StudentIndexRoute: StudentIndexRoute,
-  StudentRegisterSuccessRoute: StudentRegisterSuccessRoute,
-  StudentUpdateSuccessRoute: StudentUpdateSuccessRoute,
-  StudentRegisterEntranceFormIdRoute: StudentRegisterEntranceFormIdRoute,
-  StudentRegisterSubjectChoiceFormIdRoute:
-    StudentRegisterSubjectChoiceFormIdRoute,
-  StudentUpdateEntranceFormIdRoute: StudentUpdateEntranceFormIdRoute,
 }
 
 const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
