@@ -38,7 +38,7 @@ function RouteComponent() {
     <>
       <title>Subject Choice Form</title>
 
-      <div className='flex justify-center pt-4'>
+      <div className='pt-4'>
         <CreateSubjectChoiceForm
           formDetails={formDetails}
           entranceForm={entranceForm}
