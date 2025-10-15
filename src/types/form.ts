@@ -4,8 +4,8 @@ export type TForm = {
   number: string
   code: string
   stampUrl: string | null
-  createdAt: Date
-  updatedAt: Date | null
+  createdAt: string
+  updatedAt: string | null
   open: boolean
 }
 
