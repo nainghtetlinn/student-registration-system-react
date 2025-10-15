@@ -8,13 +8,13 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty'
-import { EntranceFormDetails } from '@/features/student/components/entrance-form-details'
+import { EntranceFormDetails } from '@/features/student/forms/entrance/components/entrance-form-details'
 import { File } from 'lucide-react'
 
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { useGetOpenedForms } from '@/api/form/get-opened-forms'
-import { useGetEntranceForm } from '@/api/student/get-entrance-form'
+import { useGetEntranceForm } from '@/features/student/forms/entrance/api/get.api'
 
 export const Route = createFileRoute('/student/')({
   component: RouteComponent,
@@ -66,12 +66,7 @@ function RouteComponent() {
         </EmptyDescription>
         <EmptyContent>
           <Button asChild>
-            <Link
-              to='/student/register/entrance-form/$id'
-              params={{ id: openedFormsResult.data[0].id.toString() }}
-            >
-              Register
-            </Link>
+            <Link to='/student/forms/entrance/create'>Register</Link>
           </Button>
         </EmptyContent>
       </Empty>
