@@ -24,6 +24,7 @@ import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_doc
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/_accounts/students'
 import { Route as AdminAccountsStaffsRouteImport } from './routes/admin/_accounts/staffs'
 import { Route as AdminAccountsRegisterRouteImport } from './routes/admin/_accounts/register'
+import { Route as StudentFormsEntranceIndexRouteImport } from './routes/student/forms/entrance/index'
 import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/profile/update/index'
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/create/index'
@@ -111,6 +112,12 @@ const AdminAccountsRegisterRoute = AdminAccountsRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const StudentFormsEntranceIndexRoute =
+  StudentFormsEntranceIndexRouteImport.update({
+    id: '/entrance/',
+    path: '/entrance/',
+    getParentRoute: () => StudentFormsRouteRoute,
+  } as any)
 const AdminProfileUpdateIndexRoute = AdminProfileUpdateIndexRouteImport.update({
   id: '/profile/update/',
   path: '/profile/update/',
@@ -198,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
   '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
@@ -224,6 +232,7 @@ export interface FileRoutesByTo {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
   '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update': typeof AdminFormsIdUpdateIndexRoute
 }
@@ -253,6 +262,7 @@ export interface FileRoutesById {
   '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
+  '/student/forms/entrance/': typeof StudentFormsEntranceIndexRoute
   '/admin/forms/$id/confirm-closure/': typeof AdminFormsIdConfirmClosureIndexRoute
   '/admin/forms/$id/update/': typeof AdminFormsIdUpdateIndexRoute
 }
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/student/forms/entrance'
     | '/admin/forms/$id/confirm-closure'
     | '/admin/forms/$id/update'
   fileRoutesByTo: FileRoutesByTo
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/student/forms/entrance'
     | '/admin/forms/$id/confirm-closure'
     | '/admin/forms/$id/update'
   id:
@@ -337,6 +349,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create/'
     | '/admin/profile/create/'
     | '/admin/profile/update/'
+    | '/student/forms/entrance/'
     | '/admin/forms/$id/confirm-closure/'
     | '/admin/forms/$id/update/'
   fileRoutesById: FileRoutesById
@@ -454,6 +467,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/register'
       preLoaderRoute: typeof AdminAccountsRegisterRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/student/forms/entrance/': {
+      id: '/student/forms/entrance/'
+      path: '/entrance'
+      fullPath: '/student/forms/entrance'
+      preLoaderRoute: typeof StudentFormsEntranceIndexRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
     }
     '/admin/profile/update/': {
       id: '/admin/profile/update/'
@@ -592,6 +612,7 @@ interface StudentFormsRouteRouteChildren {
   StudentFormsEntranceUpdateRoute: typeof StudentFormsEntranceUpdateRoute
   StudentFormsSubjectChoiceCreateRoute: typeof StudentFormsSubjectChoiceCreateRoute
   StudentFormsSubjectChoiceUpdateRoute: typeof StudentFormsSubjectChoiceUpdateRoute
+  StudentFormsEntranceIndexRoute: typeof StudentFormsEntranceIndexRoute
 }
 
 const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
@@ -599,6 +620,7 @@ const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
   StudentFormsEntranceUpdateRoute: StudentFormsEntranceUpdateRoute,
   StudentFormsSubjectChoiceCreateRoute: StudentFormsSubjectChoiceCreateRoute,
   StudentFormsSubjectChoiceUpdateRoute: StudentFormsSubjectChoiceUpdateRoute,
+  StudentFormsEntranceIndexRoute: StudentFormsEntranceIndexRoute,
 }
 
 const StudentFormsRouteRouteWithChildren =

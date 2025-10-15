@@ -1,11 +1,11 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { UpdateEntranceForm } from '@/features/student/forms/entrance/components/update-entrance-form'
+import { EntranceFormDetails } from '@/features/student/forms/entrance/components/entrance-form-details'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 
-export const Route = createFileRoute('/student/forms/entrance/update')({
+export const Route = createFileRoute('/student/forms/entrance/')({
   component: RouteComponent,
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
@@ -26,7 +26,7 @@ function RouteComponent() {
       <title>Entrance Form</title>
 
       <div className='pt-4'>
-        <UpdateEntranceForm
+        <EntranceFormDetails
           formDetails={formDetails}
           formData={formData}
         />

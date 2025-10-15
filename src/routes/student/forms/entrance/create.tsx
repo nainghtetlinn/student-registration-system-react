@@ -1,5 +1,5 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { CreateEntranceForm } from '@/features/student/components/create-entrance-form'
+import { CreateEntranceForm } from '@/features/student/forms/entrance/components/create-entrance-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
