@@ -3,7 +3,7 @@ export type TForm = {
   academicYear: string
   number: string
   code: string
-  stampUrl: string
+  stampUrl: string | null
   createdAt: Date
   updatedAt: Date | null
   open: boolean
