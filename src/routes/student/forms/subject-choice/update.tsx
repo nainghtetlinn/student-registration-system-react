@@ -1,9 +1,10 @@
-import { getEntranceFormQuery } from '@/api/student/get-entrance-form'
-import { getSubjectChoiceFormQuery } from '@/api/student/get-subject-choice-form'
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { UpdateSubjectChoiceForm } from '@/features/student/components/update-subject-choice-form'
+import { UpdateSubjectChoiceForm } from '@/features/student/forms/subject-choice/components/update-subject-choice-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
+
+import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
+import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
 
 export const Route = createFileRoute('/student/forms/subject-choice/update')({
   component: RouteComponent,
