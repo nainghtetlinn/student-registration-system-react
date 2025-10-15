@@ -9,7 +9,7 @@ export const Stamp = ({
   id,
   className,
   ...props
-}: { url: string; id: string } & React.ComponentProps<'div'>) => {
+}: { url: string | null; id: string } & React.ComponentProps<'div'>) => {
   const { fileUrl, loading } = useGetFile(url, id)
 
   return (
