@@ -22,7 +22,7 @@ export function nrcObjectToString(nrc: TNrcSchema): string {
 
 export function nrcStringToObject(nrcString: string): TNrcSchema {
   const nrcPattern =
-    /^([1-9]|1[0-3])\/([A-Za-z]{1,6})\((N|E|P|T|Y|S)\)([0-9၀၁၂၃၄၅၆၇၈၉]{6})$/
+    /^([1-9]|1[0-3])\/([A-Za-z]{6,9})\((N|E|P|T|Y|S)\)([0-9၀၁၂၃၄၅၆၇၈၉]{6})$/
 
   const match = nrcString.match(nrcPattern)
 
