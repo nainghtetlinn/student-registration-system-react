@@ -31,28 +31,30 @@ export const EntranceFormDetails = ({
           variant='outline'
           size='icon'
         >
-          <Link
-            to='/student/forms/entrance/update'
-            params={{ id: formDetails.id.toString() }}
-          >
+          <Link to='/student/forms/entrance/update'>
             <Edit2 />
           </Link>
         </Button>
         <CardTitle className='text-2xl'>Entrance Form Details</CardTitle>
-        <CardDescription>{`${new Date().getFullYear()}-${new Date().getFullYear() + 1} ပညာသင်နှစ်`}</CardDescription>
+        <CardDescription>{`${formDetails.academicYear} ပညာသင်နှစ်`}</CardDescription>
       </CardHeader>
       <CardContent>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Academic Year'
             value={`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`}
           />
           <Info
-            label='Student Name (MM)'
+            label='Enrollment Number'
+            value={formData.student.enrollmentNumber}
+          />
+          <Info
+            label='Name (MM)'
             value={formData.student.nameMm}
           />
           <Info
-            label='Student Name (Eng)'
+            label='Name (Eng)'
             value={formData.student.nameEn}
           />
           <Info
@@ -79,42 +81,50 @@ export const EntranceFormDetails = ({
             label='Matriculation Department'
             value={formData.student.matriculationDepartment}
           />
+        </div>
+
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Father</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
-            label='Matriculation Roll Number'
-            value={formData.student.enrollmentNumber}
-          />
-          <Info
-            label='Father Name (MM)'
+            label='Name (MM)'
             value={formData.father.nameMm}
           />
           <Info
-            label='Father Name (Eng)'
+            label='Name (Eng)'
             value={formData.father.nameEn}
           />
           <Info
-            label='Father NRC'
+            label='NRC'
             value={nrcObjectToString(formData.father.nrc)}
           />
           <Info
-            label='Father Job'
+            label='Job'
             value={formData.father.job}
           />
+        </div>
+
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Mother</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
-            label='Mother Name (MM)'
+            label='Name (MM)'
             value={formData.mother.nameMm}
           />
           <Info
-            label='Mother Name (Eng)'
+            label='Name (Eng)'
             value={formData.mother.nameEn}
           />
           <Info
-            label='Mother NRC'
+            label='NRC'
             value={nrcObjectToString(formData.mother.nrc)}
           />
           <Info
-            label='Mother Job'
+            label='Job'
             value={formData.mother.job}
           />
+        </div>
+
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Contacts</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Address'
             value={formData.contact.address}
