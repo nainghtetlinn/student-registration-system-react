@@ -1,4 +1,3 @@
-import { Acknowledgement } from './acknowledgement'
 import { ContactsDetails } from './contacts-details'
 import { FatherDetails, MotherDetails } from './parents-details'
 import { StudentDetails } from './student-details'
@@ -28,13 +27,7 @@ export const steps: TStep<TEntranceFormSchema>[] = [
   {
     position: 4,
     title: '',
-    fields: ['contact'],
+    fields: ['contact', 'acknowledged'],
     component: <ContactsDetails />,
-  },
-  {
-    position: 5,
-    title: '',
-    fields: ['acknowledged', 'formId'],
-    component: <Acknowledgement />,
   },
 ]

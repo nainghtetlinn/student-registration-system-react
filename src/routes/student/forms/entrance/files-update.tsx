@@ -1,11 +1,11 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { UpdateEntranceForm } from '@/features/student/forms/entrance/components/update-entrance-form'
+import { UpdateFilesForm } from '@/features/student/forms/entrance/components/update-files-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 
-export const Route = createFileRoute('/student/forms/entrance/update')({
+export const Route = createFileRoute('/student/forms/entrance/files-update')({
   component: RouteComponent,
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
@@ -20,18 +20,18 @@ export const Route = createFileRoute('/student/forms/entrance/update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData } = Route.useLoaderData()
+  const { formDetails, files } = Route.useLoaderData()
 
   return (
     <>
       <title>Entrance Form</title>
 
       <div className='pt-4'>
-        <UpdateEntranceForm
+        <UpdateFilesForm
           formDetails={formDetails}
-          formData={formData}
+          files={files}
           onSuccess={() => {
-            navigate({ to: '/student/forms/entrance/files-update' })
+            navigate({ to: '/student' })
           }}
         />
       </div>

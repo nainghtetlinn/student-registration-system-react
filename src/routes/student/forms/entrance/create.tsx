@@ -23,6 +23,7 @@ export const Route = createFileRoute('/student/forms/entrance/create')({
 })
 
 function RouteComponent() {
+  const navigate = Route.useNavigate()
   const { formDetails } = Route.useLoaderData()
 
   return (
@@ -30,7 +31,12 @@ function RouteComponent() {
       <title>Entrance Form</title>
 
       <div className='pt-4'>
-        <CreateEntranceForm formDetails={formDetails} />
+        <CreateEntranceForm
+          formDetails={formDetails}
+          onSuccess={() => {
+            navigate({ to: '/student/forms/entrance/files-upload' })
+          }}
+        />
       </div>
     </>
   )

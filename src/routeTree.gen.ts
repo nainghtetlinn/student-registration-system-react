@@ -33,6 +33,8 @@ import { Route as AdminFormsIdIndexRouteImport } from './routes/admin/forms/$id/
 import { Route as StudentFormsSubjectChoiceUpdateRouteImport } from './routes/student/forms/subject-choice/update'
 import { Route as StudentFormsSubjectChoiceCreateRouteImport } from './routes/student/forms/subject-choice/create'
 import { Route as StudentFormsEntranceUpdateRouteImport } from './routes/student/forms/entrance/update'
+import { Route as StudentFormsEntranceFilesUploadRouteImport } from './routes/student/forms/entrance/files-upload'
+import { Route as StudentFormsEntranceFilesUpdateRouteImport } from './routes/student/forms/entrance/files-update'
 import { Route as StudentFormsEntranceCreateRouteImport } from './routes/student/forms/entrance/create'
 import { Route as AdminAccountsAccountsEmailRouteImport } from './routes/admin/_accounts/accounts.$email'
 import { Route as AdminFormsIdUpdateIndexRouteImport } from './routes/admin/forms/$id/update/index'
@@ -163,6 +165,18 @@ const StudentFormsEntranceUpdateRoute =
     path: '/entrance/update',
     getParentRoute: () => StudentFormsRouteRoute,
   } as any)
+const StudentFormsEntranceFilesUploadRoute =
+  StudentFormsEntranceFilesUploadRouteImport.update({
+    id: '/entrance/files-upload',
+    path: '/entrance/files-upload',
+    getParentRoute: () => StudentFormsRouteRoute,
+  } as any)
+const StudentFormsEntranceFilesUpdateRoute =
+  StudentFormsEntranceFilesUpdateRouteImport.update({
+    id: '/entrance/files-update',
+    path: '/entrance/files-update',
+    getParentRoute: () => StudentFormsRouteRoute,
+  } as any)
 const StudentFormsEntranceCreateRoute =
   StudentFormsEntranceCreateRouteImport.update({
     id: '/entrance/create',
@@ -205,6 +219,8 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
+  '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
   '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
@@ -233,6 +249,8 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginIndexRoute
   '/admin/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
+  '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
   '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
@@ -264,6 +282,8 @@ export interface FileRoutesById {
   '/auth/login/': typeof AuthLoginIndexRoute
   '/admin/_accounts/accounts/$email': typeof AdminAccountsAccountsEmailRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
+  '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
+  '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
   '/student/forms/subject-choice/create': typeof StudentFormsSubjectChoiceCreateRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
@@ -296,6 +316,8 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/admin/accounts/$email'
     | '/student/forms/entrance/create'
+    | '/student/forms/entrance/files-update'
+    | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
     | '/student/forms/subject-choice/create'
     | '/student/forms/subject-choice/update'
@@ -324,6 +346,8 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/admin/accounts/$email'
     | '/student/forms/entrance/create'
+    | '/student/forms/entrance/files-update'
+    | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
     | '/student/forms/subject-choice/create'
     | '/student/forms/subject-choice/update'
@@ -354,6 +378,8 @@ export interface FileRouteTypes {
     | '/auth/login/'
     | '/admin/_accounts/accounts/$email'
     | '/student/forms/entrance/create'
+    | '/student/forms/entrance/files-update'
+    | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
     | '/student/forms/subject-choice/create'
     | '/student/forms/subject-choice/update'
@@ -544,6 +570,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentFormsEntranceUpdateRouteImport
       parentRoute: typeof StudentFormsRouteRoute
     }
+    '/student/forms/entrance/files-upload': {
+      id: '/student/forms/entrance/files-upload'
+      path: '/entrance/files-upload'
+      fullPath: '/student/forms/entrance/files-upload'
+      preLoaderRoute: typeof StudentFormsEntranceFilesUploadRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
+    }
+    '/student/forms/entrance/files-update': {
+      id: '/student/forms/entrance/files-update'
+      path: '/entrance/files-update'
+      fullPath: '/student/forms/entrance/files-update'
+      preLoaderRoute: typeof StudentFormsEntranceFilesUpdateRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
+    }
     '/student/forms/entrance/create': {
       id: '/student/forms/entrance/create'
       path: '/entrance/create'
@@ -629,6 +669,8 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 
 interface StudentFormsRouteRouteChildren {
   StudentFormsEntranceCreateRoute: typeof StudentFormsEntranceCreateRoute
+  StudentFormsEntranceFilesUpdateRoute: typeof StudentFormsEntranceFilesUpdateRoute
+  StudentFormsEntranceFilesUploadRoute: typeof StudentFormsEntranceFilesUploadRoute
   StudentFormsEntranceUpdateRoute: typeof StudentFormsEntranceUpdateRoute
   StudentFormsSubjectChoiceCreateRoute: typeof StudentFormsSubjectChoiceCreateRoute
   StudentFormsSubjectChoiceUpdateRoute: typeof StudentFormsSubjectChoiceUpdateRoute
@@ -638,6 +680,8 @@ interface StudentFormsRouteRouteChildren {
 
 const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
   StudentFormsEntranceCreateRoute: StudentFormsEntranceCreateRoute,
+  StudentFormsEntranceFilesUpdateRoute: StudentFormsEntranceFilesUpdateRoute,
+  StudentFormsEntranceFilesUploadRoute: StudentFormsEntranceFilesUploadRoute,
   StudentFormsEntranceUpdateRoute: StudentFormsEntranceUpdateRoute,
   StudentFormsSubjectChoiceCreateRoute: StudentFormsSubjectChoiceCreateRoute,
   StudentFormsSubjectChoiceUpdateRoute: StudentFormsSubjectChoiceUpdateRoute,

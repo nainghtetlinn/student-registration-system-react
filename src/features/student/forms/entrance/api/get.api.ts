@@ -3,7 +3,7 @@ import type { TForm } from '@/types/form'
 import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import type { TEntranceFormSchema } from '../schema/entrance-form.schema'
-import type { TGetEntranceFormResponse } from '../types/get.type'
+import type { TFiles, TGetEntranceFormResponse } from '../types/get.type'
 
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
@@ -12,7 +12,7 @@ import { nrcStringToObject } from '@/lib/utils'
 
 const fromDto = (
   data: TGetEntranceFormResponse,
-): { formDetails: TForm; formData: TEntranceFormSchema } => {
+): { formDetails: TForm; formData: TEntranceFormSchema; files: TFiles } => {
   return {
     formDetails: data.formData,
     formData: {
@@ -47,6 +47,10 @@ const fromDto = (
         permanentPhoneNumber: data.permanentPhoneNumber,
       },
       acknowledged: false,
+    },
+    files: {
+      studentSignatureUrl: data.studentSignatureUrl,
+      studentPhotoUrl: data.studentPhotoUrl,
     },
   }
 }
