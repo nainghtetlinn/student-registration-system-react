@@ -6,13 +6,17 @@ import { useNavigate } from '@tanstack/react-router'
 
 import { useCreateEntranceForm } from '../api/create.api'
 
-export const CreateEntranceForm = ({ formDetails }: { formDetails: TForm }) => {
+export const CreateEntranceForm = ({
+  formDetails,
+  onSuccess,
+}: {
+  formDetails: TForm
+  onSuccess: () => void
+}) => {
   const navigate = useNavigate()
 
   const { mutate, isPending, error } = useCreateEntranceForm({
-    onSuccess: () => {
-      navigate({ to: '/student/forms/subject-choice/create' })
-    },
+    onSuccess,
     onError: (error) => {
       if (error?.response?.status === 409) {
         navigate({ to: '/student/forms/subject-choice/create' })
