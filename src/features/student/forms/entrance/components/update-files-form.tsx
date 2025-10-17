@@ -19,7 +19,7 @@ import type { TFiles } from '../types/get.type'
 
 import { useRef, useState } from 'react'
 
-import { useGetFile } from '../api/get-file'
+import { useGetFile } from '../api/get-file.api'
 import { useUploadPhoto } from '../api/upload-photo.api'
 import { useUploadSignature } from '../api/upload-signature.api'
 
