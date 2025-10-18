@@ -43,7 +43,7 @@ export const EntranceFormDetails = ({
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Academic Year'
-            value={`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`}
+            value={formDetails.academicYear}
           />
           <Info
             label='Enrollment Number'
@@ -58,16 +58,16 @@ export const EntranceFormDetails = ({
             value={formData.student.nameEn}
           />
           <Info
-            label='NRC'
-            value={nrcObjectToString(formData.student.nrc)}
-          />
-          <Info
             label='Ethnicity'
             value={formData.student.ethnicity}
           />
           <Info
             label='Religion'
             value={formData.student.religion}
+          />
+          <Info
+            label='NRC'
+            value={nrcObjectToString(formData.student.nrc)}
           />
           <Info
             label='Date of Birth'
