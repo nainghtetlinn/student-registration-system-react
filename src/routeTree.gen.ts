@@ -30,6 +30,7 @@ import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/prof
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/create/index'
 import { Route as AdminFormsIdIndexRouteImport } from './routes/admin/forms/$id/index'
+import { Route as StudentRegisterRegisterFormIdRouteImport } from './routes/student/register/register-form/$id'
 import { Route as StudentFormsSubjectChoiceUpdateRouteImport } from './routes/student/forms/subject-choice/update'
 import { Route as StudentFormsSubjectChoiceFilesUploadRouteImport } from './routes/student/forms/subject-choice/files-upload'
 import { Route as StudentFormsSubjectChoiceFilesUpdateRouteImport } from './routes/student/forms/subject-choice/files-update'
@@ -149,6 +150,12 @@ const AdminFormsIdIndexRoute = AdminFormsIdIndexRouteImport.update({
   path: '/forms/$id/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const StudentRegisterRegisterFormIdRoute =
+  StudentRegisterRegisterFormIdRouteImport.update({
+    id: '/register/register-form/$id',
+    path: '/register/register-form/$id',
+    getParentRoute: () => StudentRouteRoute,
+  } as any)
 const StudentFormsSubjectChoiceUpdateRoute =
   StudentFormsSubjectChoiceUpdateRouteImport.update({
     id: '/subject-choice/update',
@@ -240,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/student/forms/subject-choice/files-update': typeof StudentFormsSubjectChoiceFilesUpdateRoute
   '/student/forms/subject-choice/files-upload': typeof StudentFormsSubjectChoiceFilesUploadRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
+  '/student/register/register-form/$id': typeof StudentRegisterRegisterFormIdRoute
   '/admin/forms/$id': typeof AdminFormsIdIndexRoute
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
@@ -272,6 +280,7 @@ export interface FileRoutesByTo {
   '/student/forms/subject-choice/files-update': typeof StudentFormsSubjectChoiceFilesUpdateRoute
   '/student/forms/subject-choice/files-upload': typeof StudentFormsSubjectChoiceFilesUploadRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
+  '/student/register/register-form/$id': typeof StudentRegisterRegisterFormIdRoute
   '/admin/forms/$id': typeof AdminFormsIdIndexRoute
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
@@ -307,6 +316,7 @@ export interface FileRoutesById {
   '/student/forms/subject-choice/files-update': typeof StudentFormsSubjectChoiceFilesUpdateRoute
   '/student/forms/subject-choice/files-upload': typeof StudentFormsSubjectChoiceFilesUploadRoute
   '/student/forms/subject-choice/update': typeof StudentFormsSubjectChoiceUpdateRoute
+  '/student/register/register-form/$id': typeof StudentRegisterRegisterFormIdRoute
   '/admin/forms/$id/': typeof AdminFormsIdIndexRoute
   '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
@@ -343,6 +353,7 @@ export interface FileRouteTypes {
     | '/student/forms/subject-choice/files-update'
     | '/student/forms/subject-choice/files-upload'
     | '/student/forms/subject-choice/update'
+    | '/student/register/register-form/$id'
     | '/admin/forms/$id'
     | '/admin/forms/create'
     | '/admin/profile/create'
@@ -375,6 +386,7 @@ export interface FileRouteTypes {
     | '/student/forms/subject-choice/files-update'
     | '/student/forms/subject-choice/files-upload'
     | '/student/forms/subject-choice/update'
+    | '/student/register/register-form/$id'
     | '/admin/forms/$id'
     | '/admin/forms/create'
     | '/admin/profile/create'
@@ -409,6 +421,7 @@ export interface FileRouteTypes {
     | '/student/forms/subject-choice/files-update'
     | '/student/forms/subject-choice/files-upload'
     | '/student/forms/subject-choice/update'
+    | '/student/register/register-form/$id'
     | '/admin/forms/$id/'
     | '/admin/forms/create/'
     | '/admin/profile/create/'
@@ -574,6 +587,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/forms/$id'
       preLoaderRoute: typeof AdminFormsIdIndexRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/student/register/register-form/$id': {
+      id: '/student/register/register-form/$id'
+      path: '/register/register-form/$id'
+      fullPath: '/student/register/register-form/$id'
+      preLoaderRoute: typeof StudentRegisterRegisterFormIdRouteImport
+      parentRoute: typeof StudentRouteRoute
     }
     '/student/forms/subject-choice/update': {
       id: '/student/forms/subject-choice/update'
@@ -741,11 +761,13 @@ const StudentFormsRouteRouteWithChildren =
 interface StudentRouteRouteChildren {
   StudentFormsRouteRoute: typeof StudentFormsRouteRouteWithChildren
   StudentIndexRoute: typeof StudentIndexRoute
+  StudentRegisterRegisterFormIdRoute: typeof StudentRegisterRegisterFormIdRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
   StudentFormsRouteRoute: StudentFormsRouteRouteWithChildren,
   StudentIndexRoute: StudentIndexRoute,
+  StudentRegisterRegisterFormIdRoute: StudentRegisterRegisterFormIdRoute,
 }
 
 const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
