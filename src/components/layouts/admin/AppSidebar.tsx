@@ -9,47 +9,61 @@ import {
 } from '@/components/ui/sidebar'
 import {
   ChartPie,
-  File,
-  FilePlus2,
+  Files,
+  PlusCircle,
   SquareSlash,
   User2,
   UserRoundCog,
-  UserRoundPlus,
 } from 'lucide-react'
 import { AppSidebarFooter } from './AppSidebarFooter'
 import { AppSidebarGroup } from './AppSidebarGroup'
 
-import { paths } from '@/config/paths'
+import { useUser } from '@/api/lib/auth'
 
 const contents = {
   accounts: [
     {
-      name: 'Staffs',
-      href: paths.admin.staffs.getHref(),
+      name: 'Accounts',
+      href: '/admin/accounts',
+      icon: UserRoundCog,
+    },
+    {
+      name: 'Student Affairs',
+      href: '/admin/accounts/student-affairs',
+      icon: UserRoundCog,
+    },
+    {
+      name: 'Finances',
+      href: '/admin/accounts/finances',
+      icon: UserRoundCog,
+    },
+    {
+      name: 'Deans',
+      href: '/admin/accounts/deans',
       icon: UserRoundCog,
     },
     {
       name: 'Students',
-      href: paths.admin.students.getHref(),
+      href: '/admin/accounts/students',
       icon: User2,
     },
     {
       name: 'Register',
-      href: paths.admin.register.getHref(),
-      icon: UserRoundPlus,
+      href: '/admin/accounts/register',
+      icon: PlusCircle,
     },
   ],
 
   forms: [
     {
       name: 'Forms',
-      href: paths.admin.forms.root.getHref(),
-      icon: File,
+      href: '/admin/forms',
+      icon: Files,
     },
     {
       name: 'Create',
-      href: paths.admin.forms.create.getHref(),
-      icon: FilePlus2,
+      href: '/admin/forms/create',
+      icon: PlusCircle,
     },
   ],
 
@@ -64,7 +78,7 @@ const contents = {
   documents: [
     {
       name: 'Shortcuts',
-      href: paths.admin.shortcuts.getHref(),
+      href: '/admin/shortcuts',
       icon: SquareSlash,
     },
   ],
@@ -73,6 +87,8 @@ const contents = {
 export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
+  const { data: user } = useUser()
+
   return (
     <Sidebar
       collapsible='offcanvas'
@@ -95,14 +111,18 @@ export const AppSidebar = ({
       </SidebarHeader>
 
       <SidebarContent>
-        <AppSidebarGroup
-          label='Accounts'
-          items={contents.accounts}
-        />
-        <AppSidebarGroup
-          label='Forms'
-          items={contents.forms}
-        />
+        {user?.role === 'Admin' && (
+          <AppSidebarGroup
+            label='Accounts'
+            items={contents.accounts}
+          />
+        )}
+        {user?.role === 'Admin' && (
+          <AppSidebarGroup
+            label='Forms'
+            items={contents.forms}
+          />
+        )}
         <AppSidebarGroup
           label='Management'
           items={contents.management}

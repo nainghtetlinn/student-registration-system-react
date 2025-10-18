@@ -5,18 +5,16 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { getAllAccounts } from '@/api/admin/get-all-accounts'
-import { paths } from '@/config/paths'
 
-export const Route = createFileRoute('/admin/_accounts/accounts/$email')({
+export const Route = createFileRoute('/admin/accounts/$email')({
   component: RouteComponent,
   pendingComponent: () => <Pending />,
   beforeLoad: ({ params }) => {
     const ok = z.email().safeParse(decodeURIComponent(params.email)).success
-    if (!ok) throw redirect({ to: paths.admin.root.getHref() })
+    if (!ok) throw redirect({ to: '/admin' })
   },
   loader: async ({ context, params }) => {
-    const qc = context.queryClient
-    const details = await qc.ensureQueryData({
+    const details = await context.queryClient.ensureQueryData({
       queryKey: ['accounts', 'details', params.email],
       queryFn: async () => {
         const response = await getAllAccounts({ keyword: params.email })

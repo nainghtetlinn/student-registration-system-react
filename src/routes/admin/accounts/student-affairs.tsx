@@ -1,18 +1,19 @@
 import { AccountsListTable } from '@/features/admin/components/accounts-list-table'
+
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/admin/_accounts/students')({
+export const Route = createFileRoute('/admin/accounts/student-affairs')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   return (
     <>
-      <title>Admin | Students</title>
+      <title>Student Affairs</title>
 
       <AccountsListTable
-        queryKey={['students']}
-        search={{ role: 'Student' }}
+        queryKey={['accounts', 'student-affair']}
+        search={{ role: 'Student Affair' }}
       />
     </>
   )
