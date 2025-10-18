@@ -1,13 +1,11 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { UploadFilesForm } from '@/features/student/forms/registration/components/upload-files-form'
+import { RulesForm } from '@/features/student/forms/registration/components/rules-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getRegistrationFormQuery } from '@/features/student/forms/registration/api/get.api'
+import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
 
-export const Route = createFileRoute(
-  '/student/forms/registration/files-upload',
-)({
+export const Route = createFileRoute('/student/forms/registration/rules')({
   component: RouteComponent,
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
@@ -16,7 +14,11 @@ export const Route = createFileRoute(
     })
   },
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(getRegistrationFormQuery())
+    const openedForms = await context.queryClient.ensureQueryData(
+      getOpenedFormsQuery(),
+    )
+    if (openedForms.length === 0) throw new Error('There is no opened form.')
+    return { formDetails: openedForms[0] }
   },
 })
 
@@ -26,15 +28,13 @@ function RouteComponent() {
 
   return (
     <>
-      <title>Registration Form</title>
+      <title>Rules</title>
 
       <div className='pt-4'>
-        <UploadFilesForm
+        <RulesForm
           formDetails={formDetails}
           onSuccess={() => {
-            navigate({
-              to: '/student/forms/registration/rules',
-            })
+            navigate({ to: '/student' })
           }}
         />
       </div>
