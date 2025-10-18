@@ -1,7 +1,7 @@
 import { SubjectChoiceForm } from './ui'
 
 import type { TForm } from '@/types/form'
-import type { TEntranceFormSchema } from '../../entrance/schema/entrance-form.schema'
+import type { TSubjectChoiceFormSchema } from '../schema/subject-choice-form.schema'
 
 import { useNavigate } from '@tanstack/react-router'
 
@@ -9,11 +9,11 @@ import { useCreateSubjectChoiceForm } from '../api/create.api'
 
 export const CreateSubjectChoiceForm = ({
   formDetails,
-  entranceForm,
+  defaultValues,
   onSuccess,
 }: {
   formDetails: TForm
-  entranceForm: TEntranceFormSchema
+  defaultValues: TSubjectChoiceFormSchema
   onSuccess: () => void
 }) => {
   const navigate = useNavigate()
@@ -30,7 +30,7 @@ export const CreateSubjectChoiceForm = ({
   return (
     <SubjectChoiceForm
       formDetails={formDetails}
-      entranceForm={entranceForm}
+      defaultValues={defaultValues}
       isPending={isPending}
       errors={error?.response?.data.data || null}
       onSubmit={mutate}

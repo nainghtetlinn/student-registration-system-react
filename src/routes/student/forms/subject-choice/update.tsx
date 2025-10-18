@@ -22,7 +22,7 @@ export const Route = createFileRoute('/student/forms/subject-choice/update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData, entranceForm } = Route.useLoaderData()
+  const { formDetails, formData } = Route.useLoaderData()
 
   return (
     <>
@@ -32,7 +32,6 @@ function RouteComponent() {
         <UpdateSubjectChoiceForm
           formDetails={formDetails}
           formData={formData}
-          entranceForm={entranceForm}
           onSuccess={() => {
             navigate({ to: '/student/forms/subject-choice/files-update' })
           }}

@@ -17,7 +17,6 @@ import {
 import { Spinner } from '@/components/ui/spinner'
 
 import type { TForm } from '@/types/form'
-import type { TEntranceFormSchema } from '../../../entrance/schema/entrance-form.schema'
 import type { TSubjectChoiceFormSchema } from '../../schema/subject-choice-form.schema'
 import type { TSubjectChoiceFormError } from '../../types/error.type'
 
@@ -31,16 +30,14 @@ import { steps } from './steps'
 
 type Props = {
   formDetails: TForm
-  entranceForm: TEntranceFormSchema
   isPending: boolean
   errors: TSubjectChoiceFormError | null
   onSubmit: (data: TSubjectChoiceFormSchema) => void
-  defaultValues?: TSubjectChoiceFormSchema
+  defaultValues: TSubjectChoiceFormSchema
 }
 
 export const SubjectChoiceForm = ({
   formDetails,
-  entranceForm,
   isPending,
   errors,
   onSubmit,
@@ -50,57 +47,7 @@ export const SubjectChoiceForm = ({
 
   const form = useForm({
     resolver: zodResolver(subjectChoiceFormSchema),
-    defaultValues: defaultValues ?? {
-      student: {
-        enrollmentNumber: entranceForm.student.enrollmentNumber,
-        name: entranceForm.student.nameEn,
-        otherName: '',
-        nrc: entranceForm.student.nrc,
-        ethnicity: entranceForm.student.ethnicity,
-        religion: entranceForm.student.religion,
-        dob: entranceForm.student.dob,
-        phoneNumber: entranceForm.contact.phoneNumber,
-        pob: '',
-      },
-      father: {
-        name: entranceForm.father.nameEn,
-        otherName: '',
-        nrc: entranceForm.father.nrc,
-        ethnicity: '',
-        religion: '',
-        pob: '',
-        dob: '' as unknown as Date,
-        phoneNumber: '',
-        job: entranceForm.father.job,
-        address: '',
-      },
-      mother: {
-        name: entranceForm.mother.nameEn,
-        otherName: '',
-        nrc: entranceForm.mother.nrc,
-        ethnicity: '',
-        religion: '',
-        pob: '',
-        dob: '' as unknown as Date,
-        phoneNumber: '',
-        job: entranceForm.mother.job,
-        address: '',
-      },
-      matriculation: {
-        rollNo: '',
-        year: entranceForm.student.matriculationPassedYear,
-        department: entranceForm.student.matriculationDepartment,
-        myanmar: '' as unknown as number,
-        english: '' as unknown as number,
-        mathematic: '' as unknown as number,
-        chemistry: '' as unknown as number,
-        physics: '' as unknown as number,
-        other: '' as unknown as number,
-      },
-      majorChoices: [],
-      formId: formDetails.id,
-      acknowledged: false,
-    },
+    defaultValues,
   })
 
   useEffect(() => {
