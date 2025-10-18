@@ -45,7 +45,13 @@ function RouteComponent() {
     staleTime: Infinity,
   })
 
-  if (openedFormsResult.isPending) return <FormSkeleton />
+  if (
+    openedFormsResult.isPending ||
+    entranceFormResult.isPending ||
+    subjectChoiceFormResult.isPending ||
+    registrationFormResult.isPending
+  )
+    return <FormSkeleton />
 
   if (!openedFormsResult.data)
     return (
@@ -68,94 +74,91 @@ function RouteComponent() {
       </Empty>
     )
 
+  if (!entranceFormResult.data)
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant='icon'>
+            <File />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>No entrance form found</EmptyTitle>
+        <EmptyDescription>
+          You haven&apos;t created or submitted an entrance form yet.
+        </EmptyDescription>
+        <EmptyContent>
+          <Button asChild>
+            <Link to='/student/forms/entrance/create'>
+              Submit entrance form
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
+    )
+
+  if (!subjectChoiceFormResult.data)
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant='icon'>
+            <File />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>No subject choice form found</EmptyTitle>
+        <EmptyDescription>
+          You haven&apos;t created or submitted an subject choice form yet.
+        </EmptyDescription>
+        <EmptyContent>
+          <Button asChild>
+            <Link to='/student/forms/subject-choice/create'>
+              Submit subject choice form
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
+    )
+
+  if (!registrationFormResult.data)
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant='icon'>
+            <File />
+          </EmptyMedia>
+        </EmptyHeader>
+        <EmptyTitle>No registration form found</EmptyTitle>
+        <EmptyDescription>
+          You haven&apos;t created or submitted an registration form yet.
+        </EmptyDescription>
+        <EmptyContent>
+          <Button asChild>
+            <Link to='/student/forms/registration/create'>
+              Submit registration form
+            </Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
+    )
+
   return (
     <div>
       <div className='pt-4'>
-        {entranceFormResult.isPending ? (
-          <FormSkeleton />
-        ) : entranceFormResult.data ? (
-          <EntranceFormDetails
-            formDetails={entranceFormResult.data.formDetails}
-            formData={entranceFormResult.data.formData}
-          />
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant='icon'>
-                <File />
-              </EmptyMedia>
-            </EmptyHeader>
-            <EmptyTitle>No entrance form found</EmptyTitle>
-            <EmptyDescription>
-              You haven&apos;t created or submitted an entrance form yet.
-            </EmptyDescription>
-            <EmptyContent>
-              <Button asChild>
-                <Link to='/student/forms/entrance/create'>
-                  Submit entrance form
-                </Link>
-              </Button>
-            </EmptyContent>
-          </Empty>
-        )}
+        <EntranceFormDetails
+          formDetails={entranceFormResult.data.formDetails}
+          formData={entranceFormResult.data.formData}
+        />
       </div>
       <div className='pt-4'>
-        {subjectChoiceFormResult.isPending ? (
-          <FormSkeleton />
-        ) : subjectChoiceFormResult.data ? (
-          <SubjectChoiceFormDetails
-            formDetails={subjectChoiceFormResult.data.formDetails}
-            formData={subjectChoiceFormResult.data.formData}
-          />
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant='icon'>
-                <File />
-              </EmptyMedia>
-            </EmptyHeader>
-            <EmptyTitle>No subject choice form found</EmptyTitle>
-            <EmptyDescription>
-              You haven&apos;t created or submitted an subject choice form yet.
-            </EmptyDescription>
-            <EmptyContent>
-              <Button asChild>
-                <Link to='/student/forms/subject-choice/create'>
-                  Submit subject choice form
-                </Link>
-              </Button>
-            </EmptyContent>
-          </Empty>
-        )}
+        <SubjectChoiceFormDetails
+          formDetails={subjectChoiceFormResult.data.formDetails}
+          formData={subjectChoiceFormResult.data.formData}
+        />
       </div>
       <div className='pt-4'>
-        {registrationFormResult.isPending ? (
-          <FormSkeleton />
-        ) : registrationFormResult.data ? (
-          <RegistrationFormDetails
-            formDetails={registrationFormResult.data.formDetails}
-            formData={registrationFormResult.data.formData}
-          />
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant='icon'>
-                <File />
-              </EmptyMedia>
-            </EmptyHeader>
-            <EmptyTitle>No registration form found</EmptyTitle>
-            <EmptyDescription>
-              You haven&apos;t created or submitted an registration form yet.
-            </EmptyDescription>
-            <EmptyContent>
-              <Button asChild>
-                <Link to='/student/forms/registration/create'>
-                  Submit registration form
-                </Link>
-              </Button>
-            </EmptyContent>
-          </Empty>
-        )}
+        <RegistrationFormDetails
+          formDetails={registrationFormResult.data.formDetails}
+          formData={registrationFormResult.data.formData}
+        />
       </div>
     </div>
   )
