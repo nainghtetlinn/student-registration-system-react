@@ -25,9 +25,9 @@ export type TEntranceForm = {
 
 export type TSubjectChoiceForm = {
   formId: number
-  studentNickname?: string
-  fatherNickname?: string
-  motherNickname?: string
+  studentNickname: string
+  fatherNickname: string
+  motherNickname: string
   fatherEthnicity: string
   motherEthnicity: string
   fatherReligion: string
@@ -72,4 +72,11 @@ export type TSubjectChoiceForm = {
     majorName: string
     priorityScore: number
   }[]
+}
+
+export type TRegistrationForm = {
+  formId: number
+  fatherDeathDate: string | null
+  motherDeathDate: string | null
+  siblings: { name: string; nrc: string; job: string; address: string }[]
 }

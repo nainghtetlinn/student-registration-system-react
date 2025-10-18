@@ -1,15 +1,16 @@
 import { NrcInput } from '@/components/nrc-input'
 import { Button } from '@/components/ui/button'
-import { FormInputField } from '@/components/ui/form-fields'
+import { FormCheckboxField, FormInputField } from '@/components/ui/form-fields'
 import { Trash2 } from 'lucide-react'
+
+import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
 
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { nrcDefaults } from '@/lib/schema'
-import { type TRegisterFormSchema } from '../../schemas/register-form-schema'
 
 export const SiblingsDetails = () => {
-  const form = useFormContext<TRegisterFormSchema>()
+  const form = useFormContext<TRegistrationFormSchema>()
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -75,6 +76,12 @@ export const SiblingsDetails = () => {
       >
         Add Sibling
       </Button>
+
+      <FormCheckboxField
+        control={form.control}
+        name='acknowledged'
+        label='အထက်ပါအချက်များမှန်ကန်ကြောင်းတာဝန်ယူပါသည်။'
+      />
     </div>
   )
 }

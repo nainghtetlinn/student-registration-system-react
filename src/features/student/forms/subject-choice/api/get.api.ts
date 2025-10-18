@@ -4,6 +4,7 @@ import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import type { TSubjectChoiceFormSchema } from '../schema/subject-choice-form.schema'
 import type { TFiles, TGetSubjectChoiceFormResponse } from '../types/get.type'
+import type { TEntranceFormSchema } from '@/features/student/forms/entrance/schema/entrance-form.schema'
 
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
@@ -16,6 +17,7 @@ const fromDto = (
   formDetails: TForm
   formData: TSubjectChoiceFormSchema
   files: TFiles
+  entranceForm: TEntranceFormSchema
 } => {
   return {
     formDetails: data.formData,
@@ -76,6 +78,39 @@ const fromDto = (
       guardianName: data.guardianName,
       guardianSginatureUrl: data.guardianSginatureUrl,
       guardianSignatureDate: data.guardianSignatureDate,
+    },
+    entranceForm: {
+      formId: data.formData.id,
+      student: {
+        nameEn: data.studentNameEng,
+        nameMm: data.studentNameMm,
+        ethnicity: data.studentEthnicity,
+        religion: data.studentReligion,
+        nrc: nrcStringToObject(data.studentNrc),
+        dob: new Date(data.studentDob),
+        matriculationPassedYear: data.matriculationPassedYear,
+        matriculationDepartment: data.department,
+        enrollmentNumber: data.enrollmentNumber,
+      },
+      father: {
+        nameEn: data.fatherNameEng,
+        nameMm: data.fatherNameMm,
+        nrc: nrcStringToObject(data.fatherNrc),
+        job: data.fatherJob,
+      },
+      mother: {
+        nameEn: data.motherNameEng,
+        nameMm: data.motherNameMm,
+        nrc: nrcStringToObject(data.motherNrc),
+        job: data.motherJob,
+      },
+      contact: {
+        address: '',
+        phoneNumber: '',
+        permanentAddress: '',
+        permanentPhoneNumber: '',
+      },
+      acknowledged: false,
     },
   }
 }

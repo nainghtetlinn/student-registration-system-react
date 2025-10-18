@@ -2,12 +2,12 @@ import { DobPicker } from '@/components/dob-picker'
 import { NrcInput } from '@/components/nrc-input'
 import { FormInputField } from '@/components/ui/form-fields'
 
+import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
+
 import { useFormContext } from 'react-hook-form'
 
-import { type TRegisterFormSchema } from '../../schemas/register-form-schema'
-
 export const FatherDetails = () => {
-  const form = useFormContext<TRegisterFormSchema>()
+  const form = useFormContext<TRegistrationFormSchema>()
 
   return (
     <div className='min-h-[550px] space-y-4'>
@@ -74,7 +74,7 @@ export const FatherDetails = () => {
   )
 }
 export const MotherDetails = () => {
-  const form = useFormContext<TRegisterFormSchema>()
+  const form = useFormContext<TRegistrationFormSchema>()
 
   return (
     <div className='min-h-[550px] space-y-4'>

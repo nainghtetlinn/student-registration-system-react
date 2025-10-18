@@ -1,20 +1,21 @@
-import { DropPhoto, type TDropPhoto } from '@/components/drop-photo'
+import { DropPhoto } from '@/components/drop-photo'
 import { Button } from '@/components/ui/button'
 import { FormCheckboxField } from '@/components/ui/form-fields'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Trash2 } from 'lucide-react'
 
+import type { TDropPhoto } from '@/components/drop-photo'
+import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
+
 import { useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
-
-import { type TRegisterFormSchema } from '../../schemas/register-form-schema'
 
 export const Acknowledgement = () => {
   const photoRef = useRef<TDropPhoto>(null)
   const signRef = useRef<TDropPhoto>(null)
   const parentSignRef = useRef<TDropPhoto>(null)
-  const form = useFormContext<TRegisterFormSchema>()
+  const form = useFormContext<TRegistrationFormSchema>()
 
   const onDrop = (file: File) => {
     console.log(file)
