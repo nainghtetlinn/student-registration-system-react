@@ -35,7 +35,7 @@ function RouteComponent() {
           formDetails={formDetails}
           studentName={formData.student.name}
           onSuccess={() => {
-            navigate({ to: '/student' })
+            navigate({ to: '/student/forms/registration/create' })
           }}
         />
       </div>

@@ -3,7 +3,6 @@ import { UpdateSubjectChoiceForm } from '@/features/student/forms/subject-choice
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
 
 export const Route = createFileRoute('/student/forms/subject-choice/update')({
@@ -15,12 +14,9 @@ export const Route = createFileRoute('/student/forms/subject-choice/update')({
     })
   },
   loader: async ({ context }) => {
-    const { formData: entranceForm } =
-      await context.queryClient.ensureQueryData(getEntranceFormQuery())
-    const { formDetails, formData } = await context.queryClient.ensureQueryData(
+    return await context.queryClient.ensureQueryData(
       getSubjectChoiceFormQuery(),
     )
-    return { formDetails, formData, entranceForm }
   },
 })
 
