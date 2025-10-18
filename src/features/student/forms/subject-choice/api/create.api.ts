@@ -17,9 +17,9 @@ const toDto = (
   data: TSubjectChoiceFormSchema,
 ): TCreateSubjectChoiceFormRequest => ({
   formId: data.formId,
-  studentNickname: data.student.otherName,
-  fatherNickname: data.father.otherName,
-  motherNickname: data.mother.otherName,
+  studentNickname: data.student.otherName || '',
+  fatherNickname: data.father.otherName || '',
+  motherNickname: data.mother.otherName || '',
   fatherEthnicity: data.father.ethnicity,
   motherEthnicity: data.mother.ethnicity,
   fatherReligion: data.father.religion,
