@@ -1,3 +1,4 @@
+import { Footer } from '@/components/layouts/shared/footer'
 import { Header } from '@/components/layouts/shared/header'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -10,11 +11,10 @@ export const Route = createFileRoute('/_home/')({
 
 function App() {
   return (
-    <div className='min-h-screen'>
+    <div>
       <Header />
 
-      {/* Hero Section */}
-      <main className='flex flex-1 flex-col items-center justify-center px-4 text-center'>
+      <main className='flex h-[80vh] flex-col items-center justify-center px-4 text-center'>
         <Card className='w-full max-w-2xl bg-white/80 shadow-lg'>
           <CardContent className='py-10'>
             <h1 className='mb-4 text-4xl font-extrabold text-blue-800 md:text-5xl'>
@@ -35,11 +35,7 @@ function App() {
         </Card>
       </main>
 
-      {/* Footer */}
-      <footer className='bg-white py-4 text-center text-sm text-gray-500 shadow-inner'>
-        &copy; {new Date().getFullYear()} Technological University Taunggyi. All
-        rights reserved.
-      </footer>
+      <Footer />
     </div>
   )
 }

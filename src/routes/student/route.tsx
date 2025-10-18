@@ -1,10 +1,10 @@
+import { Footer } from '@/components/layouts/shared/footer'
+import { Header } from '@/components/layouts/shared/header'
 import { Pending } from '@/components/layouts/shared/pending'
 
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { getUserQuery } from '@/api/lib/auth'
-import { Header } from '@/components/layouts/shared/header'
-import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/student')({
   pendingComponent: Pending,
@@ -31,13 +31,16 @@ export const Route = createFileRoute('/student')({
 
     if (shouldRedirect) {
       throw redirect({
-        to: paths.auth.login.getHref(location.href),
+        to: '/auth/login',
+        search: {
+          redirect: location.href,
+        },
       })
     }
 
     if (user?.role.toLowerCase() !== 'student') {
       throw redirect({
-        to: paths.home.getHref(),
+        to: '/',
       })
     }
   },
@@ -48,6 +51,7 @@ function RouteComponent() {
     <div>
       <Header />
       <Outlet />
+      <Footer />
     </div>
   )
 }

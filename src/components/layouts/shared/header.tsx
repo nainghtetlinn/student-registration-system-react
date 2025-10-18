@@ -16,7 +16,7 @@ import { UserAvatar } from '@/components/user-avatar'
 import { LogIn, LogOut, Menu, MonitorCog, Moon, Sun } from 'lucide-react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useRouter } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 
 import { useLogout } from '@/api/lib/auth'
@@ -73,15 +73,25 @@ export const Header = () => {
         <div className='hidden items-center gap-2 md:flex'>
           <nav>
             <ul className='flex items-center gap-2'>
-              <li className='hover:text-primary hover:bg-accent rounded p-2'>
+              <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>Home</a>
               </li>
-              <li className='hover:text-primary hover:bg-accent rounded p-2'>
+              <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>Contact</a>
               </li>
-              <li className='hover:text-primary hover:bg-accent rounded p-2'>
+              <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>About</a>
               </li>
+              {user && user.role === 'Student' && (
+                <li className='hover:bg-accent rounded p-2'>
+                  <Link to='/student'>Dashboard</Link>
+                </li>
+              )}
+              {user && user.role !== 'Student' && (
+                <li className='hover:bg-accent rounded p-2'>
+                  <Link to='/admin'>Dashboard</Link>
+                </li>
+              )}
             </ul>
           </nav>
           <ModeToggle />
