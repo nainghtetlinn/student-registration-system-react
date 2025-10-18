@@ -10,16 +10,16 @@ import { useCreateSubjectChoiceForm } from '../api/create.api'
 export const CreateSubjectChoiceForm = ({
   formDetails,
   entranceForm,
+  onSuccess,
 }: {
   formDetails: TForm
   entranceForm: TEntranceFormSchema
+  onSuccess: () => void
 }) => {
   const navigate = useNavigate()
 
   const { mutate, isPending, error } = useCreateSubjectChoiceForm({
-    onSuccess: () => {
-      navigate({ to: '/student' })
-    },
+    onSuccess,
     onError: (error) => {
       if (error?.response?.status === 409) {
         navigate({ to: '/student' })

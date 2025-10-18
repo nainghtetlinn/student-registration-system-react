@@ -3,7 +3,6 @@ import { CreateSubjectChoiceForm } from '@/features/student/forms/subject-choice
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 
 export const Route = createFileRoute('/student/forms/subject-choice/create')({
@@ -11,28 +10,17 @@ export const Route = createFileRoute('/student/forms/subject-choice/create')({
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
-      to: '/',
+      to: '/student',
     })
   },
   loader: async ({ context }) => {
-    const openedForms = await context.queryClient.ensureQueryData(
-      getOpenedFormsQuery(),
-    )
-    if (openedForms.length === 0) throw new Error('There is no opened form.')
-
-    const entranceForm = await context.queryClient.ensureQueryData(
-      getEntranceFormQuery(),
-    )
-
-    return {
-      formDetails: openedForms[0],
-      entranceForm: entranceForm.formData,
-    }
+    return await context.queryClient.ensureQueryData(getEntranceFormQuery())
   },
 })
 
 function RouteComponent() {
-  const { formDetails, entranceForm } = Route.useLoaderData()
+  const navigate = Route.useNavigate()
+  const { formDetails, formData: entranceForm } = Route.useLoaderData()
 
   return (
     <>
@@ -42,6 +30,9 @@ function RouteComponent() {
         <CreateSubjectChoiceForm
           formDetails={formDetails}
           entranceForm={entranceForm}
+          onSuccess={() => {
+            navigate({ to: '/student/forms/subject-choice/files-upload' })
+          }}
         />
       </div>
     </>

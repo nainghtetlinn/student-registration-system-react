@@ -1,7 +1,6 @@
 import { MajorChoices } from './major-choices'
 import { MatriculationDetails } from './matriculation-details'
 import { FatherDetails, MotherDetails } from './parents-details'
-import { PhotoUpload } from './photo-upload'
 import { StudentDetails } from './student-details'
 
 import type { TStep } from '@/components/multistep-form'
@@ -37,11 +36,5 @@ export const steps: TStep<TSubjectChoiceFormSchema>[] = [
     title: '',
     fields: ['majorChoices', 'acknowledged'],
     component: <MajorChoices />,
-  },
-  {
-    position: 6,
-    title: '',
-    fields: [],
-    component: <PhotoUpload />,
   },
 ]

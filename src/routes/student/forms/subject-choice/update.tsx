@@ -15,16 +15,17 @@ export const Route = createFileRoute('/student/forms/subject-choice/update')({
     })
   },
   loader: async ({ context }) => {
+    const { formData: entranceForm } =
+      await context.queryClient.ensureQueryData(getEntranceFormQuery())
     const { formDetails, formData } = await context.queryClient.ensureQueryData(
       getSubjectChoiceFormQuery(),
     )
-    const { formData: entranceForm } =
-      await context.queryClient.ensureQueryData(getEntranceFormQuery())
     return { formDetails, formData, entranceForm }
   },
 })
 
 function RouteComponent() {
+  const navigate = Route.useNavigate()
   const { formDetails, formData, entranceForm } = Route.useLoaderData()
 
   return (
@@ -36,6 +37,9 @@ function RouteComponent() {
           formDetails={formDetails}
           formData={formData}
           entranceForm={entranceForm}
+          onSuccess={() => {
+            navigate({ to: '/student/forms/subject-choice/files-update' })
+          }}
         />
       </div>
     </>
