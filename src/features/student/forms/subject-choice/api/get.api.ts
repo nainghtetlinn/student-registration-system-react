@@ -3,7 +3,7 @@ import type { TForm } from '@/types/form'
 import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import type { TSubjectChoiceFormSchema } from '../schema/subject-choice-form.schema'
-import type { TGetSubjectChoiceFormResponse } from '../types/get.type'
+import type { TFiles, TGetSubjectChoiceFormResponse } from '../types/get.type'
 
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
@@ -15,6 +15,7 @@ const fromDto = (
 ): {
   formDetails: TForm
   formData: TSubjectChoiceFormSchema
+  files: TFiles
 } => {
   return {
     formDetails: data.formData,
@@ -68,6 +69,13 @@ const fromDto = (
       },
       majorChoices: data.majorChoices,
       acknowledged: false,
+    },
+    files: {
+      studentSignatureUrl: data.studentSignatureUrl,
+      studentSignatureDate: data.studentSignatureDate,
+      guardianName: data.guardianName,
+      guardianSginatureUrl: data.guardianSginatureUrl,
+      guardianSignatureDate: data.guardianSignatureDate,
     },
   }
 }

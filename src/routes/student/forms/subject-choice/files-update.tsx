@@ -1,11 +1,13 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { CreateSubjectChoiceForm } from '@/features/student/forms/subject-choice/components/create-subject-choice-form'
+import { UpdateFilesForm } from '@/features/student/forms/subject-choice/components/update-files-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
+import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
 
-export const Route = createFileRoute('/student/forms/subject-choice/create')({
+export const Route = createFileRoute(
+  '/student/forms/subject-choice/files-update',
+)({
   component: RouteComponent,
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
@@ -14,24 +16,27 @@ export const Route = createFileRoute('/student/forms/subject-choice/create')({
     })
   },
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(getEntranceFormQuery())
+    return await context.queryClient.ensureQueryData(
+      getSubjectChoiceFormQuery(),
+    )
   },
 })
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData: entranceForm } = Route.useLoaderData()
+  const { formDetails, formData, files } = Route.useLoaderData()
 
   return (
     <>
       <title>Subject Choice Form</title>
 
       <div className='pt-4'>
-        <CreateSubjectChoiceForm
+        <UpdateFilesForm
           formDetails={formDetails}
-          entranceForm={entranceForm}
+          studentName={formData.student.name}
+          files={files}
           onSuccess={() => {
-            navigate({ to: '/student/forms/subject-choice/files-upload' })
+            navigate({ to: '/student' })
           }}
         />
       </div>
