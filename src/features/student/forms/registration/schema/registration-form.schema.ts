@@ -15,6 +15,8 @@ const studentSchema = z.object({
       (date) => date < new Date(),
       'Date of birth cannot be in the future',
     ),
+  enrollmentNumber: z.string().min(1),
+  universityRegisterNumber: z.string().min(1),
 })
 
 const parentSchema = z.object({
@@ -43,9 +45,7 @@ const siblingSchema = z.object({
   address: z.string().min(1),
 })
 
-export const registerFormSchema = z.object({
-  universityRegisterNumber: z.string().min(1),
-  enrollmentNumber: z.string().min(1),
+export const registrationFormSchema = z.object({
   student: studentSchema,
   father: parentSchema,
   mother: parentSchema,
@@ -55,11 +55,9 @@ export const registerFormSchema = z.object({
     .refine((val) => val === true, 'Acknowledgement required.'),
 })
 
-export type TRegisterFormSchema = z.infer<typeof registerFormSchema>
+export type TRegistrationFormSchema = z.infer<typeof registrationFormSchema>
 
-export const registerFormDefaults: TRegisterFormSchema = {
-  universityRegisterNumber: '',
-  enrollmentNumber: '',
+export const registerFormDefaults: TRegistrationFormSchema = {
   student: {
     nameEn: '',
     nameMm: '',
@@ -68,6 +66,8 @@ export const registerFormDefaults: TRegisterFormSchema = {
     nrc: nrcDefaults,
     pob: '',
     dob: '' as unknown as Date,
+    enrollmentNumber: '',
+    universityRegisterNumber: '',
   },
   father: {
     nameEn: '',
