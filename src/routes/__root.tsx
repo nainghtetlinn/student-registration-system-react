@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     <>
       <Outlet />
 
-      <Toaster />
+      <Toaster expand />
       <TanStackRouterDevtools />
       <ReactQueryDevtools buttonPosition='bottom-right' />
     </>
