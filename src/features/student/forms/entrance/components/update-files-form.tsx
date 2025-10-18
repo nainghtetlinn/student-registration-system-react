@@ -85,7 +85,7 @@ export const UpdateFilesForm = ({
           className='absolute top-2 left-2'
         />
       </CardHeader>
-      <CardContent className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <CardContent className='space-y-4'>
         <section>
           <Label className='leading-8'>ဓာတ်ပုံ</Label>
           {isPhotoEdit && (

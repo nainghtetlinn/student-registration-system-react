@@ -16,7 +16,7 @@ import { Trash2 } from 'lucide-react'
 import type { TDropPhoto } from '@/components/drop-photo'
 import type { TForm } from '@/types/form'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { useUploadPhoto } from '../api/upload-photo.api'
 import { useUploadSignature } from '../api/upload-signature.api'
@@ -34,20 +34,16 @@ export const UploadFilesForm = ({
   const photoRef = useRef<TDropPhoto>(null)
   const signRef = useRef<TDropPhoto>(null)
 
-  const [successCount, setSuccessCount] = useState(0)
-
   const photoMutation = useUploadPhoto({
     onSuccess: () => {
-      setSuccessCount((prev) => prev + 1)
+      if (sign) signatureMutation.mutate(sign)
     },
     onError: () => {
       console.log('Photo Error')
     },
   })
   const signatureMutation = useUploadSignature({
-    onSuccess: () => {
-      setSuccessCount((prev) => prev + 1)
-    },
+    onSuccess,
     onError: () => {
       console.log('Signature Error')
     },
@@ -55,14 +51,7 @@ export const UploadFilesForm = ({
 
   const handleSubmit = () => {
     if (photo) photoMutation.mutate(photo)
-    if (sign) signatureMutation.mutate(sign)
   }
-
-  useEffect(() => {
-    if (successCount === 2) {
-      onSuccess()
-    }
-  }, [successCount])
 
   return (
     <Card className='relative container mx-auto max-w-3xl'>
@@ -80,7 +69,7 @@ export const UploadFilesForm = ({
           className='absolute top-2 left-2'
         />
       </CardHeader>
-      <CardContent className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <CardContent className='space-y-4'>
         <section>
           <Label className='leading-8'>ဓာတ်ပုံ</Label>
           <DropPhoto
