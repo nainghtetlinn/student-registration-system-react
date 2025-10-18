@@ -1,4 +1,4 @@
-import { nrcDefaults, nrcSchema } from '@/lib/schema'
+import { nrcSchema } from '@/lib/schema'
 import { z } from 'zod'
 
 const studentSchema = z.object({
@@ -16,7 +16,6 @@ const studentSchema = z.object({
       'Date of birth cannot be in the future',
     ),
   enrollmentNumber: z.string().min(1),
-  universityRegisterNumber: z.string().min(1),
 })
 
 const parentSchema = z.object({
@@ -35,7 +34,9 @@ const parentSchema = z.object({
     ),
   job: z.string().min(1),
   address: z.string().min(1),
-  yod: z.string().length(4).optional(),
+  yod: z.coerce
+    .number()
+    .refine((val) => val === 0 || val.toString().length === 4, 'Invalid year'),
 })
 
 const siblingSchema = z.object({
@@ -46,6 +47,7 @@ const siblingSchema = z.object({
 })
 
 export const registrationFormSchema = z.object({
+  formId: z.coerce.number(),
   student: studentSchema,
   father: parentSchema,
   mother: parentSchema,
@@ -56,41 +58,3 @@ export const registrationFormSchema = z.object({
 })
 
 export type TRegistrationFormSchema = z.infer<typeof registrationFormSchema>
-
-export const registerFormDefaults: TRegistrationFormSchema = {
-  student: {
-    nameEn: '',
-    nameMm: '',
-    ethnicity: '',
-    religion: '',
-    nrc: nrcDefaults,
-    pob: '',
-    dob: '' as unknown as Date,
-    enrollmentNumber: '',
-    universityRegisterNumber: '',
-  },
-  father: {
-    nameEn: '',
-    nameMm: '',
-    ethnicity: '',
-    religion: '',
-    nrc: nrcDefaults,
-    pob: '',
-    dob: '' as unknown as Date,
-    job: '',
-    address: '',
-  },
-  mother: {
-    nameEn: '',
-    nameMm: '',
-    ethnicity: '',
-    religion: '',
-    nrc: nrcDefaults,
-    pob: '',
-    dob: '' as unknown as Date,
-    job: '',
-    address: '',
-  },
-  siblings: [],
-  acknowledged: false,
-}

@@ -2,12 +2,12 @@ import { FormInputField } from '@/components/ui/form-fields'
 import { NrcInput } from '@/components/nrc-input'
 import { DobPicker } from '@/components/dob-picker'
 
+import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
+
 import { useFormContext } from 'react-hook-form'
 
-import { type TRegisterFormSchema } from '../../schemas/register-form-schema'
-
 export const StudentDetails = () => {
-  const form = useFormContext<TRegisterFormSchema>()
+  const form = useFormContext<TRegistrationFormSchema>()
 
   return (
     <div className='min-h-[550px] space-y-4'>
@@ -16,12 +16,7 @@ export const StudentDetails = () => {
       </h2>
       <FormInputField
         control={form.control}
-        name='universityRegisterNumber'
-        label='တက္ကသိုလ်ဝင်မှတ်ပုံတင်အမှတ်'
-      />
-      <FormInputField
-        control={form.control}
-        name='enrollmentNumber'
+        name='student.enrollmentNumber'
         label='ဝင်ခွင့်ရအမှတ်စဉ်/ခုံအမှတ်'
       />
       <FormInputField
@@ -32,7 +27,7 @@ export const StudentDetails = () => {
       />
       <FormInputField
         control={form.control}
-        name='enrollmentNumber'
+        name='student.nameMm'
         label='အမည် (မြန်မာ)'
         placeholder='Eg- မောင်မောင်'
       />

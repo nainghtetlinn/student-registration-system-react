@@ -5,6 +5,7 @@ import {
   MultistepFormPrevious,
   MultistepFormSubmit,
 } from '@/components/multistep-form'
+import { Stamp } from '@/components/stamp'
 import {
   Card,
   CardContent,
@@ -15,24 +16,28 @@ import {
 } from '@/components/ui/card'
 import { Spinner } from '@/components/ui/spinner'
 
+import type { TForm } from '@/types/form'
+import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
+import type { TRegistrationFormError } from '../../types/error.type'
+
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  registerFormSchema,
-  type TRegisterFormSchema,
-} from '../../schemas/register-form-schema'
+import { fromErrorDto } from '../../lib/registration-form-dto'
+import { registrationFormSchema } from '../../schema/registration-form.schema'
 import { steps } from './steps'
 
 type Props = {
+  formDetails: TForm
   isPending: boolean
-  errors: null
-  onSubmit: (data: TRegisterFormSchema) => void
-  defaultValues: TRegisterFormSchema
+  errors: TRegistrationFormError | null
+  onSubmit: (data: TRegistrationFormSchema) => void
+  defaultValues: TRegistrationFormSchema
 }
 
-export const RegisterForm = ({
+export const RegistrationForm = ({
+  formDetails,
   isPending,
   errors,
   onSubmit,
@@ -41,9 +46,27 @@ export const RegisterForm = ({
   const [active, setActive] = useState(0)
 
   const form = useForm({
-    resolver: zodResolver(registerFormSchema),
+    resolver: zodResolver(registrationFormSchema),
     defaultValues,
   })
+
+  useEffect(() => {
+    if (errors && typeof errors !== 'string') {
+      // this error comes form server
+      let index = -1
+      fromErrorDto(errors).forEach((e) => {
+        if (index < 0) {
+          steps.forEach((s, i) => {
+            s.fields.forEach((f) => {
+              if (e.field.startsWith(f)) index = i
+            })
+          })
+        }
+        form.setError(e.field, { message: e.message })
+      })
+      setActive(index < 0 ? 0 : index)
+    }
+  }, [errors])
 
   return (
     <>
@@ -60,11 +83,16 @@ export const RegisterForm = ({
               နည်းပညာတက္ကသိုလ်(တောင်ကြီး)
             </CardTitle>
             <CardDescription className='text-card-foreground leading-6'>
-              (2020-2021)ပညာသင်နှစ်
+              ({formDetails.academicYear})ပညာသင်နှစ်
             </CardDescription>
             <CardTitle className='leading-6'>
               ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ
             </CardTitle>
+            <Stamp
+              url={formDetails.stampUrl}
+              id={formDetails.id.toString()}
+              className='absolute top-2 left-2'
+            />
           </CardHeader>
           <CardContent>
             <MultistepFormCurrent />
