@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 
 // import { AnimatePresence, motion, Variants } from 'motion/react'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import {
   type FieldPath,
   type FieldValues,
@@ -80,6 +80,10 @@ export const MultistepForm = <
       setActive((prev) => prev - 1)
     }
   }
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [active])
 
   return (
     <>
