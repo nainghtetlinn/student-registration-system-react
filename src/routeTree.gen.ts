@@ -21,6 +21,7 @@ import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/chang
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
 import { Route as AdminFormsIndexRouteImport } from './routes/admin/forms/index'
 import { Route as AdminAccountsIndexRouteImport } from './routes/admin/accounts/index'
+import { Route as AdminReviewIdRouteImport } from './routes/admin/review/$id'
 import { Route as AdminAccountsStudentsRouteImport } from './routes/admin/accounts/students'
 import { Route as AdminAccountsStudentAffairsRouteImport } from './routes/admin/accounts/student-affairs'
 import { Route as AdminAccountsRegisterRouteImport } from './routes/admin/accounts/register'
@@ -109,6 +110,11 @@ const AdminFormsIndexRoute = AdminFormsIndexRouteImport.update({
 const AdminAccountsIndexRoute = AdminAccountsIndexRouteImport.update({
   id: '/accounts/',
   path: '/accounts/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminReviewIdRoute = AdminReviewIdRouteImport.update({
+  id: '/review/$id',
+  path: '/review/$id',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminAccountsStudentsRoute = AdminAccountsStudentsRouteImport.update({
@@ -290,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/admin/accounts/register': typeof AdminAccountsRegisterRoute
   '/admin/accounts/student-affairs': typeof AdminAccountsStudentAffairsRoute
   '/admin/accounts/students': typeof AdminAccountsStudentsRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
   '/admin/accounts': typeof AdminAccountsIndexRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
@@ -331,6 +338,7 @@ export interface FileRoutesByTo {
   '/admin/accounts/register': typeof AdminAccountsRegisterRoute
   '/admin/accounts/student-affairs': typeof AdminAccountsStudentAffairsRoute
   '/admin/accounts/students': typeof AdminAccountsStudentsRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
   '/admin/accounts': typeof AdminAccountsIndexRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
@@ -375,6 +383,7 @@ export interface FileRoutesById {
   '/admin/accounts/register': typeof AdminAccountsRegisterRoute
   '/admin/accounts/student-affairs': typeof AdminAccountsStudentAffairsRoute
   '/admin/accounts/students': typeof AdminAccountsStudentsRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
   '/admin/accounts/': typeof AdminAccountsIndexRoute
   '/admin/forms/': typeof AdminFormsIndexRoute
   '/admin/profile/': typeof AdminProfileIndexRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/admin/accounts/register'
     | '/admin/accounts/student-affairs'
     | '/admin/accounts/students'
+    | '/admin/review/$id'
     | '/admin/accounts'
     | '/admin/forms'
     | '/admin/profile'
@@ -461,6 +471,7 @@ export interface FileRouteTypes {
     | '/admin/accounts/register'
     | '/admin/accounts/student-affairs'
     | '/admin/accounts/students'
+    | '/admin/review/$id'
     | '/admin/accounts'
     | '/admin/forms'
     | '/admin/profile'
@@ -504,6 +515,7 @@ export interface FileRouteTypes {
     | '/admin/accounts/register'
     | '/admin/accounts/student-affairs'
     | '/admin/accounts/students'
+    | '/admin/review/$id'
     | '/admin/accounts/'
     | '/admin/forms/'
     | '/admin/profile/'
@@ -624,6 +636,13 @@ declare module '@tanstack/react-router' {
       path: '/accounts'
       fullPath: '/admin/accounts'
       preLoaderRoute: typeof AdminAccountsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/review/$id': {
+      id: '/admin/review/$id'
+      path: '/review/$id'
+      fullPath: '/admin/review/$id'
+      preLoaderRoute: typeof AdminReviewIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/accounts/students': {
@@ -841,6 +860,7 @@ interface AdminRouteRouteChildren {
   AdminAccountsRegisterRoute: typeof AdminAccountsRegisterRoute
   AdminAccountsStudentAffairsRoute: typeof AdminAccountsStudentAffairsRoute
   AdminAccountsStudentsRoute: typeof AdminAccountsStudentsRoute
+  AdminReviewIdRoute: typeof AdminReviewIdRoute
   AdminAccountsIndexRoute: typeof AdminAccountsIndexRoute
   AdminFormsIndexRoute: typeof AdminFormsIndexRoute
   AdminProfileIndexRoute: typeof AdminProfileIndexRoute
@@ -861,6 +881,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAccountsRegisterRoute: AdminAccountsRegisterRoute,
   AdminAccountsStudentAffairsRoute: AdminAccountsStudentAffairsRoute,
   AdminAccountsStudentsRoute: AdminAccountsStudentsRoute,
+  AdminReviewIdRoute: AdminReviewIdRoute,
   AdminAccountsIndexRoute: AdminAccountsIndexRoute,
   AdminFormsIndexRoute: AdminFormsIndexRoute,
   AdminProfileIndexRoute: AdminProfileIndexRoute,
