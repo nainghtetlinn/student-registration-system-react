@@ -15,16 +15,13 @@ import {
 } from '@/components/ui/sidebar'
 import { EllipsisVertical, Loader2, LogOut, UserCircle2 } from 'lucide-react'
 
-import { useLogout } from '@/api/lib/auth'
-import { useQueryClient } from '@tanstack/react-query'
-import { Link, useNavigate } from '@tanstack/react-router'
-import type { TUser } from '@/types/user'
+import { useLogout, useUser } from '@/api/lib/auth'
 import { paths } from '@/config/paths'
+import { Link, useNavigate } from '@tanstack/react-router'
 
 export const AppSidebarFooter = () => {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
 
   const logout = useLogout({
     onSuccess: () => {
@@ -32,7 +29,7 @@ export const AppSidebarFooter = () => {
     },
   })
 
-  const user = queryClient.getQueryData(['auth', 'user']) as TUser
+  const { data: user } = useUser()
 
   return (
     <SidebarMenu>

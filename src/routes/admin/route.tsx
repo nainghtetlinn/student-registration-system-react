@@ -1,14 +1,16 @@
-import { getUserQuery } from '@/api/lib/auth'
-import { getProfileQuery } from '@/api/profile/get-profile'
-import { AppHeader } from '@/components/layouts/admin/AppHeader'
-import { AppSidebar } from '@/components/layouts/admin/AppSidebar'
 import { Pending } from '@/components/layouts/shared/pending'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { AppHeader } from '@/features/admin/components/layout/AppHeader'
+import { AppSidebar } from '@/features/admin/components/layout/AppSidebar'
 
-import { paths } from '@/config/paths'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
+import { getUserQuery } from '@/api/lib/auth'
+import { getProfileQuery } from '@/api/profile/get-profile'
+
 export const Route = createFileRoute('/admin')({
+  component: RouteComponent,
+  pendingComponent: () => <Pending />,
   beforeLoad: async ({ location, context }) => {
     let shouldRedirect = false
 
@@ -29,12 +31,12 @@ export const Route = createFileRoute('/admin')({
       shouldRedirect = true
     } else if (user.role.toLowerCase() == 'student') {
       throw redirect({
-        to: paths.home.getHref(),
+        to: '/',
       })
     } else if (user.updatedAt == null) {
       // user is logged in but haven't changed his password
       throw redirect({
-        to: paths.auth.changePassword.getHref(),
+        to: '/auth/change-password',
         search: {
           redirect: location.href,
           email: user.email,
@@ -44,7 +46,8 @@ export const Route = createFileRoute('/admin')({
 
     if (shouldRedirect) {
       throw redirect({
-        to: paths.auth.login.getHref(location.href),
+        to: '/auth/login',
+        search: { redirect: location.href },
       })
     }
 
@@ -54,21 +57,16 @@ export const Route = createFileRoute('/admin')({
     } catch (error) {
       console.log(error)
     }
-    if (
-      !profile &&
-      !location.href.includes(paths.admin.profile.create.getHref())
-    ) {
+    if (!profile && !location.href.includes('/admin/profile/create')) {
       // redirect profile/create if profile is undefined
       throw redirect({
-        to: paths.admin.profile.create.getHref(),
+        to: '/admin/profile/create',
         search: {
           redirect: location.href,
         },
       })
     }
   },
-  pendingComponent: () => <Pending />,
-  component: RouteComponent,
 })
 
 function RouteComponent() {
