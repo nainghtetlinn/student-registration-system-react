@@ -22,11 +22,13 @@ export const DobPicker = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
+  disabled = false,
   control,
   name,
   description,
   hideErrorMessage = false,
 }: {
+  disabled?: boolean
   control: Control<TFieldValues>
   name: TName
   description?: string
@@ -46,7 +48,10 @@ export const DobPicker = <
             onOpenChange={setOpen}
           >
             <FormControl>
-              <PopoverTrigger asChild>
+              <PopoverTrigger
+                asChild
+                disabled={disabled}
+              >
                 <Button
                   variant='outline'
                   className='w-48 justify-between font-normal'

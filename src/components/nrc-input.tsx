@@ -16,12 +16,14 @@ export const NrcInput = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
+  disabled = false,
   control,
   stateCodeName,
   townshipCodeName,
   nrcTypeName,
   nrcNumberName,
 }: {
+  disabled?: boolean
   control: Control<TFieldValues>
   stateCodeName: TName
   townshipCodeName: TName
@@ -82,6 +84,7 @@ export const NrcInput = <
           name={stateCodeName}
           hideErrorMessage
           placeholder='State'
+          disabled={disabled}
           items={nrcStates.filter((s) => s.number.en !== '9*')}
           keyExtractor={(item) => item.id}
           labelExtractor={(item) => item.number.mm}
@@ -91,7 +94,7 @@ export const NrcInput = <
           name={townshipCodeName}
           hideErrorMessage
           placeholder='Township'
-          disabled={uniqueTownships.length === 0}
+          disabled={disabled || uniqueTownships.length === 0}
           items={uniqueTownships.sort((a, b) =>
             a.short.mm.localeCompare(b.short.mm),
           )}
@@ -103,6 +106,7 @@ export const NrcInput = <
           name={nrcTypeName}
           hideErrorMessage
           placeholder='Type'
+          disabled={disabled}
           items={nrcTypes}
           keyExtractor={(item) => item.id}
           labelExtractor={(item) => item.name.mm}
@@ -114,6 +118,7 @@ export const NrcInput = <
         name={nrcNumberName}
         hideErrorMessage
         placeholder='NRC Number'
+        disabled={disabled}
       />
     </div>
   )
