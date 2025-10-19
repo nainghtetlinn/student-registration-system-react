@@ -17,6 +17,7 @@ export const FatherDetails = () => {
         name='father.name'
         label='အမည်'
         placeholder='Eg- U Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -29,6 +30,7 @@ export const FatherDetails = () => {
         townshipCodeName='father.nrc.townshipCode'
         nrcTypeName='father.nrc.nrcType'
         nrcNumberName='father.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -53,6 +55,7 @@ export const FatherDetails = () => {
         control={form.control}
         name='father.job'
         label='အလုပ်အကိုင်'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -79,6 +82,7 @@ export const MotherDetails = () => {
         name='mother.name'
         label='အမည်'
         placeholder='Eg- Daw Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -91,6 +95,7 @@ export const MotherDetails = () => {
         townshipCodeName='mother.nrc.townshipCode'
         nrcTypeName='mother.nrc.nrcType'
         nrcNumberName='mother.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -115,6 +120,7 @@ export const MotherDetails = () => {
         control={form.control}
         name='mother.job'
         label='အလုပ်အကိုင်'
+        disabled
       />
       <FormInputField
         control={form.control}

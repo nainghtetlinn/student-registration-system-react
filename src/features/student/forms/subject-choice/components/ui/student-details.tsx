@@ -18,12 +18,14 @@ export const StudentDetails = () => {
         control={form.control}
         name='student.enrollmentNumber'
         label='ဝင်ခွင့်ရအမှတ်စဉ်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.name'
         label='အမည်'
         placeholder='Eg- Mg Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -36,16 +38,19 @@ export const StudentDetails = () => {
         townshipCodeName='student.nrc.townshipCode'
         nrcTypeName='student.nrc.nrcType'
         nrcNumberName='student.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.ethnicity'
         label='လူမျိုး'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.religion'
         label='ကိုးကွယ်သည့်ဘာသာ'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -56,11 +61,13 @@ export const StudentDetails = () => {
         control={form.control}
         name='student.dob'
         description='(တက္ကသိုလ်ဝင်စာမေးပွဲအောင်လက်မှတ်ပါအတိုင်း)'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.phoneNumber'
         label='လက်ကိုင်ဖုန်းနံပါတ်'
+        disabled
       />
     </div>
   )

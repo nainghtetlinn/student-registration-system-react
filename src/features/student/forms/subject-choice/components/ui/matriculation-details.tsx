@@ -21,11 +21,13 @@ export const MatriculationDetails = () => {
         control={form.control}
         name='matriculation.year'
         label='ခုနှစ်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='matriculation.department'
         label='စာစစ်ဌာန'
+        disabled
       />
       <h2 className='mt-8 mb-4 text-center leading-8 font-semibold'>
         ဘာသာရပ်ရမှတ်များ

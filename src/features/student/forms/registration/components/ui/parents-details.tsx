@@ -17,17 +17,20 @@ export const FatherDetails = () => {
         name='father.nameEn'
         label='အမည် (အင်္ဂလိပ်)'
         placeholder='Eg- U Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.nameMm'
         label='အမည် (မြန်မာ)'
         placeholder='Eg- ဦးမောင်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.otherName'
         label='အခြားအမည်ရှိပါက'
+        disabled
       />
       <NrcInput
         control={form.control}
@@ -35,35 +38,42 @@ export const FatherDetails = () => {
         townshipCodeName='father.nrc.townshipCode'
         nrcTypeName='father.nrc.nrcType'
         nrcNumberName='father.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.ethnicity'
         label='လူမျိုး'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.religion'
         label='ကိုးကွယ်သည့်ဘာသာ'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.pob'
         label='မွေးဖွားရာဒေသ'
+        disabled
       />
       <DobPicker
         control={form.control}
         name='father.dob'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.job'
         label='အလုပ်အကိုင်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='father.address'
         label='နေရပ်လိပ်စာ'
+        disabled
       />
       <FormInputField
         control={form.control}
@@ -84,17 +94,20 @@ export const MotherDetails = () => {
         name='mother.nameEn'
         label='အမိအမည် (အင်္ဂလိပ်)'
         placeholder='Eg- Daw Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.nameMm'
         label='အမိအမည် (မြန်မာ)'
         placeholder='Eg- ဒေါ်မောင်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.otherName'
         label='အခြားအမည်ရှိပါက'
+        disabled
       />
       <NrcInput
         control={form.control}
@@ -102,35 +115,42 @@ export const MotherDetails = () => {
         townshipCodeName='mother.nrc.townshipCode'
         nrcTypeName='mother.nrc.nrcType'
         nrcNumberName='mother.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.ethnicity'
         label='လူမျိုး'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.religion'
         label='ကိုးကွယ်သည့်ဘာသာ'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.pob'
         label='မွေးဖွားရာဒေသ'
+        disabled
       />
       <DobPicker
         control={form.control}
         name='mother.dob'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.job'
         label='အလုပ်အကိုင်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='mother.address'
         label='နေရပ်လိပ်စာ'
+        disabled
       />
       <FormInputField
         control={form.control}

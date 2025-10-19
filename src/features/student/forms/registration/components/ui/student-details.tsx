@@ -18,23 +18,27 @@ export const StudentDetails = () => {
         control={form.control}
         name='student.enrollmentNumber'
         label='ဝင်ခွင့်ရအမှတ်စဉ်/ခုံအမှတ်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.nameEn'
         label='အမည် (အင်္ဂလိပ်)'
         placeholder='Eg- Mg Mg'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.nameMm'
         label='အမည် (မြန်မာ)'
         placeholder='Eg- မောင်မောင်'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.otherName'
         label='အခြားအမည်ရှိပါက'
+        disabled
       />
       <NrcInput
         control={form.control}
@@ -42,26 +46,31 @@ export const StudentDetails = () => {
         townshipCodeName='student.nrc.townshipCode'
         nrcTypeName='student.nrc.nrcType'
         nrcNumberName='student.nrc.nrcNumber'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.ethnicity'
         label='လူမျိုး'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.religion'
         label='ကိုးကွယ်သည့်ဘာသာ'
+        disabled
       />
       <FormInputField
         control={form.control}
         name='student.pob'
         label='မွေးဖွားရာဒေသ'
+        disabled
       />
       <DobPicker
         control={form.control}
         name='student.dob'
         description='တက္ကသိုလ်ဝင်စာမေးပွဲဖြေစဉ်ကဖော်ပြသည့်အတိုင်းထည့်ရန်'
+        disabled
       />
     </div>
   )
