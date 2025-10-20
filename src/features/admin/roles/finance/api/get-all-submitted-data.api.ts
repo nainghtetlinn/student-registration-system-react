@@ -25,7 +25,7 @@ export type TFilterGetAllSubmittedData = z.infer<
 
 export const getAllSubmittedData = (search: TFilterGetAllSubmittedData) => {
   return api.get<ApiResponse<TGetAllSubmittedDataResponse>>(
-    '/dean/getAllSubmittedData',
+    '/finance/getAllSubmittedData',
     {
       params: search,
     },

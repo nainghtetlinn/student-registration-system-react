@@ -11,7 +11,7 @@ export const Route = createFileRoute('/admin/')({
 function RouteComponent() {
   const { data: user } = useUser()
 
-  if (user?.role.toLowerCase() === 'dean') return <FinanceDashboard />
+  if (user?.role.toLowerCase() === 'finance') return <FinanceDashboard />
 
   return <div>This is protected route</div>
 }

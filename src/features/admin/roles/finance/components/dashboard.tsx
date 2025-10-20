@@ -42,7 +42,7 @@ export const FinanceDashboard = () => {
   })
 
   useEffect(() => {
-    const source = new EventSource(env.API_URL + '/dean/subscribe')
+    const source = new EventSource(env.API_URL + '/finance/subscribe')
 
     source.onmessage = (event) => {
       const newMessage = JSON.parse(event.data)
