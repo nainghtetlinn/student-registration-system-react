@@ -1,22 +1,8 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { DropPhoto } from '@/components/drop-photo'
-import { Stamp } from '@/components/stamp'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Spinner } from '@/components/ui/spinner'
-
-import type { TDropPhoto } from '@/components/drop-photo'
-import type { TForm } from '@/types/form'
-import type { TReceipt } from '@/types/receipt'
-
-import { useRef, useState } from 'react'
-import { useUploadPayment } from '../api/upload-payment.api'
 import {
   Table,
   TableBody,
@@ -25,6 +11,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+
+import type { TDropPhoto } from '@/components/drop-photo'
+import type { TForm } from '@/types/form'
+import type { TReceipt } from '@/types/receipt'
+
+import { useRef, useState } from 'react'
+
+import { useUploadPayment } from '../api/upload-payment.api'
 
 export const PaymentForm = ({
   formDetails,
@@ -52,18 +46,10 @@ export const PaymentForm = ({
 
   return (
     <Card className='relative container mx-auto max-w-3xl'>
-      <CardHeader className='text-center'>
-        <CardTitle className='leading-6'>နည်းပညာတက္ကသိုလ်(တောင်ကြီး)</CardTitle>
-        <CardDescription className='text-card-foreground leading-6'>
-          ({formDetails.academicYear})ပညာသင်နှစ်
-        </CardDescription>
-        <CardTitle className='leading-6'>Payment</CardTitle>
-        <Stamp
-          url={formDetails.stampUrl}
-          id={formDetails.id.toString()}
-          className='absolute top-2 left-2'
-        />
-      </CardHeader>
+      <FormCardHeader
+        form={formDetails}
+        title='Payment'
+      />
       <CardContent className='space-y-4'>
         <Table>
           <TableHeader>

@@ -1,3 +1,4 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import {
   MultistepForm,
   MultistepFormCurrent,
@@ -5,15 +6,7 @@ import {
   MultistepFormPrevious,
   MultistepFormSubmit,
 } from '@/components/multistep-form'
-import { Stamp } from '@/components/stamp'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Spinner } from '@/components/ui/spinner'
 
 import type { TForm } from '@/types/form'
@@ -78,22 +71,10 @@ export const SubjectChoiceForm = ({
         onSubmit={onSubmit}
       >
         <Card className='relative container mx-auto max-w-3xl'>
-          <CardHeader className='text-center'>
-            <CardTitle className='leading-6'>
-              နည်းပညာတက္ကသိုလ်(တောင်ကြီး)
-            </CardTitle>
-            <CardDescription className='text-card-foreground leading-6'>
-              ({formDetails.academicYear}) ပညာသင်နှစ်
-            </CardDescription>
-            <CardTitle className='leading-6'>
-              အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ
-            </CardTitle>
-            <Stamp
-              url={formDetails.stampUrl}
-              id={formDetails.id.toString()}
-              className='absolute top-2 left-2'
-            />
-          </CardHeader>
+          <FormCardHeader
+            form={formDetails}
+            title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
+          />
           <CardContent>
             <MultistepFormCurrent />
           </CardContent>

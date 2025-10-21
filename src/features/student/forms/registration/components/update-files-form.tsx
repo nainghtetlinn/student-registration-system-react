@@ -1,14 +1,7 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { DropPhoto } from '@/components/drop-photo'
-import { Stamp } from '@/components/stamp'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
@@ -77,20 +70,10 @@ export const UpdateFilesForm = ({
 
   return (
     <Card className='relative container mx-auto max-w-3xl'>
-      <CardHeader className='text-center'>
-        <CardTitle className='leading-6'>နည်းပညာတက္ကသိုလ်(တောင်ကြီး)</CardTitle>
-        <CardDescription className='text-card-foreground leading-6'>
-          ({formDetails.academicYear})ပညာသင်နှစ်
-        </CardDescription>
-        <CardTitle className='leading-6'>
-          ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ
-        </CardTitle>
-        <Stamp
-          url={formDetails.stampUrl}
-          id={formDetails.id.toString()}
-          className='absolute top-2 left-2'
-        />
-      </CardHeader>
+      <FormCardHeader
+        form={formDetails}
+        title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
+      />
       <CardContent className='space-y-4'>
         <section className='space-y-2'>
           <div>

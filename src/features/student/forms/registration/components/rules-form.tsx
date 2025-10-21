@@ -1,13 +1,6 @@
-import { Stamp } from '@/components/stamp'
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
@@ -35,21 +28,11 @@ export const RulesForm = ({
 
   return (
     <Card className='relative container mx-auto max-w-3xl'>
-      <CardHeader className='text-center'>
-        <CardTitle className='leading-6'>နည်းပညာတက္ကသိုလ်(တောင်ကြီး)</CardTitle>
-        <CardDescription className='text-card-foreground leading-6'>
-          ({formDetails.academicYear})ပညာသင်နှစ်
-        </CardDescription>
-        <CardTitle className='leading-6'>
-          ကျောင်းသားကျောင်းသူများလိုက်နာဆောင်ရွက်ရမည့် စည်းကမ်းများနှင့်
-          ၎င်းတို့ကို လိုက်နာမည်ဖြစ်ကြောင်းကတိခံဝန်ချက်
-        </CardTitle>
-        <Stamp
-          url={formDetails.stampUrl}
-          id={formDetails.id.toString()}
-          className='absolute top-2 left-2'
-        />
-      </CardHeader>
+      <FormCardHeader
+        form={formDetails}
+        title='ကျောင်းသားကျောင်းသူများလိုက်နာဆောင်ရွက်ရမည့် စည်းကမ်းများနှင့်
+          ၎င်းတို့ကို လိုက်နာမည်ဖြစ်ကြောင်းကတိခံဝန်ချက်'
+      />
       <CardContent className='space-y-4'>
         <section>
           <h2 className='font-bold'>၁။ အထွေထွေစည်းကမ်းများ</h2>
