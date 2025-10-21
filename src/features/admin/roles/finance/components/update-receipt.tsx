@@ -27,8 +27,8 @@ import {
 } from '@/components/ui/table'
 import { TicketPlus, Trash2 } from 'lucide-react'
 
+import type { TReceipt } from '@/types/receipt'
 import type { TReceiptSchema } from '../schema/receipt.schema'
-import type { TReceipt } from '../types/receipt.type'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'

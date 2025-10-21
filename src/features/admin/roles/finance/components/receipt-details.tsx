@@ -19,7 +19,7 @@ import {
 import { ArrowLeft, Edit } from 'lucide-react'
 import { DeleteReceiptBtn } from './delete-receipt-btn'
 
-import type { TReceipt } from '../types/receipt.type'
+import type { TReceipt } from '@/types/receipt'
 
 import { useNavigate } from '@tanstack/react-router'
 import { format } from 'date-fns'

@@ -1,7 +1,9 @@
+export type TData = { name: string; amount: number }
+
 export type TReceipt = {
   id: number
   year: string
-  data: { name: string; amount: number }[]
+  data: TData[]
   createdAt: string
   updatedAt: string | null
 }

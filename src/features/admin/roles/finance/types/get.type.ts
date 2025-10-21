@@ -1,4 +1,4 @@
-import type { TReceipt } from './receipt.type'
+import type { TReceipt } from '@/types/receipt'
 import type { TSubmittedData } from './submitted-data.type'
 
 export type TGetAllSubmittedDataResponse = TSubmittedData[]

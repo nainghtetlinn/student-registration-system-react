@@ -1,5 +1,5 @@
+import type { TData, TReceipt } from '@/types/receipt'
 import type { ColumnDef } from '@tanstack/react-table'
-import type { TReceipt, TData } from '../types/receipt.type'
 
 import { format } from 'date-fns'
 

@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import type { TReceipt } from '../types/receipt.type'
+import type { TReceipt } from '@/types/receipt'
 
 import { useNavigate } from '@tanstack/react-router'
 import {
