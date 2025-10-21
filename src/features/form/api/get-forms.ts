@@ -1,13 +1,13 @@
-import {
-  useInfiniteQuery,
-  type QueryKey,
-  type UseInfiniteQueryOptions,
-} from '@tanstack/react-query'
+import type { ApiResponse } from '@/types/api'
+import type { TForm } from '@/types/form'
+import type { QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query'
+import type { TGetFormsResponse } from '../types/get.type'
+import type { AxiosError } from 'axios'
+
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
-import type { ApiResponse } from '@/types/api'
-import type { TForm, TGetFormsResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
 export const filterGetFormsInputSchema = z.object({
   page: z.coerce.number().min(0).optional(),
@@ -32,7 +32,13 @@ type FormsPage = {
 
 export const useGetForms = (
   options: Omit<
-    UseInfiniteQueryOptions<FormsPage, Error, TForm[], QueryKey, number>,
+    UseInfiniteQueryOptions<
+      FormsPage,
+      AxiosError<ApiResponse<string>>,
+      TForm[],
+      QueryKey,
+      number
+    >,
     'queryFn' | 'queryKey' | 'initialPageParam' | 'getNextPageParam'
   >,
   search?: Omit<TFilterGetFormsInput, 'page'>,

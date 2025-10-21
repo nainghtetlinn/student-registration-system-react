@@ -3,7 +3,7 @@ import { PaymentForm } from '@/features/student/forms/payment/components/payment
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
+import { getOpenedFormsQuery } from '@/features/form/api/get-opened-forms'
 import { getReceiptQuery } from '@/features/student/forms/payment/api/get-receipt.api'
 
 export const Route = createFileRoute('/student/forms/payment/')({

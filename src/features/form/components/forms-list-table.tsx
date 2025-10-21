@@ -8,6 +8,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import type { TForm } from '@/types/form'
+
 import { useNavigate } from '@tanstack/react-router'
 import {
   flexRender,
@@ -17,8 +19,7 @@ import {
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-import { useGetForms } from '@/api/form/get-forms'
-import type { TForm } from '@/types/form'
+import { useGetForms } from '../api/get-forms'
 
 import { formsListColumns } from '../utils/forms-list-columns'
 

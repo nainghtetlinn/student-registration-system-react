@@ -1,14 +1,16 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import { toast } from 'sonner'
-import { AxiosError } from 'axios'
-
-import { type TConfirmClosureSchema } from '@/features/form/schemas/confirm-closure-schema'
 import type { ApiResponse } from '@/types/api'
+import type { UseMutationOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TConfirmClosureSchema } from '../schemas/confirm-closure-schema'
 import type {
   TConfirmClosureRequest,
   TConfirmClosureResponse,
-} from '@/types/form'
-import { api } from '../lib/axios'
+} from '../types/confirm-closure.type'
+
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
+
+import { api } from '@/api/lib/axios'
 
 const confirmClosure = (id: string, data: TConfirmClosureRequest) => {
   return api.post<ApiResponse<TConfirmClosureResponse>>(
@@ -20,7 +22,11 @@ const confirmClosure = (id: string, data: TConfirmClosureRequest) => {
 export const useConfirmClosure = (
   id: string,
   options?: Omit<
-    UseMutationOptions<TConfirmClosureResponse, Error, TConfirmClosureSchema>,
+    UseMutationOptions<
+      TConfirmClosureResponse,
+      AxiosError<ApiResponse<string>>,
+      TConfirmClosureSchema
+    >,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -37,8 +43,7 @@ export const useConfirmClosure = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,

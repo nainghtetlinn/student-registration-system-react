@@ -27,11 +27,13 @@ import {
 } from 'lucide-react'
 import { InitiateClosureBtn } from './ui/initiate-closure-btn'
 
-import { useUploadStamp } from '@/api/form/upload-stamp'
 import type { TForm } from '@/types/form'
+
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
 import { useRef, useState } from 'react'
+
+import { useUploadStamp } from '../api/upload-stamp'
 
 export const FormDetails = ({ data: form }: { data: TForm }) => {
   const stampRef = useRef<TDropPhoto>(null)

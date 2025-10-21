@@ -5,7 +5,3 @@ export const confirmClosureSchema = z.object({
 })
 
 export type TConfirmClosureSchema = z.infer<typeof confirmClosureSchema>
-
-export const confirmClosureDefaults: TConfirmClosureSchema = {
-  otp: '',
-}

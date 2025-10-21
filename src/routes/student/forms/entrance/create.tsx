@@ -3,7 +3,7 @@ import { CreateEntranceForm } from '@/features/student/forms/entrance/components
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getOpenedFormsQuery } from '@/api/form/get-opened-forms'
+import { getOpenedFormsQuery } from '@/features/form/api/get-opened-forms'
 
 export const Route = createFileRoute('/student/forms/entrance/create')({
   component: RouteComponent,

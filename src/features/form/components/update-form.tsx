@@ -12,18 +12,18 @@ import { FormInputField } from '@/components/ui/form-fields'
 import { Spinner } from '@/components/ui/spinner'
 import { FilePen } from 'lucide-react'
 
-import { useUpdateForm } from '@/api/form/update-form'
 import type { TForm } from '@/types/form'
+import type { TFormSchema } from '../schemas/form.schema'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import {
-  updateFormSchema,
-  type TUpdateFormSchema,
-} from '../schemas/update-form-schema'
+
+import { useUpdateForm } from '../api/update-form'
+import { formSchema } from '../schemas/form.schema'
 
 export const UpdateForm = ({ data: formDetails }: { data: TForm }) => {
   const form = useForm({
-    resolver: zodResolver(updateFormSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       academicYear: formDetails.academicYear,
       code: formDetails.code,
@@ -33,7 +33,7 @@ export const UpdateForm = ({ data: formDetails }: { data: TForm }) => {
 
   const { mutate, isPending } = useUpdateForm(formDetails.id.toString())
 
-  const onSubmit = (data: TUpdateFormSchema) => {
+  const onSubmit = (data: TFormSchema) => {
     mutate(data)
   }
 

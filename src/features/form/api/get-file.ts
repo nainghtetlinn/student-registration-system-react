@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
 export const getFile = (url: string, id: string) => {
   return api.get<ArrayBuffer>('/forms/getFile/' + id, {

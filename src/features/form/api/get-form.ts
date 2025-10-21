@@ -1,13 +1,11 @@
-import {
-  queryOptions,
-  useQuery,
-  type QueryKey,
-  type UseQueryOptions,
-} from '@tanstack/react-query'
-
 import type { ApiResponse } from '@/types/api'
-import type { TGetFormResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TGetFormResponse } from '../types/get.type'
+
+import { queryOptions, useQuery } from '@tanstack/react-query'
+
+import { api } from '@/api/lib/axios'
 
 const getForm = (id: string) => {
   return api.get<ApiResponse<TGetFormResponse>>('/admin/forms/' + id)
@@ -25,7 +23,12 @@ export const getFormQuery = (id: string) =>
 export const useGetForm = (
   id: string,
   options?: Omit<
-    UseQueryOptions<TGetFormResponse, Error, TGetFormResponse, QueryKey>,
+    UseQueryOptions<
+      TGetFormResponse,
+      AxiosError<ApiResponse<string>>,
+      TGetFormResponse,
+      QueryKey
+    >,
     'queryKey' | 'queryFn'
   >,
 ) => {

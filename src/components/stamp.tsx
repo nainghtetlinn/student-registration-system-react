@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { cn } from '@/lib/utils'
-import { useGetFile } from '@/api/form/get-file'
+import { useGetFile } from '@/features/form/api/get-file'
 
 export const Stamp = ({
   url,

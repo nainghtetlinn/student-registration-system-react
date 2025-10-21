@@ -1,11 +1,16 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+import type { ApiResponse } from '@/types/api'
+import type { UseMutationOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TFormSchema } from '../schemas/form.schema'
+import type {
+  TUpdateFormRequest,
+  TUpdateFormResponse,
+} from '../types/update.type'
+
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { type TUpdateFormSchema } from '@/features/form/schemas/update-form-schema'
-import type { ApiResponse } from '@/types/api'
-import type { TUpdateFormRequest, TUpdateFormResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
 const updateForm = (id: string, data: TUpdateFormRequest) => {
   return api.put<ApiResponse<TUpdateFormResponse>>('/admin/forms/' + id, data)
@@ -14,7 +19,11 @@ const updateForm = (id: string, data: TUpdateFormRequest) => {
 export const useUpdateForm = (
   id: string,
   options?: Omit<
-    UseMutationOptions<TUpdateFormResponse, Error, TUpdateFormSchema>,
+    UseMutationOptions<
+      TUpdateFormResponse,
+      AxiosError<ApiResponse<string>>,
+      TFormSchema
+    >,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -31,8 +40,7 @@ export const useUpdateForm = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,

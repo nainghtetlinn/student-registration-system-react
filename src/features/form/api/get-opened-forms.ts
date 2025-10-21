@@ -1,13 +1,11 @@
-import {
-  queryOptions,
-  useQuery,
-  type QueryKey,
-  type UseQueryOptions,
-} from '@tanstack/react-query'
-
 import type { ApiResponse } from '@/types/api'
-import type { TGetOpenedFormsResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TGetOpenedFormsResponse } from '../types/get.type'
+
+import { queryOptions, useQuery } from '@tanstack/react-query'
+
+import { api } from '@/api/lib/axios'
 
 const getOpenedForms = () => {
   return api.get<ApiResponse<TGetOpenedFormsResponse>>('/forms/open/all')
@@ -26,7 +24,7 @@ export const useGetOpenedForms = (
   options?: Omit<
     UseQueryOptions<
       TGetOpenedFormsResponse,
-      Error,
+      AxiosError<ApiResponse<string>>,
       TGetOpenedFormsResponse,
       QueryKey
     >,

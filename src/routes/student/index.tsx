@@ -9,16 +9,16 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty'
 import { EntranceFormDetails } from '@/features/student/forms/entrance/components/entrance-form-details'
-import { File } from 'lucide-react'
-import { SubjectChoiceFormDetails } from '@/features/student/forms/subject-choice/components/subject-choice-form-details'
 import { RegistrationFormDetails } from '@/features/student/forms/registration/components/registration-form-details'
+import { SubjectChoiceFormDetails } from '@/features/student/forms/subject-choice/components/subject-choice-form-details'
+import { File } from 'lucide-react'
 
 import { createFileRoute, Link } from '@tanstack/react-router'
 
-import { useGetOpenedForms } from '@/api/form/get-opened-forms'
+import { useGetOpenedForms } from '@/features/form/api/get-opened-forms'
 import { useGetEntranceForm } from '@/features/student/forms/entrance/api/get.api'
-import { useGetSubjectChoiceForm } from '@/features/student/forms/subject-choice/api/get.api'
 import { useGetRegistrationForm } from '@/features/student/forms/registration/api/get.api'
+import { useGetSubjectChoiceForm } from '@/features/student/forms/subject-choice/api/get.api'
 
 export const Route = createFileRoute('/student/')({
   component: RouteComponent,

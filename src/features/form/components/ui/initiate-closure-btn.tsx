@@ -1,4 +1,3 @@
-import { useInitiateClosure } from '@/api/form/initiate-closure'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,10 +10,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Spinner } from '@/components/ui/spinner'
-import { useNavigate } from '@tanstack/react-router'
 import { AlertCircleIcon, FileX2 } from 'lucide-react'
 
+import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
+
+import { useInitiateClosure } from '../../api/initiate-closure'
 
 export const InitiateClosureBtn = ({ id }: { id: string }) => {
   const navigate = useNavigate()

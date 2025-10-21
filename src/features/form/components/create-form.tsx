@@ -8,23 +8,22 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
-import { FilePlus2 } from 'lucide-react'
-import { Spinner } from '@/components/ui/spinner'
-
 import { FormInputField } from '@/components/ui/form-fields'
+import { Spinner } from '@/components/ui/spinner'
+import { FilePlus2 } from 'lucide-react'
+
+import type { TFormSchema } from '../schemas/form.schema'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import {
-  createFormDefaults,
-  createFormSchema,
-  type TCreateFormSchema,
-} from '../schemas/create-form-schema'
-import { useCreateForm } from '@/api/form/create-form'
+
+import { useCreateForm } from '../api/create-form'
+import { formSchema } from '../schemas/form.schema'
 
 export const CreateForm = () => {
   const form = useForm({
-    resolver: zodResolver(createFormSchema),
-    defaultValues: createFormDefaults,
+    resolver: zodResolver(formSchema),
+    defaultValues: { academicYear: '', code: '', number: '' },
   })
 
   const { mutate, isPending } = useCreateForm({
@@ -33,7 +32,7 @@ export const CreateForm = () => {
     },
   })
 
-  const onSubmit = (data: TCreateFormSchema) => {
+  const onSubmit = (data: TFormSchema) => {
     mutate(data)
   }
 

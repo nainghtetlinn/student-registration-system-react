@@ -1,21 +1,20 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+import type { ApiResponse } from '@/types/api'
+import type { UseMutationOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import type { ApiResponse } from '@/types/api'
-import type { TInitiateClosureResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
 const initiateClosure = (id: string) => {
-  return api.post<ApiResponse<TInitiateClosureResponse>>(
-    '/admin/forms/initiate-closure/' + id,
-  )
+  return api.post<ApiResponse<string>>('/admin/forms/initiate-closure/' + id)
 }
 
 export const useInitiateClosure = (
   id: string,
   options?: Omit<
-    UseMutationOptions<TInitiateClosureResponse, Error, unknown>,
+    UseMutationOptions<string, AxiosError<ApiResponse<string>>, unknown>,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -32,8 +31,7 @@ export const useInitiateClosure = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,

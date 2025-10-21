@@ -21,22 +21,21 @@ import {
 } from '@/components/ui/input-otp'
 import { Spinner } from '@/components/ui/spinner'
 
-import { useConfirmClosure } from '@/api/form/confirm-closure'
+import type { TConfirmClosureSchema } from '../schemas/confirm-closure-schema'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
-import {
-  confirmClosureDefaults,
-  confirmClosureSchema,
-  type TConfirmClosureSchema,
-} from '../schemas/confirm-closure-schema'
+
+import { useConfirmClosure } from '../api/confirm-closure'
+import { confirmClosureSchema } from '../schemas/confirm-closure-schema'
 
 export const ConfirmClosure = ({ id }: { id: string }) => {
   const navigate = useNavigate()
 
   const form = useForm({
     resolver: zodResolver(confirmClosureSchema),
-    defaultValues: confirmClosureDefaults,
+    defaultValues: { otp: '' },
   })
 
   const { mutate, isPending } = useConfirmClosure(id, {

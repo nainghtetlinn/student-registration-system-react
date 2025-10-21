@@ -1,11 +1,16 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+import type { ApiResponse } from '@/types/api'
+import type { UseMutationOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TFormSchema } from '../schemas/form.schema'
+import type {
+  TCreateFormRequest,
+  TCreateFormResponse,
+} from '../types/create.type'
+
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { type TCreateFormSchema } from '@/features/form/schemas/create-form-schema'
-import type { ApiResponse } from '@/types/api'
-import type { TCreateFormRequest, TCreateFormResponse } from '@/types/form'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
 const createForm = (data: TCreateFormRequest) => {
   return api.post<ApiResponse<TCreateFormResponse>>('/admin/forms', data)
@@ -13,7 +18,11 @@ const createForm = (data: TCreateFormRequest) => {
 
 export const useCreateForm = (
   options?: Omit<
-    UseMutationOptions<TCreateFormResponse, Error, TCreateFormSchema>,
+    UseMutationOptions<
+      TCreateFormResponse,
+      AxiosError<ApiResponse<string>>,
+      TFormSchema
+    >,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -30,8 +39,7 @@ export const useCreateForm = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,
