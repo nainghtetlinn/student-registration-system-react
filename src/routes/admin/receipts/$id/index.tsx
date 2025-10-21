@@ -16,14 +16,13 @@ export const Route = createFileRoute('/admin/receipts/$id/')({
 
 function RouteComponent() {
   const data = Route.useLoaderData()
-  console.log(data)
 
   return (
     <>
       <title>Receipt Details</title>
 
       <div className='flex justify-center p-2'>
-        <ReceiptDetails />
+        <ReceiptDetails data={data} />
       </div>
     </>
   )
