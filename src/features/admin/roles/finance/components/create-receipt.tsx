@@ -7,16 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Form } from '@/components/ui/form'
-import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
-import { Spinner } from '@/components/ui/spinner'
-import { TicketPlus, Trash2 } from 'lucide-react'
-
-import type { TReceiptSchema } from '../schema/receipt.schema'
-
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useFieldArray, useForm } from 'react-hook-form'
-
 import {
   Dialog,
   DialogContent,
@@ -24,6 +14,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Form } from '@/components/ui/form'
+import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
+import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
   TableBody,
@@ -32,7 +25,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { TicketPlus, Trash2 } from 'lucide-react'
+
+import type { TReceiptSchema } from '../schema/receipt.schema'
+
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+
 import { useCreateReceipt } from '../api/create-receipt.api'
 import { dataSchema, receiptSchema } from '../schema/receipt.schema'
 
