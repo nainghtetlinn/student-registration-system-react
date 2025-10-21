@@ -39,6 +39,7 @@ export const useUpdateReceipt = (
     },
     onSuccess: (response, ...restArgs) => {
       toast.success('Receipt updated successfully')
+      queryClient.invalidateQueries({ queryKey: ['receipts'] })
       queryClient.invalidateQueries({ queryKey: ['receipts', id] })
       onSuccess?.(response, ...restArgs)
     },

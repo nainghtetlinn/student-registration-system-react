@@ -7,7 +7,7 @@ import type {
   TCreateReceiptResponse,
 } from '../types/create.type'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { api } from '@/api/lib/axios'
@@ -26,6 +26,8 @@ export const useCreateReceipt = (
     'mutationKey' | 'mutationFn'
   >,
 ) => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
@@ -36,6 +38,7 @@ export const useCreateReceipt = (
     },
     onSuccess: (response, ...restArgs) => {
       toast.success('Receipt created successfully')
+      queryClient.invalidateQueries({ queryKey: ['receipts'] })
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
