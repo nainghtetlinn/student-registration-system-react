@@ -32,6 +32,7 @@ import { Route as AdminAccountsEmailRouteImport } from './routes/admin/accounts/
 import { Route as AdminDocumentsShortcutsRouteImport } from './routes/admin/_documents/shortcuts'
 import { Route as StudentFormsSubjectChoiceIndexRouteImport } from './routes/student/forms/subject-choice/index'
 import { Route as StudentFormsRegistrationIndexRouteImport } from './routes/student/forms/registration/index'
+import { Route as StudentFormsPaymentIndexRouteImport } from './routes/student/forms/payment/index'
 import { Route as StudentFormsEntranceIndexRouteImport } from './routes/student/forms/entrance/index'
 import { Route as AdminReceiptsCreateIndexRouteImport } from './routes/admin/receipts/create/index'
 import { Route as AdminReceiptsIdIndexRouteImport } from './routes/admin/receipts/$id/index'
@@ -48,6 +49,7 @@ import { Route as StudentFormsRegistrationRulesRouteImport } from './routes/stud
 import { Route as StudentFormsRegistrationFilesUploadRouteImport } from './routes/student/forms/registration/files-upload'
 import { Route as StudentFormsRegistrationFilesUpdateRouteImport } from './routes/student/forms/registration/files-update'
 import { Route as StudentFormsRegistrationCreateRouteImport } from './routes/student/forms/registration/create'
+import { Route as StudentFormsPaymentSuccessRouteImport } from './routes/student/forms/payment/success'
 import { Route as StudentFormsEntranceUpdateRouteImport } from './routes/student/forms/entrance/update'
 import { Route as StudentFormsEntranceFilesUploadRouteImport } from './routes/student/forms/entrance/files-upload'
 import { Route as StudentFormsEntranceFilesUpdateRouteImport } from './routes/student/forms/entrance/files-update'
@@ -174,6 +176,12 @@ const StudentFormsRegistrationIndexRoute =
     path: '/registration/',
     getParentRoute: () => StudentFormsRouteRoute,
   } as any)
+const StudentFormsPaymentIndexRoute =
+  StudentFormsPaymentIndexRouteImport.update({
+    id: '/payment/',
+    path: '/payment/',
+    getParentRoute: () => StudentFormsRouteRoute,
+  } as any)
 const StudentFormsEntranceIndexRoute =
   StudentFormsEntranceIndexRouteImport.update({
     id: '/entrance/',
@@ -265,6 +273,12 @@ const StudentFormsRegistrationCreateRoute =
     path: '/registration/create',
     getParentRoute: () => StudentFormsRouteRoute,
   } as any)
+const StudentFormsPaymentSuccessRoute =
+  StudentFormsPaymentSuccessRouteImport.update({
+    id: '/payment/success',
+    path: '/payment/success',
+    getParentRoute: () => StudentFormsRouteRoute,
+  } as any)
 const StudentFormsEntranceUpdateRoute =
   StudentFormsEntranceUpdateRouteImport.update({
     id: '/entrance/update',
@@ -333,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
   '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/payment/success': typeof StudentFormsPaymentSuccessRoute
   '/student/forms/registration/create': typeof StudentFormsRegistrationCreateRoute
   '/student/forms/registration/files-update': typeof StudentFormsRegistrationFilesUpdateRoute
   '/student/forms/registration/files-upload': typeof StudentFormsRegistrationFilesUploadRoute
@@ -349,6 +364,7 @@ export interface FileRoutesByFullPath {
   '/admin/receipts/$id': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
+  '/student/forms/payment': typeof StudentFormsPaymentIndexRoute
   '/student/forms/registration': typeof StudentFormsRegistrationIndexRoute
   '/student/forms/subject-choice': typeof StudentFormsSubjectChoiceIndexRoute
   '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
@@ -379,6 +395,7 @@ export interface FileRoutesByTo {
   '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
   '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/payment/success': typeof StudentFormsPaymentSuccessRoute
   '/student/forms/registration/create': typeof StudentFormsRegistrationCreateRoute
   '/student/forms/registration/files-update': typeof StudentFormsRegistrationFilesUpdateRoute
   '/student/forms/registration/files-upload': typeof StudentFormsRegistrationFilesUploadRoute
@@ -395,6 +412,7 @@ export interface FileRoutesByTo {
   '/admin/receipts/$id': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
+  '/student/forms/payment': typeof StudentFormsPaymentIndexRoute
   '/student/forms/registration': typeof StudentFormsRegistrationIndexRoute
   '/student/forms/subject-choice': typeof StudentFormsSubjectChoiceIndexRoute
   '/admin/forms/$id/confirm-closure': typeof AdminFormsIdConfirmClosureIndexRoute
@@ -428,6 +446,7 @@ export interface FileRoutesById {
   '/student/forms/entrance/files-update': typeof StudentFormsEntranceFilesUpdateRoute
   '/student/forms/entrance/files-upload': typeof StudentFormsEntranceFilesUploadRoute
   '/student/forms/entrance/update': typeof StudentFormsEntranceUpdateRoute
+  '/student/forms/payment/success': typeof StudentFormsPaymentSuccessRoute
   '/student/forms/registration/create': typeof StudentFormsRegistrationCreateRoute
   '/student/forms/registration/files-update': typeof StudentFormsRegistrationFilesUpdateRoute
   '/student/forms/registration/files-upload': typeof StudentFormsRegistrationFilesUploadRoute
@@ -444,6 +463,7 @@ export interface FileRoutesById {
   '/admin/receipts/$id/': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create/': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance/': typeof StudentFormsEntranceIndexRoute
+  '/student/forms/payment/': typeof StudentFormsPaymentIndexRoute
   '/student/forms/registration/': typeof StudentFormsRegistrationIndexRoute
   '/student/forms/subject-choice/': typeof StudentFormsSubjectChoiceIndexRoute
   '/admin/forms/$id/confirm-closure/': typeof AdminFormsIdConfirmClosureIndexRoute
@@ -478,6 +498,7 @@ export interface FileRouteTypes {
     | '/student/forms/entrance/files-update'
     | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
+    | '/student/forms/payment/success'
     | '/student/forms/registration/create'
     | '/student/forms/registration/files-update'
     | '/student/forms/registration/files-upload'
@@ -494,6 +515,7 @@ export interface FileRouteTypes {
     | '/admin/receipts/$id'
     | '/admin/receipts/create'
     | '/student/forms/entrance'
+    | '/student/forms/payment'
     | '/student/forms/registration'
     | '/student/forms/subject-choice'
     | '/admin/forms/$id/confirm-closure'
@@ -524,6 +546,7 @@ export interface FileRouteTypes {
     | '/student/forms/entrance/files-update'
     | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
+    | '/student/forms/payment/success'
     | '/student/forms/registration/create'
     | '/student/forms/registration/files-update'
     | '/student/forms/registration/files-upload'
@@ -540,6 +563,7 @@ export interface FileRouteTypes {
     | '/admin/receipts/$id'
     | '/admin/receipts/create'
     | '/student/forms/entrance'
+    | '/student/forms/payment'
     | '/student/forms/registration'
     | '/student/forms/subject-choice'
     | '/admin/forms/$id/confirm-closure'
@@ -572,6 +596,7 @@ export interface FileRouteTypes {
     | '/student/forms/entrance/files-update'
     | '/student/forms/entrance/files-upload'
     | '/student/forms/entrance/update'
+    | '/student/forms/payment/success'
     | '/student/forms/registration/create'
     | '/student/forms/registration/files-update'
     | '/student/forms/registration/files-upload'
@@ -588,6 +613,7 @@ export interface FileRouteTypes {
     | '/admin/receipts/$id/'
     | '/admin/receipts/create/'
     | '/student/forms/entrance/'
+    | '/student/forms/payment/'
     | '/student/forms/registration/'
     | '/student/forms/subject-choice/'
     | '/admin/forms/$id/confirm-closure/'
@@ -765,6 +791,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentFormsRegistrationIndexRouteImport
       parentRoute: typeof StudentFormsRouteRoute
     }
+    '/student/forms/payment/': {
+      id: '/student/forms/payment/'
+      path: '/payment'
+      fullPath: '/student/forms/payment'
+      preLoaderRoute: typeof StudentFormsPaymentIndexRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
+    }
     '/student/forms/entrance/': {
       id: '/student/forms/entrance/'
       path: '/entrance'
@@ -875,6 +908,13 @@ declare module '@tanstack/react-router' {
       path: '/registration/create'
       fullPath: '/student/forms/registration/create'
       preLoaderRoute: typeof StudentFormsRegistrationCreateRouteImport
+      parentRoute: typeof StudentFormsRouteRoute
+    }
+    '/student/forms/payment/success': {
+      id: '/student/forms/payment/success'
+      path: '/payment/success'
+      fullPath: '/student/forms/payment/success'
+      preLoaderRoute: typeof StudentFormsPaymentSuccessRouteImport
       parentRoute: typeof StudentFormsRouteRoute
     }
     '/student/forms/entrance/update': {
@@ -1002,6 +1042,7 @@ interface StudentFormsRouteRouteChildren {
   StudentFormsEntranceFilesUpdateRoute: typeof StudentFormsEntranceFilesUpdateRoute
   StudentFormsEntranceFilesUploadRoute: typeof StudentFormsEntranceFilesUploadRoute
   StudentFormsEntranceUpdateRoute: typeof StudentFormsEntranceUpdateRoute
+  StudentFormsPaymentSuccessRoute: typeof StudentFormsPaymentSuccessRoute
   StudentFormsRegistrationCreateRoute: typeof StudentFormsRegistrationCreateRoute
   StudentFormsRegistrationFilesUpdateRoute: typeof StudentFormsRegistrationFilesUpdateRoute
   StudentFormsRegistrationFilesUploadRoute: typeof StudentFormsRegistrationFilesUploadRoute
@@ -1012,6 +1053,7 @@ interface StudentFormsRouteRouteChildren {
   StudentFormsSubjectChoiceFilesUploadRoute: typeof StudentFormsSubjectChoiceFilesUploadRoute
   StudentFormsSubjectChoiceUpdateRoute: typeof StudentFormsSubjectChoiceUpdateRoute
   StudentFormsEntranceIndexRoute: typeof StudentFormsEntranceIndexRoute
+  StudentFormsPaymentIndexRoute: typeof StudentFormsPaymentIndexRoute
   StudentFormsRegistrationIndexRoute: typeof StudentFormsRegistrationIndexRoute
   StudentFormsSubjectChoiceIndexRoute: typeof StudentFormsSubjectChoiceIndexRoute
 }
@@ -1021,6 +1063,7 @@ const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
   StudentFormsEntranceFilesUpdateRoute: StudentFormsEntranceFilesUpdateRoute,
   StudentFormsEntranceFilesUploadRoute: StudentFormsEntranceFilesUploadRoute,
   StudentFormsEntranceUpdateRoute: StudentFormsEntranceUpdateRoute,
+  StudentFormsPaymentSuccessRoute: StudentFormsPaymentSuccessRoute,
   StudentFormsRegistrationCreateRoute: StudentFormsRegistrationCreateRoute,
   StudentFormsRegistrationFilesUpdateRoute:
     StudentFormsRegistrationFilesUpdateRoute,
@@ -1035,6 +1078,7 @@ const StudentFormsRouteRouteChildren: StudentFormsRouteRouteChildren = {
     StudentFormsSubjectChoiceFilesUploadRoute,
   StudentFormsSubjectChoiceUpdateRoute: StudentFormsSubjectChoiceUpdateRoute,
   StudentFormsEntranceIndexRoute: StudentFormsEntranceIndexRoute,
+  StudentFormsPaymentIndexRoute: StudentFormsPaymentIndexRoute,
   StudentFormsRegistrationIndexRoute: StudentFormsRegistrationIndexRoute,
   StudentFormsSubjectChoiceIndexRoute: StudentFormsSubjectChoiceIndexRoute,
 }
