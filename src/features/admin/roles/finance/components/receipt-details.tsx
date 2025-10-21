@@ -1,16 +1,13 @@
 import { Button } from '@/components/ui/button'
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ArrowLeft } from 'lucide-react'
-
-import type { TReceipt } from '../types/receipt.type'
-
 import {
   Table,
   TableBody,
@@ -19,6 +16,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ArrowLeft, Edit, Trash2 } from 'lucide-react'
+
+import type { TReceipt } from '../types/receipt.type'
 
 import { useNavigate } from '@tanstack/react-router'
 import { format } from 'date-fns'
@@ -33,6 +33,26 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
       <CardHeader>
         <CardTitle className='text-xl font-semibold'>Receipt Details</CardTitle>
         <CardDescription>ID: {receipt.id}</CardDescription>
+        <CardAction className='space-x-2'>
+          <Button
+            size={'icon'}
+            variant={'secondary'}
+            onClick={() =>
+              navigate({
+                to: '/admin/receipts/$id/update',
+                params: { id: receipt.id.toString() },
+              })
+            }
+          >
+            <Edit />
+          </Button>
+          <Button
+            size={'icon'}
+            variant={'destructive'}
+          >
+            <Trash2 />
+          </Button>
+        </CardAction>
       </CardHeader>
       <CardContent className='space-y-4'>
         <div className='grid grid-cols-2 gap-2 text-sm'>

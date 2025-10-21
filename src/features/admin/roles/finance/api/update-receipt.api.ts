@@ -7,7 +7,7 @@ import type {
   TUpdateReceiptResponse,
 } from '../types/update.type'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { api } from '@/api/lib/axios'
@@ -27,6 +27,8 @@ export const useUpdateReceipt = (
     'mutationKey' | 'mutationFn'
   >,
 ) => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
@@ -37,6 +39,7 @@ export const useUpdateReceipt = (
     },
     onSuccess: (response, ...restArgs) => {
       toast.success('Receipt updated successfully')
+      queryClient.invalidateQueries({ queryKey: ['receipts', id] })
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
