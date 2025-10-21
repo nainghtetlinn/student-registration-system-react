@@ -1,16 +1,14 @@
-import {
-  queryOptions,
-  useQuery,
-  type QueryKey,
-  type UseQueryOptions,
-} from '@tanstack/react-query'
-
 import type { ApiResponse } from '@/types/api'
-import type { TProfile } from '@/types/profile'
-import { api } from '../lib/axios'
+import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+import type { TGetProfileResponse } from '../types/get.type'
 
-export const getProfile = () => {
-  return api.get<ApiResponse<TProfile>>('/staff/profile')
+import { queryOptions, useQuery } from '@tanstack/react-query'
+
+import { api } from '@/api/lib/axios'
+
+const getProfile = () => {
+  return api.get<ApiResponse<TGetProfileResponse>>('/staff/profile')
 }
 
 export const getProfileQuery = () =>
@@ -24,7 +22,12 @@ export const getProfileQuery = () =>
 
 export const useGetProfile = (
   options?: Omit<
-    UseQueryOptions<TProfile, Error, TProfile, QueryKey>,
+    UseQueryOptions<
+      TGetProfileResponse,
+      AxiosError<ApiResponse<string>>,
+      TGetProfileResponse,
+      QueryKey
+    >,
     'queryKey' | 'queryFn'
   >,
 ) => {

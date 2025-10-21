@@ -6,7 +6,7 @@ import { AppSidebar } from '@/features/admin/components/layout/AppSidebar'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 import { getUserQuery } from '@/api/lib/auth'
-import { getProfileQuery } from '@/api/profile/get-profile'
+import { getProfileQuery } from '@/features/profile/api/get-profile'
 
 export const Route = createFileRoute('/admin')({
   component: RouteComponent,

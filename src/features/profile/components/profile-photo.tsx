@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { DeleteProfilePhoto } from './delete-profile-photo'
 import { UploadProfilePhoto } from './upload-profile-photo'
 
-import { useGetFile } from '@/api/profile/get-file'
+import { useGetFile } from '..//api/get-file'
 
 export const ProfilePhoto = ({ url }: { url: string | null }) => {
   const { fileUrl, loading } = useGetFile(url, 'Profile Photo')

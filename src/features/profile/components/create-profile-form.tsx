@@ -1,3 +1,4 @@
+import { NrcInput } from '@/components/nrc-input'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -11,21 +12,17 @@ import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
 import { Loader2, User2 } from 'lucide-react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import type { TProfileSchema } from '../schema/profile.schema'
 
-import {
-  createProfileInputSchema,
-  useCreateProfile,
-  type TCreateProfileInput,
-} from '@/api/profile/create-profile'
-import { NrcInput } from '@/components/nrc-input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+import { useCreateProfile } from '../api/create-profile'
+import { profileSchema } from '../schema/profile.schema'
 
 export const CreateProfileForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const form = useForm({
-    resolver: zodResolver(createProfileInputSchema),
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       mmName: '',
       engName: '',
@@ -37,13 +34,9 @@ export const CreateProfileForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
   const { mutate, isPending } = useCreateProfile({
     onSuccess,
-    onError: (error) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
-    },
   })
 
-  const onSubmit = (data: TCreateProfileInput) => {
+  const onSubmit = (data: TProfileSchema) => {
     mutate(data)
   }
 

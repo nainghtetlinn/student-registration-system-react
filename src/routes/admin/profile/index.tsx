@@ -17,7 +17,7 @@ import {
 import { AxiosError } from 'axios'
 import { useEffect } from 'react'
 
-import { getProfileQuery } from '@/api/profile/get-profile'
+import { getProfileQuery } from '@/features/profile/api/get-profile'
 import { paths } from '@/config/paths'
 
 export const Route = createFileRoute('/admin/profile/')({

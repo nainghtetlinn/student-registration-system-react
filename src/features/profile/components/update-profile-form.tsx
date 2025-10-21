@@ -1,3 +1,4 @@
+import { NrcInput } from '@/components/nrc-input'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -11,19 +12,15 @@ import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
 import { Loader2, User2 } from 'lucide-react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-
-import {
-  updateProfileInputSchema,
-  useUpdateProfile,
-  type TUpdateProfileInput,
-} from '@/api/profile/update-profile'
-import { NrcInput } from '@/components/nrc-input'
-import { nrcStringToObject } from '@/lib/utils'
 import type { TProfile } from '@/types/profile'
+import type { TProfileSchema } from '../schema/profile.schema'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+import { nrcStringToObject } from '@/lib/utils'
+import { useUpdateProfile } from '../api/update-profile'
+import { profileSchema } from '../schema/profile.schema'
 
 export const UpdateProfileForm = ({
   old,
@@ -35,7 +32,7 @@ export const UpdateProfileForm = ({
   onCancel: () => void
 }) => {
   const form = useForm({
-    resolver: zodResolver(updateProfileInputSchema),
+    resolver: zodResolver(profileSchema),
     defaultValues: {
       mmName: old.mmName,
       engName: old.engName,
@@ -50,13 +47,9 @@ export const UpdateProfileForm = ({
 
   const { mutate, isPending } = useUpdateProfile({
     onSuccess,
-    onError: (error) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
-    },
   })
 
-  const onSubmit = (data: TUpdateProfileInput) => {
+  const onSubmit = (data: TProfileSchema) => {
     mutate(data)
   }
 

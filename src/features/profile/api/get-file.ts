@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { api } from '../lib/axios'
+import { api } from '@/api/lib/axios'
 
-export const getFile = (url: string, type: 'Profile Photo' | 'Signature') => {
+const getFile = (url: string, type: 'Profile Photo' | 'Signature') => {
   return api.get<ArrayBuffer>('/staff/profile/getFile', {
     params: {
       fileUrl: url,

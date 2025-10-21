@@ -10,8 +10,9 @@ import {
 } from '@/components/ui/dialog'
 import { Loader2, Trash2 } from 'lucide-react'
 
-import { useDeleteProfileFile } from '@/api/profile/delete-file'
 import { useState } from 'react'
+
+import { useDeleteProfileFile } from '../api/delete-file'
 
 export const DeleteProfilePhoto = () => {
   const [open, setOpen] = useState(false)

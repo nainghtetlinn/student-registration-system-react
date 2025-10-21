@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react'
 import { ThemeProvider } from './theme-provider'
 import * as TanStackQueryProvider from '@/providers/query-provider.tsx'
 import { useRefreshToken, useUser } from '@/api/lib/auth'
-import { useGetProfile } from '@/api/profile/get-profile'
+import { useGetProfile } from '@/features/profile/api/get-profile'
 
 function InnerApp({ children }: { children: React.ReactNode }) {
   const { data: token } = useRefreshToken({

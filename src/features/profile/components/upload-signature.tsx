@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,11 +12,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Loader2, Upload } from 'lucide-react'
 import Dropzone from 'react-dropzone'
 
-import { imageSchema, useUploadSignature } from '@/api/profile/upload-file'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import { toast } from 'sonner'
+
+import { cn } from '@/lib/utils'
+import { imageSchema, useUploadSignature } from '../api/upload-file'
 
 export const UploadSignature = () => {
   const [fileLoading, setFileLoading] = useState(false)

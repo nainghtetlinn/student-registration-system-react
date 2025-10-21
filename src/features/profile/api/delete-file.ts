@@ -1,13 +1,12 @@
-import {
-  useMutation,
-  useQueryClient,
-  type UseMutationOptions,
-} from '@tanstack/react-query'
-import { api } from '../lib/axios'
-import { toast } from 'sonner'
-import type { TProfile } from '@/types/profile'
-import { AxiosError } from 'axios'
 import type { ApiResponse } from '@/types/api'
+import type { TProfile } from '@/types/profile'
+import type { UseMutationOptions } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
+
+import { api } from '@/api/lib/axios'
 
 const deleteFile = (type: 'Profile Photo' | 'Signature') => {
   return api.delete<ApiResponse<string>>('/staff/profile/deleteFile', {
@@ -17,7 +16,7 @@ const deleteFile = (type: 'Profile Photo' | 'Signature') => {
 
 export const useDeleteProfileFile = (
   options?: Omit<
-    UseMutationOptions<string, Error, unknown>,
+    UseMutationOptions<string, AxiosError<ApiResponse<string>>, unknown>,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -40,8 +39,7 @@ export const useDeleteProfileFile = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,
@@ -50,7 +48,7 @@ export const useDeleteProfileFile = (
 
 export const useDeleteProfileSignatureFile = (
   options?: Omit<
-    UseMutationOptions<string, Error, unknown>,
+    UseMutationOptions<string, AxiosError<ApiResponse<string>>, unknown>,
     'mutationKey' | 'mutationFn'
   >,
 ) => {
@@ -73,8 +71,7 @@ export const useDeleteProfileSignatureFile = (
       onSuccess?.(response, ...restArgs)
     },
     onError: (error, ...restArgs) => {
-      if (error instanceof AxiosError)
-        toast.error(error.response?.data?.message || error.message)
+      toast.error(error.response?.data?.message || error.message)
       onError?.(error, ...restArgs)
     },
     ...restOptions,
