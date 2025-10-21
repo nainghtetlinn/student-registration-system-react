@@ -4,5 +4,5 @@ export type TSubmittedData = {
   studentNameEng: string
   enrollmentNumber: string
   createdAt: string
-  updatedAt: string
+  updatedAt: string | null
 }
