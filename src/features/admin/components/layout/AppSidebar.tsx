@@ -12,6 +12,8 @@ import {
   Files,
   PlusCircle,
   SquareSlash,
+  Ticket,
+  TicketCheck,
   User2,
   UserRoundCog,
 } from 'lucide-react'
@@ -51,6 +53,19 @@ const contents = {
       name: 'Register',
       href: '/admin/accounts/register',
       icon: PlusCircle,
+    },
+  ],
+
+  finance: [
+    {
+      name: 'Receipts',
+      href: '/admin/receipts',
+      icon: Ticket,
+    },
+    {
+      name: 'Create',
+      href: '/admin/receipts/create',
+      icon: TicketCheck,
     },
   ],
 
@@ -123,6 +138,13 @@ export const AppSidebar = ({
             items={contents.forms}
           />
         )}
+        {user?.role === 'Finance' && (
+          <AppSidebarGroup
+            label='Finance'
+            items={contents.finance}
+          />
+        )}
+
         <AppSidebarGroup
           label='Management'
           items={contents.management}
