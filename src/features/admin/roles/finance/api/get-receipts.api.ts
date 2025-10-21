@@ -1,13 +1,14 @@
 import type { ApiResponse } from '@/types/api'
 import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
+import type { TGetReceiptsResponse } from '../types/get.type'
 
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { api } from '@/api/lib/axios'
 
 const getReceipts = () => {
-  return api.get<ApiResponse<string>>('/finance')
+  return api.get<ApiResponse<TGetReceiptsResponse>>('/finance')
 }
 
 export const getReceiptsQuery = () =>
@@ -21,7 +22,12 @@ export const getReceiptsQuery = () =>
 
 export const useGetReceipts = (
   options?: Omit<
-    UseQueryOptions<string, AxiosError<ApiResponse<string>>, string, QueryKey>,
+    UseQueryOptions<
+      TGetReceiptsResponse,
+      AxiosError<ApiResponse<string>>,
+      TGetReceiptsResponse,
+      QueryKey
+    >,
     'queryKey' | 'queryFn'
   >,
 ) => {

@@ -18,6 +18,7 @@ import { Route as HomeIndexRouteImport } from './routes/_home/index'
 import { Route as StudentFormsRouteRouteImport } from './routes/student/forms/route'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
+import { Route as AdminReceiptsIndexRouteImport } from './routes/admin/receipts/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
 import { Route as AdminFormsIndexRouteImport } from './routes/admin/forms/index'
 import { Route as AdminAccountsIndexRouteImport } from './routes/admin/accounts/index'
@@ -33,6 +34,7 @@ import { Route as StudentFormsSubjectChoiceIndexRouteImport } from './routes/stu
 import { Route as StudentFormsRegistrationIndexRouteImport } from './routes/student/forms/registration/index'
 import { Route as StudentFormsEntranceIndexRouteImport } from './routes/student/forms/entrance/index'
 import { Route as AdminReceiptsCreateIndexRouteImport } from './routes/admin/receipts/create/index'
+import { Route as AdminReceiptsIdIndexRouteImport } from './routes/admin/receipts/$id/index'
 import { Route as AdminProfileUpdateIndexRouteImport } from './routes/admin/profile/update/index'
 import { Route as AdminProfileCreateIndexRouteImport } from './routes/admin/profile/create/index'
 import { Route as AdminFormsCreateIndexRouteImport } from './routes/admin/forms/create/index'
@@ -97,6 +99,11 @@ const AuthChangePasswordIndexRoute = AuthChangePasswordIndexRouteImport.update({
   id: '/change-password/',
   path: '/change-password/',
   getParentRoute: () => AuthRouteRoute,
+} as any)
+const AdminReceiptsIndexRoute = AdminReceiptsIndexRouteImport.update({
+  id: '/receipts/',
+  path: '/receipts/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminProfileIndexRoute = AdminProfileIndexRouteImport.update({
   id: '/profile/',
@@ -178,6 +185,11 @@ const AdminReceiptsCreateIndexRoute =
     path: '/receipts/create/',
     getParentRoute: () => AdminRouteRoute,
   } as any)
+const AdminReceiptsIdIndexRoute = AdminReceiptsIdIndexRouteImport.update({
+  id: '/receipts/$id/',
+  path: '/receipts/$id/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminProfileUpdateIndexRoute = AdminProfileUpdateIndexRouteImport.update({
   id: '/profile/update/',
   path: '/profile/update/',
@@ -307,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/admin/accounts': typeof AdminAccountsIndexRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
+  '/admin/receipts': typeof AdminReceiptsIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -326,6 +339,7 @@ export interface FileRoutesByFullPath {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/receipts/$id': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
   '/student/forms/registration': typeof StudentFormsRegistrationIndexRoute
@@ -350,6 +364,7 @@ export interface FileRoutesByTo {
   '/admin/accounts': typeof AdminAccountsIndexRoute
   '/admin/forms': typeof AdminFormsIndexRoute
   '/admin/profile': typeof AdminProfileIndexRoute
+  '/admin/receipts': typeof AdminReceiptsIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -369,6 +384,7 @@ export interface FileRoutesByTo {
   '/admin/forms/create': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update': typeof AdminProfileUpdateIndexRoute
+  '/admin/receipts/$id': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance': typeof StudentFormsEntranceIndexRoute
   '/student/forms/registration': typeof StudentFormsRegistrationIndexRoute
@@ -396,6 +412,7 @@ export interface FileRoutesById {
   '/admin/accounts/': typeof AdminAccountsIndexRoute
   '/admin/forms/': typeof AdminFormsIndexRoute
   '/admin/profile/': typeof AdminProfileIndexRoute
+  '/admin/receipts/': typeof AdminReceiptsIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -415,6 +432,7 @@ export interface FileRoutesById {
   '/admin/forms/create/': typeof AdminFormsCreateIndexRoute
   '/admin/profile/create/': typeof AdminProfileCreateIndexRoute
   '/admin/profile/update/': typeof AdminProfileUpdateIndexRoute
+  '/admin/receipts/$id/': typeof AdminReceiptsIdIndexRoute
   '/admin/receipts/create/': typeof AdminReceiptsCreateIndexRoute
   '/student/forms/entrance/': typeof StudentFormsEntranceIndexRoute
   '/student/forms/registration/': typeof StudentFormsRegistrationIndexRoute
@@ -443,6 +461,7 @@ export interface FileRouteTypes {
     | '/admin/accounts'
     | '/admin/forms'
     | '/admin/profile'
+    | '/admin/receipts'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/forms/entrance/create'
@@ -462,6 +481,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/receipts/$id'
     | '/admin/receipts/create'
     | '/student/forms/entrance'
     | '/student/forms/registration'
@@ -486,6 +506,7 @@ export interface FileRouteTypes {
     | '/admin/accounts'
     | '/admin/forms'
     | '/admin/profile'
+    | '/admin/receipts'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/forms/entrance/create'
@@ -505,6 +526,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create'
     | '/admin/profile/create'
     | '/admin/profile/update'
+    | '/admin/receipts/$id'
     | '/admin/receipts/create'
     | '/student/forms/entrance'
     | '/student/forms/registration'
@@ -531,6 +553,7 @@ export interface FileRouteTypes {
     | '/admin/accounts/'
     | '/admin/forms/'
     | '/admin/profile/'
+    | '/admin/receipts/'
     | '/auth/change-password/'
     | '/auth/login/'
     | '/student/forms/entrance/create'
@@ -550,6 +573,7 @@ export interface FileRouteTypes {
     | '/admin/forms/create/'
     | '/admin/profile/create/'
     | '/admin/profile/update/'
+    | '/admin/receipts/$id/'
     | '/admin/receipts/create/'
     | '/student/forms/entrance/'
     | '/student/forms/registration/'
@@ -629,6 +653,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/change-password'
       preLoaderRoute: typeof AuthChangePasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
+    }
+    '/admin/receipts/': {
+      id: '/admin/receipts/'
+      path: '/receipts'
+      fullPath: '/admin/receipts'
+      preLoaderRoute: typeof AdminReceiptsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/profile/': {
       id: '/admin/profile/'
@@ -733,6 +764,13 @@ declare module '@tanstack/react-router' {
       path: '/receipts/create'
       fullPath: '/admin/receipts/create'
       preLoaderRoute: typeof AdminReceiptsCreateIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/receipts/$id/': {
+      id: '/admin/receipts/$id/'
+      path: '/receipts/$id'
+      fullPath: '/admin/receipts/$id'
+      preLoaderRoute: typeof AdminReceiptsIdIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/profile/update/': {
@@ -884,10 +922,12 @@ interface AdminRouteRouteChildren {
   AdminAccountsIndexRoute: typeof AdminAccountsIndexRoute
   AdminFormsIndexRoute: typeof AdminFormsIndexRoute
   AdminProfileIndexRoute: typeof AdminProfileIndexRoute
+  AdminReceiptsIndexRoute: typeof AdminReceiptsIndexRoute
   AdminFormsIdIndexRoute: typeof AdminFormsIdIndexRoute
   AdminFormsCreateIndexRoute: typeof AdminFormsCreateIndexRoute
   AdminProfileCreateIndexRoute: typeof AdminProfileCreateIndexRoute
   AdminProfileUpdateIndexRoute: typeof AdminProfileUpdateIndexRoute
+  AdminReceiptsIdIndexRoute: typeof AdminReceiptsIdIndexRoute
   AdminReceiptsCreateIndexRoute: typeof AdminReceiptsCreateIndexRoute
   AdminFormsIdConfirmClosureIndexRoute: typeof AdminFormsIdConfirmClosureIndexRoute
   AdminFormsIdUpdateIndexRoute: typeof AdminFormsIdUpdateIndexRoute
@@ -906,10 +946,12 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAccountsIndexRoute: AdminAccountsIndexRoute,
   AdminFormsIndexRoute: AdminFormsIndexRoute,
   AdminProfileIndexRoute: AdminProfileIndexRoute,
+  AdminReceiptsIndexRoute: AdminReceiptsIndexRoute,
   AdminFormsIdIndexRoute: AdminFormsIdIndexRoute,
   AdminFormsCreateIndexRoute: AdminFormsCreateIndexRoute,
   AdminProfileCreateIndexRoute: AdminProfileCreateIndexRoute,
   AdminProfileUpdateIndexRoute: AdminProfileUpdateIndexRoute,
+  AdminReceiptsIdIndexRoute: AdminReceiptsIdIndexRoute,
   AdminReceiptsCreateIndexRoute: AdminReceiptsCreateIndexRoute,
   AdminFormsIdConfirmClosureIndexRoute: AdminFormsIdConfirmClosureIndexRoute,
   AdminFormsIdUpdateIndexRoute: AdminFormsIdUpdateIndexRoute,
