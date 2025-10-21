@@ -11,7 +11,7 @@ const deleteReceipt = (id: string) => {
   return api.delete<ApiResponse<string>>('/finance/' + id)
 }
 
-export const useUpdateReceipt = (
+export const useDeleteReceipt = (
   id: string,
   options?: Omit<
     UseMutationOptions<string, AxiosError<ApiResponse<string>>>,

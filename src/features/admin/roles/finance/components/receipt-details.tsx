@@ -16,7 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ArrowLeft, Edit, Trash2 } from 'lucide-react'
+import { ArrowLeft, Edit } from 'lucide-react'
+import { DeleteReceiptBtn } from './delete-receipt-btn'
 
 import type { TReceipt } from '../types/receipt.type'
 
@@ -46,12 +47,7 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
           >
             <Edit />
           </Button>
-          <Button
-            size={'icon'}
-            variant={'destructive'}
-          >
-            <Trash2 />
-          </Button>
+          <DeleteReceiptBtn id={receipt.id.toString()} />
         </CardAction>
       </CardHeader>
       <CardContent className='space-y-4'>
