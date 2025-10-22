@@ -11,9 +11,9 @@ import {
   ChartPie,
   Files,
   PlusCircle,
+  ShieldUser,
   SquareSlash,
   Ticket,
-  TicketCheck,
   User2,
   UserRoundCog,
 } from 'lucide-react'
@@ -58,6 +58,11 @@ const contents = {
 
   finance: [
     {
+      name: 'Dashboard',
+      href: '/admin',
+      icon: ShieldUser,
+    },
+    {
       name: 'Receipts',
       href: '/admin/receipts',
       icon: Ticket,
@@ -65,7 +70,7 @@ const contents = {
     {
       name: 'Create',
       href: '/admin/receipts/create',
-      icon: TicketCheck,
+      icon: PlusCircle,
     },
   ],
 
