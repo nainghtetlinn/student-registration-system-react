@@ -1,9 +1,9 @@
 import { Pending } from '@/components/layouts/shared/pending'
-import { UpdateReceipt } from '@/features/admin/roles/finance/components/update-receipt'
+import { UpdateReceipt } from '@/features/receipt/components/update-receipt'
 
 import { createFileRoute } from '@tanstack/react-router'
 
-import { getReceiptQuery } from '@/features/admin/roles/finance/api/get-receipt.api'
+import { getReceiptQuery } from '@/features/receipt/api/get-receipt.api'
 
 export const Route = createFileRoute('/admin/receipts/$id/update/')({
   component: RouteComponent,

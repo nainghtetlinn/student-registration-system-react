@@ -1,9 +1,9 @@
-import { ReceiptDetails } from '@/features/admin/roles/finance/components/receipt-details'
+import { ReceiptDetails } from '@/features/receipt/components/receipt-details'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { createFileRoute } from '@tanstack/react-router'
 
-import { useGetReceipt } from '@/features/admin/roles/finance/api/get-receipt.api'
+import { useGetReceipt } from '@/features/receipt/api/get-receipt.api'
 
 export const Route = createFileRoute('/admin/receipts/$id/')({
   component: RouteComponent,

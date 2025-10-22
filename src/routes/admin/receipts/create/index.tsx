@@ -1,4 +1,4 @@
-import { CreateReceipt } from '@/features/admin/roles/finance/components/create-receipt'
+import { CreateReceipt } from '@/features/receipt/components/create-receipt'
 
 import { createFileRoute } from '@tanstack/react-router'
 
