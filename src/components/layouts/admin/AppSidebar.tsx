@@ -74,6 +74,14 @@ const contents = {
     },
   ],
 
+  affair: [
+    {
+      name: 'Dashboard',
+      href: '/admin',
+      icon: ShieldUser,
+    },
+  ],
+
   forms: [
     {
       name: 'Dashboard',
@@ -152,6 +160,12 @@ export const AppSidebar = ({
           <AppSidebarGroup
             label='Finance'
             items={contents.finance}
+          />
+        )}
+        {user?.role === 'Student Affair' && (
+          <AppSidebarGroup
+            label='Student Affair'
+            items={contents.affair}
           />
         )}
 
