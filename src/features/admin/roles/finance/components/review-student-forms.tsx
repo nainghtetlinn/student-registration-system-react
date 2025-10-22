@@ -88,13 +88,15 @@ export const ReviewStudentForms = ({
       >
         <Card className='relative mx-auto max-w-xl'>
           <MultistepFormCurrent />
-          <CardFooter className='flex items-center justify-end gap-2'>
-            <MultistepFormPrevious>Previous</MultistepFormPrevious>
-            <MultistepFormNext>Next</MultistepFormNext>
-            <MultistepFormSubmit disabled={isPending}>
-              Accept {isPending && <Spinner />}
-            </MultistepFormSubmit>
+          <CardFooter className='flex items-center justify-between'>
             <RejectBtn id={id} />
+            <div className='space-x-2'>
+              <MultistepFormPrevious>Previous</MultistepFormPrevious>
+              <MultistepFormNext>Next</MultistepFormNext>
+              <MultistepFormSubmit disabled={isPending}>
+                Accept {isPending && <Spinner />}
+              </MultistepFormSubmit>
+            </div>
           </CardFooter>
         </Card>
       </MultistepForm>
