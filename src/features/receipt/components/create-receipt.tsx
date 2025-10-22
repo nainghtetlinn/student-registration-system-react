@@ -8,15 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
-import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
+import { FormSelectField } from '@/components/ui/form-fields'
 import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
@@ -27,16 +20,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { TicketPlus, Trash2 } from 'lucide-react'
+import { AddData } from './add-data'
 
 import type { TReceiptSchema } from '../schema/receipt.schema'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 import { FINANCE_RECEIPT_YEARS } from '@/lib/constants'
 import { useCreateReceipt } from '../api/create-receipt.api'
-import { dataSchema, receiptSchema } from '../schema/receipt.schema'
+import { receiptSchema } from '../schema/receipt.schema'
 
 export const CreateReceipt = () => {
   const form = useForm({
@@ -44,14 +37,6 @@ export const CreateReceipt = () => {
     defaultValues: {
       year: '',
       data: [],
-    },
-  })
-
-  const dataForm = useForm({
-    resolver: zodResolver(dataSchema),
-    defaultValues: {
-      name: '',
-      amount: '',
     },
   })
 
@@ -66,20 +51,8 @@ export const CreateReceipt = () => {
     },
   })
 
-  const [open, setOpen] = useState(false)
-
   const onSubmit = (data: TReceiptSchema) => {
     mutate(data)
-  }
-
-  const handleAdd = async () => {
-    const isValid = await dataForm.trigger()
-    if (!isValid) return
-
-    const data = dataForm.getValues()
-    append(data)
-    dataForm.reset()
-    setOpen(false)
   }
 
   return (
@@ -147,46 +120,7 @@ export const CreateReceipt = () => {
               </TableBody>
             </Table>
 
-            <Dialog
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <DialogTrigger asChild>
-                <Button type='button'>Add Data</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogTitle>Add Data</DialogTitle>
-                <Form {...dataForm}>
-                  <div className='space-y-4'>
-                    <FormInputField
-                      control={dataForm.control}
-                      name='name'
-                      label='Name'
-                    />
-                    <FormInputField
-                      control={dataForm.control}
-                      name='amount'
-                      label='Amount'
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button
-                      type='button'
-                      variant={'secondary'}
-                      onClick={() => setOpen(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      type='button'
-                      onClick={handleAdd}
-                    >
-                      Add
-                    </Button>
-                  </DialogFooter>
-                </Form>
-              </DialogContent>
-            </Dialog>
+            <AddData append={append} />
           </CardContent>
           <CardFooter className='flex justify-end gap-2'>
             <BackBtn />
