@@ -68,7 +68,7 @@ const contents = {
       icon: Ticket,
     },
     {
-      name: 'Create',
+      name: 'Create Receipt',
       href: '/admin/receipts/create',
       icon: PlusCircle,
     },
