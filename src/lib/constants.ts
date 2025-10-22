@@ -48,3 +48,12 @@ export const MAJORS = [
     short: 'MN',
   },
 ]
+
+export const FINANCE_RECEIPT_YEARS = [
+  { value: 'FIRST_YEAR', name: 'First year' },
+  { value: 'SECOND_YEAR', name: 'Second year' },
+  { value: 'THIRD_YEAR', name: 'Third year' },
+  { value: 'FOURTH_YEAR', name: 'Fourth year' },
+  { value: 'FIFTH_YEAR', name: 'Fifth year' },
+  { value: 'SIXTH_YEAR', name: 'Sixth year' },
+]

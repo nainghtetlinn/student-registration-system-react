@@ -33,6 +33,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
+import { FINANCE_RECEIPT_YEARS } from '@/lib/constants'
 import { useCreateReceipt } from '../api/create-receipt.api'
 import { dataSchema, receiptSchema } from '../schema/receipt.schema'
 
@@ -99,20 +100,13 @@ export const CreateReceipt = () => {
             <FormSelectField
               control={form.control}
               name='year'
-              items={[
-                'FIRST_YEAR',
-                'SECOND_YEAR',
-                'THIRD_YEAR',
-                'FOURTH_YEAR',
-                'FIFTH_YEAR',
-                'SIXTH_YEAR',
-              ]}
-              keyExtractor={(y) => y}
+              items={FINANCE_RECEIPT_YEARS}
+              keyExtractor={(y) => y.value}
+              labelExtractor={(y) => y.name}
               placeholder='Year'
               label='Year'
               hideErrorMessage
             />
-
             <Table>
               <TableHeader>
                 <TableRow>
