@@ -6,13 +6,19 @@ export const Route = createFileRoute('/admin/review/$id')({
 })
 
 function RouteComponent() {
+  const navigate = Route.useNavigate()
   const { id } = Route.useParams()
 
   return (
     <>
       <title>Review Student Forms</title>
 
-      <ReviewStudentForms id={id} />
+      <ReviewStudentForms
+        id={id}
+        onSuccess={() => {
+          navigate({ to: '/admin' })
+        }}
+      />
     </>
   )
 }

@@ -1,32 +1,48 @@
-import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { Card, CardContent } from '@/components/ui/card'
+import {
+  MultistepForm,
+  MultistepFormCurrent,
+  MultistepFormNext,
+  MultistepFormPrevious,
+  MultistepFormSubmit,
+} from '@/components/multistep-form'
+import { Card, CardFooter } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
+import { FinanceNote } from './ui/finance-note'
 import { StudentEntranceFormDetail } from './ui/student-entrance-form-detail'
 import { StudentRegistrationFormDetail } from './ui/student-registration-form-detail'
 import { StudentSubjectChoiceFormDetail } from './ui/student-subject-choice-form-detail'
 
-import { FormCardHeader } from '@/components/common/form-card-header'
-import { useGetStudentEntranceForm } from '../api/get-student-entrance-form.api'
-import { useGetStudentRegistrationForm } from '../api/get-student-registration-form.api'
-import { useGetStudentSubjectChoiceForm } from '../api/get-student-subject-choice-form.api'
+import type { TVerifyStudentSchema } from '../schema/verify-student.schema'
 
-export const ReviewStudentForms = ({ id }: { id: string }) => {
-  const entranceFormResult = useGetStudentEntranceForm(id)
-  const subjectChoiceResult = useGetStudentSubjectChoiceForm(id)
-  const registrationFormResult = useGetStudentRegistrationForm(id)
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-  if (
-    entranceFormResult.isPending ||
-    subjectChoiceResult.isPending ||
-    registrationFormResult.isPending
-  )
-    return <FormSkeleton />
+import { useVerifyStudent } from '../api/verify-student.api'
+import { verifyStudentSchema } from '../schema/verify-student.schema'
+import { RejectBtn } from './ui/reject-btn'
 
-  if (
-    entranceFormResult.isError ||
-    subjectChoiceResult.isError ||
-    registrationFormResult.isError
-  )
-    return <div>Error</div>
+export const ReviewStudentForms = ({
+  id,
+  onSuccess,
+}: {
+  id: string
+  onSuccess: () => void
+}) => {
+  const { mutate, isPending } = useVerifyStudent(id, { onSuccess })
+
+  const form = useForm({
+    resolver: zodResolver(verifyStudentSchema),
+    defaultValues: {
+      financeNote: '',
+      financeVoucherNumber: '',
+    },
+  })
+  const [active, setActive] = useState(0)
+
+  const onSubmit = (data: TVerifyStudentSchema) => {
+    mutate(data)
+  }
 
   return (
     <div className='space-y-8 p-2'>
@@ -38,33 +54,52 @@ export const ReviewStudentForms = ({ id }: { id: string }) => {
           View and manage student registration information
         </p>
       </div>
-      <Card className='relative mx-auto max-w-xl'>
-        <FormCardHeader
-          form={entranceFormResult.data.formData}
-          title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
-        />
-        <CardContent>
-          <StudentEntranceFormDetail data={entranceFormResult.data} />
-        </CardContent>
-      </Card>
-      <Card className='relative mx-auto max-w-xl'>
-        <FormCardHeader
-          form={subjectChoiceResult.data.formData}
-          title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
-        />
-        <CardContent>
-          <StudentSubjectChoiceFormDetail data={subjectChoiceResult.data} />
-        </CardContent>
-      </Card>
-      <Card className='relative mx-auto max-w-xl'>
-        <FormCardHeader
-          form={registrationFormResult.data.formData}
-          title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
-        />
-        <CardContent>
-          <StudentRegistrationFormDetail data={registrationFormResult.data} />
-        </CardContent>
-      </Card>
+      <MultistepForm
+        active={active}
+        setActive={setActive}
+        form={form}
+        steps={[
+          {
+            position: 1,
+            title: '',
+            fields: [],
+            component: <StudentEntranceFormDetail id={id} />,
+          },
+          {
+            position: 2,
+            title: '',
+            fields: [],
+            component: <StudentSubjectChoiceFormDetail id={id} />,
+          },
+          {
+            position: 3,
+            title: '',
+            fields: [],
+            component: <StudentRegistrationFormDetail id={id} />,
+          },
+          {
+            position: 4,
+            title: '',
+            fields: ['financeNote', 'financeVoucherNumber'],
+            component: <FinanceNote />,
+          },
+        ]}
+        onSubmit={onSubmit}
+      >
+        <Card className='relative mx-auto max-w-xl'>
+          <MultistepFormCurrent />
+          <CardFooter className='flex items-center justify-between'>
+            <RejectBtn id={id} />
+            <div className='space-x-2'>
+              <MultistepFormPrevious>Previous</MultistepFormPrevious>
+              <MultistepFormNext>Next</MultistepFormNext>
+              <MultistepFormSubmit disabled={isPending}>
+                Accept {isPending && <Spinner />}
+              </MultistepFormSubmit>
+            </div>
+          </CardFooter>
+        </Card>
+      </MultistepForm>
     </div>
   )
 }

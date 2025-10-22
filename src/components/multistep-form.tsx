@@ -139,6 +139,7 @@ export const MultistepFormPrevious = ({
       {current > 0 ? (
         <Button
           type='button'
+          variant={'secondary'}
           onClick={previous}
           {...props}
         >

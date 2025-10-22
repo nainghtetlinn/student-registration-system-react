@@ -1,184 +1,195 @@
-import type { TGetStudentSubjectChoiceFormResponse } from '../../types/get.type'
+import { FormCardHeader } from '@/components/common/form-card-header'
+import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
+import { CardContent } from '@/components/ui/card'
 import { Info } from './info'
 
-export const StudentSubjectChoiceFormDetail = ({
-  data,
-}: {
-  data: TGetStudentSubjectChoiceFormResponse
-}) => {
+import { useGetStudentSubjectChoiceForm } from '../../api/get-student-subject-choice-form.api'
+
+export const StudentSubjectChoiceFormDetail = ({ id }: { id: string }) => {
+  const { data, isPending, isError } = useGetStudentSubjectChoiceForm(id)
+
+  if (isPending) return <FormSkeleton />
+
+  if (isError) return <div>Error</div>
+
   return (
-    <div>
-      {' '}
-      <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
-        <Info
-          label='Name'
-          value={data.studentNameEng}
-        />
-        <Info
-          label='Other Name'
-          value={data.studentNickname || '-'}
-        />
-        <Info
-          label='Enrollment Number'
-          value={data.enrollmentNumber}
-        />
-        <Info
-          label='NRC'
-          value={data.studentNrc}
-        />
-        <Info
-          label='Ethnicity'
-          value={data.studentEthnicity}
-        />
-        <Info
-          label='Religion'
-          value={data.studentReligion}
-        />
-        <Info
-          label='Place of Birth'
-          value={data.studentPob}
-        />
-        <Info
-          label='Date of Birth'
-          value={data.studentDob}
-        />
-        <Info
-          label='Phone Number'
-          value={data.studentPhoneNumber}
-        />
-      </div>
-      <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Father</h4>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
-        <Info
-          label='Name'
-          value={data.fatherNameEng}
-        />
-        <Info
-          label='Other Name'
-          value={data.fatherNickname || '-'}
-        />
-        <Info
-          label='NRC'
-          value={data.fatherNrc}
-        />
-        <Info
-          label='Job'
-          value={data.fatherJob}
-        />
-        <Info
-          label='Ethnicity'
-          value={data.fatherEthnicity}
-        />
-        <Info
-          label='Religion'
-          value={data.fatherReligion}
-        />
-        <Info
-          label='Place of Birth'
-          value={data.fatherPob}
-        />
-        <Info
-          label='Date of Birth'
-          value={data.fatherDob}
-        />
-        <Info
-          label='Phone Number'
-          value={data.fatherPhoneNumber}
-        />
-        <Info
-          label='Address'
-          value={data.fatherAddress}
-        />
-      </div>
-      <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Mother</h4>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
-        <Info
-          label='Name'
-          value={data.motherNameEng}
-        />
-        <Info
-          label='Other Name'
-          value={data.motherNickname || '-'}
-        />
-        <Info
-          label='NRC'
-          value={data.motherNrc}
-        />
-        <Info
-          label='Job'
-          value={data.motherJob}
-        />
-        <Info
-          label='Ethnicity'
-          value={data.motherEthnicity}
-        />
-        <Info
-          label='Religion'
-          value={data.motherReligion}
-        />
-        <Info
-          label='Place of Birth'
-          value={data.motherPob}
-        />
-        <Info
-          label='Date of Birth'
-          value={data.motherDob}
-        />
-        <Info
-          label='Phone Number'
-          value={data.motherPhoneNumber}
-        />
-        <Info
-          label='Address'
-          value={data.motherAddress}
-        />
-      </div>
-      <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>
-        Matriculation
-      </h4>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
-        <Info
-          label='Matric Roll No'
-          value={data.matriculationRollNumber}
-        />
-        <Info
-          label='Matric Year'
-          value={data.matriculationPassedYear}
-        />
-        <Info
-          label='Matric Department'
-          value={data.department}
-        />
-        <Info
-          label='Total'
-          value={String(
-            data.subjectScores.reduce(
-              (total, current) => (total += current.score),
-              0,
-            ),
-          )}
-        />
-        {data.subjectScores.map((subject, i) => (
+    <>
+      <FormCardHeader
+        form={data.formData}
+        title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
+      />
+      <CardContent>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
-            key={i}
-            label={subject.subjectName}
-            value={String(subject.score)}
+            label='Name'
+            value={data.studentNameEng}
           />
-        ))}
-      </div>
-      <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>
-        Major Choices
-      </h4>
-      <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
-        {data.majorChoices.map((choice, i) => (
           <Info
-            key={i}
-            label={`Choice ${i + 1}`}
-            value={`${choice.majorName} (Priority: ${choice.priorityScore})`}
+            label='Other Name'
+            value={data.studentNickname || '-'}
           />
-        ))}
-      </div>
-    </div>
+          <Info
+            label='Enrollment Number'
+            value={data.enrollmentNumber}
+          />
+          <Info
+            label='NRC'
+            value={data.studentNrc}
+          />
+          <Info
+            label='Ethnicity'
+            value={data.studentEthnicity}
+          />
+          <Info
+            label='Religion'
+            value={data.studentReligion}
+          />
+          <Info
+            label='Place of Birth'
+            value={data.studentPob}
+          />
+          <Info
+            label='Date of Birth'
+            value={data.studentDob}
+          />
+          <Info
+            label='Phone Number'
+            value={data.studentPhoneNumber}
+          />
+        </div>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Father</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
+          <Info
+            label='Name'
+            value={data.fatherNameEng}
+          />
+          <Info
+            label='Other Name'
+            value={data.fatherNickname || '-'}
+          />
+          <Info
+            label='NRC'
+            value={data.fatherNrc}
+          />
+          <Info
+            label='Job'
+            value={data.fatherJob}
+          />
+          <Info
+            label='Ethnicity'
+            value={data.fatherEthnicity}
+          />
+          <Info
+            label='Religion'
+            value={data.fatherReligion}
+          />
+          <Info
+            label='Place of Birth'
+            value={data.fatherPob}
+          />
+          <Info
+            label='Date of Birth'
+            value={data.fatherDob}
+          />
+          <Info
+            label='Phone Number'
+            value={data.fatherPhoneNumber}
+          />
+          <Info
+            label='Address'
+            value={data.fatherAddress}
+          />
+        </div>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Mother</h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
+          <Info
+            label='Name'
+            value={data.motherNameEng}
+          />
+          <Info
+            label='Other Name'
+            value={data.motherNickname || '-'}
+          />
+          <Info
+            label='NRC'
+            value={data.motherNrc}
+          />
+          <Info
+            label='Job'
+            value={data.motherJob}
+          />
+          <Info
+            label='Ethnicity'
+            value={data.motherEthnicity}
+          />
+          <Info
+            label='Religion'
+            value={data.motherReligion}
+          />
+          <Info
+            label='Place of Birth'
+            value={data.motherPob}
+          />
+          <Info
+            label='Date of Birth'
+            value={data.motherDob}
+          />
+          <Info
+            label='Phone Number'
+            value={data.motherPhoneNumber}
+          />
+          <Info
+            label='Address'
+            value={data.motherAddress}
+          />
+        </div>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>
+          Matriculation
+        </h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
+          <Info
+            label='Matric Roll No'
+            value={data.matriculationRollNumber}
+          />
+          <Info
+            label='Matric Year'
+            value={data.matriculationPassedYear}
+          />
+          <Info
+            label='Matric Department'
+            value={data.department}
+          />
+          <Info
+            label='Total'
+            value={String(
+              data.subjectScores.reduce(
+                (total, current) => (total += current.score),
+                0,
+              ),
+            )}
+          />
+          {data.subjectScores.map((subject, i) => (
+            <Info
+              key={i}
+              label={subject.subjectName}
+              value={String(subject.score)}
+            />
+          ))}
+        </div>
+        <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>
+          Major Choices
+        </h4>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
+          {data.majorChoices.map((choice, i) => (
+            <Info
+              key={i}
+              label={`Choice ${i + 1}`}
+              value={`${choice.majorName} (Priority: ${choice.priorityScore})`}
+            />
+          ))}
+        </div>
+      </CardContent>
+    </>
   )
 }
