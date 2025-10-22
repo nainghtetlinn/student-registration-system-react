@@ -38,7 +38,7 @@ export const ReviewStudentForms = ({ id }: { id: string }) => {
           View and manage student registration information
         </p>
       </div>
-      <Card className='relative'>
+      <Card className='relative mx-auto max-w-xl'>
         <FormCardHeader
           form={entranceFormResult.data.formData}
           title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
@@ -47,7 +47,7 @@ export const ReviewStudentForms = ({ id }: { id: string }) => {
           <StudentEntranceFormDetail data={entranceFormResult.data} />
         </CardContent>
       </Card>
-      <Card className='relative'>
+      <Card className='relative mx-auto max-w-xl'>
         <FormCardHeader
           form={subjectChoiceResult.data.formData}
           title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
@@ -56,7 +56,7 @@ export const ReviewStudentForms = ({ id }: { id: string }) => {
           <StudentSubjectChoiceFormDetail data={subjectChoiceResult.data} />
         </CardContent>
       </Card>
-      <Card className='relative'>
+      <Card className='relative mx-auto max-w-xl'>
         <FormCardHeader
           form={registrationFormResult.data.formData}
           title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
