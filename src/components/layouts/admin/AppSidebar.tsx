@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/sidebar'
 import {
   ChartPie,
-  Files,
+  FileText,
   PlusCircle,
   ShieldUser,
   SquareSlash,
@@ -76,12 +76,17 @@ const contents = {
 
   forms: [
     {
-      name: 'Forms',
-      href: '/admin/forms',
-      icon: Files,
+      name: 'Dashboard',
+      href: '/admin',
+      icon: ShieldUser,
     },
     {
-      name: 'Create',
+      name: 'Forms',
+      href: '/admin/forms',
+      icon: FileText,
+    },
+    {
+      name: 'Create Form',
       href: '/admin/forms/create',
       icon: PlusCircle,
     },
@@ -133,14 +138,14 @@ export const AppSidebar = ({
       <SidebarContent>
         {user?.role === 'Admin' && (
           <AppSidebarGroup
-            label='Accounts'
-            items={contents.accounts}
+            label='Admin'
+            items={contents.forms}
           />
         )}
         {user?.role === 'Admin' && (
           <AppSidebarGroup
-            label='Forms'
-            items={contents.forms}
+            label='Accounts'
+            items={contents.accounts}
           />
         )}
         {user?.role === 'Finance' && (
