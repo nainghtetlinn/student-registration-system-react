@@ -31,7 +31,7 @@ export const RejectBtn = ({ id }: { id: string }) => {
       open={open}
       onOpenChange={setOpen}
     >
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button
           type='button'
           variant={'destructive'}
