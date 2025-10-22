@@ -68,24 +68,26 @@ export const ConfirmClosure = ({ id }: { id: string }) => {
               control={form.control}
               name='otp'
               render={({ field }) => (
-                <FormItem className='flex justify-center'>
-                  <FormControl>
-                    <InputOTP
-                      maxLength={6}
-                      {...field}
-                    >
-                      <InputOTPGroup>
-                        <InputOTPSlot index={0} />
-                        <InputOTPSlot index={1} />
-                        <InputOTPSlot index={2} />
-                        <InputOTPSlot index={3} />
-                        <InputOTPSlot index={4} />
-                        <InputOTPSlot index={5} />
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <div className='mx-auto'>
+                  <FormItem>
+                    <FormControl>
+                      <InputOTP
+                        maxLength={6}
+                        {...field}
+                      >
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </div>
               )}
             />
           </CardContent>
