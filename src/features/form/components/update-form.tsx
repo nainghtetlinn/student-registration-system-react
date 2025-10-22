@@ -10,18 +10,21 @@ import {
 import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
 import { Spinner } from '@/components/ui/spinner'
-import { FilePen } from 'lucide-react'
+import { ArrowLeft, FilePen } from 'lucide-react'
 
 import type { TForm } from '@/types/form'
 import type { TFormSchema } from '../schemas/form.schema'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 
 import { useUpdateForm } from '../api/update-form'
 import { formSchema } from '../schemas/form.schema'
 
 export const UpdateForm = ({ data: formDetails }: { data: TForm }) => {
+  const navigate = useNavigate()
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,7 +71,14 @@ export const UpdateForm = ({ data: formDetails }: { data: TForm }) => {
               label='Code'
             />
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <Button
+              variant='secondary'
+              onClick={() => navigate({ to: '..' })}
+            >
+              <ArrowLeft className='mr-2 h-4 w-4' />
+              Back
+            </Button>
             <Button disabled={isPending}>
               Save {isPending ? <Spinner /> : <FilePen />}
             </Button>
