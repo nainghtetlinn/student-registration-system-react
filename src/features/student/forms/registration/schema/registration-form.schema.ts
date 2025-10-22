@@ -39,7 +39,7 @@ const parentSchema = z.object({
     .refine((val) => val === 0 || val.toString().length === 4, 'Invalid year'),
 })
 
-const siblingSchema = z.object({
+export const siblingSchema = z.object({
   name: z.string().min(1),
   nrc: nrcSchema,
   job: z.string().min(1),
@@ -57,4 +57,5 @@ export const registrationFormSchema = z.object({
     .refine((val) => val === true, 'Acknowledgement required.'),
 })
 
+export type TSiblingSchema = z.infer<typeof siblingSchema>
 export type TRegistrationFormSchema = z.infer<typeof registrationFormSchema>

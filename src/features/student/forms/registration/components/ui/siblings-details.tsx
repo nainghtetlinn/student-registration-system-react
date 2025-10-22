@@ -1,13 +1,21 @@
-import { NrcInput } from '@/components/nrc-input'
 import { Button } from '@/components/ui/button'
-import { FormCheckboxField, FormInputField } from '@/components/ui/form-fields'
+import { FormCheckboxField } from '@/components/ui/form-fields'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { Trash2 } from 'lucide-react'
+import { AddSibling } from './add-sibling'
 
 import type { TRegistrationFormSchema } from '../../schema/registration-form.schema'
 
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
-import { nrcDefaults } from '@/lib/schema'
+import { nrcObjectToString } from '@/lib/utils'
 
 export const SiblingsDetails = () => {
   const form = useFormContext<TRegistrationFormSchema>()
@@ -22,60 +30,50 @@ export const SiblingsDetails = () => {
       <h2 className='mb-4 text-center leading-8 font-semibold'>
         ညီအကိုမောင်နှမများ
       </h2>
-      {fields.map((field, index) => (
-        <div
-          key={field.id}
-          className='flex flex-col gap-2'
-        >
-          <div className='flex items-center justify-between'>
-            <p>Sibling {index + 1}</p>
-            <Button
-              type='button'
-              size='icon'
-              variant='ghost'
-              onClick={() => remove(index)}
-            >
-              <Trash2 />
-            </Button>
-          </div>
-          <FormInputField
-            control={form.control}
-            name={`siblings.${index}.name`}
-            placeholder='အမည်'
-          />
-          <NrcInput
-            control={form.control}
-            stateCodeName={`siblings.${index}.nrc.stateCode`}
-            townshipCodeName={`siblings.${index}.nrc.townshipCode`}
-            nrcTypeName={`siblings.${index}.nrc.nrcType`}
-            nrcNumberName={`siblings.${index}.nrc.nrcNumber`}
-          />
-          <FormInputField
-            control={form.control}
-            name={`siblings.${index}.job`}
-            placeholder='အလုပ်အကိုင်'
-          />
-          <FormInputField
-            control={form.control}
-            name={`siblings.${index}.address`}
-            placeholder='နေရပ်လိပ်စာ'
-          />
-        </div>
-      ))}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>NRC</TableHead>
+            <TableHead>Job</TableHead>
+            <TableHead>Address</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {fields.length > 0 ? (
+            fields.map((field, index) => (
+              <TableRow key={field.id}>
+                <TableCell>{field.name}</TableCell>
+                <TableCell>{nrcObjectToString(field.nrc)}</TableCell>
+                <TableCell>{field.job}</TableCell>
+                <TableCell>{field.address}</TableCell>
+                <TableCell className='w-9'>
+                  <Button
+                    size='icon'
+                    variant='destructive'
+                    type='button'
+                    onClick={() => remove(index)}
+                  >
+                    <Trash2 />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={5}
+                className='text-muted-foreground text-center text-sm'
+              >
+                No Sibling
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
-      {fields.length === 0 && (
-        <p className='rounded border py-4 text-center'>No Siblings.</p>
-      )}
-
-      <Button
-        type='button'
-        className='w-full'
-        onClick={() =>
-          append({ name: '', nrc: nrcDefaults, job: '', address: '' })
-        }
-      >
-        Add Sibling
-      </Button>
+      <AddSibling append={append} />
 
       <FormCheckboxField
         control={form.control}
