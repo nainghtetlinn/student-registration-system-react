@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form'
 
 import { useVerifyStudent } from '../api/verify-student.api'
 import { verifyStudentSchema } from '../schema/verify-student.schema'
+import { RejectBtn } from './ui/reject-btn'
 
 export const ReviewStudentForms = ({
   id,
@@ -93,6 +94,7 @@ export const ReviewStudentForms = ({
             <MultistepFormSubmit disabled={isPending}>
               Accept {isPending && <Spinner />}
             </MultistepFormSubmit>
+            <RejectBtn id={id} />
           </CardFooter>
         </Card>
       </MultistepForm>
