@@ -1,7 +1,7 @@
 import { Pending } from '@/components/layouts/shared/pending'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { AppHeader } from '@/features/admin/components/layout/AppHeader'
-import { AppSidebar } from '@/features/admin/components/layout/AppSidebar'
+import { AppHeader } from '@/components/layouts/admin/AppHeader'
+import { AppSidebar } from '@/components/layouts/admin/AppSidebar'
 
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
