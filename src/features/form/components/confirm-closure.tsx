@@ -1,3 +1,4 @@
+import { BackBtn } from '@/components/common/back-btn'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -91,7 +92,8 @@ export const ConfirmClosure = ({ id }: { id: string }) => {
               )}
             />
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <BackBtn />
             <Button
               variant={'destructive'}
               disabled={isPending}

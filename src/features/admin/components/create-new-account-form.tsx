@@ -1,3 +1,4 @@
+import { BackBtn } from '@/components/common/back-btn'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -16,8 +17,8 @@ import { useForm } from 'react-hook-form'
 
 import {
   ROLES,
-  useCreateNewAccount,
   createNewAccountInputSchema,
+  useCreateNewAccount,
   type TCreateNewAccountInput,
 } from '@/api/admin/create-new-account'
 
@@ -71,7 +72,8 @@ export const CreateNewAccountForm = () => {
               keyExtractor={(item) => item}
             />
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <BackBtn />
             <Button disabled={isPending}>
               Create{' '}
               {isPending ? (

@@ -1,3 +1,4 @@
+import { BackBtn } from '@/components/common/back-btn'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -187,7 +188,8 @@ export const CreateReceipt = () => {
               </DialogContent>
             </Dialog>
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <BackBtn />
             <Button disabled={isPending}>
               Save {isPending ? <Spinner /> : <TicketPlus />}
             </Button>

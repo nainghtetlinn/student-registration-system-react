@@ -1,3 +1,4 @@
+import { BackBtn } from '@/components/common/back-btn'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -16,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ArrowLeft, Edit } from 'lucide-react'
+import { Edit } from 'lucide-react'
 import { DeleteReceiptBtn } from './delete-receipt-btn'
 
 import type { TReceipt } from '@/types/receipt'
@@ -115,13 +116,7 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
       </CardContent>
 
       <CardFooter className='flex justify-end'>
-        <Button
-          variant='secondary'
-          onClick={() => navigate({ to: '..' })}
-        >
-          <ArrowLeft className='mr-2 h-4 w-4' />
-          Back
-        </Button>
+        <BackBtn />
       </CardFooter>
     </Card>
   )

@@ -26,6 +26,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { TicketPlus, Trash2 } from 'lucide-react'
+import { BackBtn } from '@/components/common/back-btn'
 
 import type { TReceipt } from '@/types/receipt'
 import type { TReceiptSchema } from '../schema/receipt.schema'
@@ -196,7 +197,8 @@ export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
               </DialogContent>
             </Dialog>
           </CardContent>
-          <CardFooter className='flex justify-end'>
+          <CardFooter className='flex justify-end gap-2'>
+            <BackBtn />
             <Button disabled={isPending}>
               Save {isPending ? <Spinner /> : <TicketPlus />}
             </Button>
