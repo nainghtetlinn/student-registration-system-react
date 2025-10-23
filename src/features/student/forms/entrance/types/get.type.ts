@@ -8,5 +8,24 @@ export type TFiles = {
 
 export type TGetEntranceFormResponse = {
   formData: TForm
-} & TFiles &
-  Omit<TEntranceForm, 'formId'>
+  studentSignatureUrl: string | null
+  studentPhotoUrl: string | null
+  submitted: boolean
+  paid: boolean
+  verified: boolean
+  departmentSection: {
+    studentAffairNote: string | null
+    studentAffairOtherNote: string | null
+    studentAffairVerifiedDate: string | null
+    financeNote: string | null
+    financeDate: string | null
+    financeVoucherNumber: string | null
+    financeVerifierName: string | null
+    financeVerifierSignature: string | null
+  }
+  formUrls: {
+    entranceFormUrl: string | null
+    subjectChoiceUrl: string | null
+    registrationUrl: string | null
+  }
+} & Omit<TEntranceForm, 'formId'>

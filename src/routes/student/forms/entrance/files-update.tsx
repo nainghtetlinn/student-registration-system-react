@@ -20,7 +20,7 @@ export const Route = createFileRoute('/student/forms/entrance/files-update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, files } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -28,8 +28,11 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <UpdateFilesForm
-          formDetails={formDetails}
-          files={files}
+          formDetails={data.formData}
+          files={{
+            studentPhotoUrl: data.studentPhotoUrl,
+            studentSignatureUrl: data.studentSignatureUrl,
+          }}
           onSuccess={() => {
             navigate({ to: '/student' })
           }}

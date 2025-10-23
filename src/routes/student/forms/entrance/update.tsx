@@ -4,6 +4,7 @@ import { UpdateEntranceForm } from '@/features/student/forms/entrance/components
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
+import { fromDto } from '@/features/student/forms/entrance/lib/entrance-form-dto'
 
 export const Route = createFileRoute('/student/forms/entrance/update')({
   component: RouteComponent,
@@ -20,7 +21,7 @@ export const Route = createFileRoute('/student/forms/entrance/update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -28,8 +29,8 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <UpdateEntranceForm
-          formDetails={formDetails}
-          formData={formData}
+          formDetails={data.formData}
+          formData={fromDto(data)}
           onSuccess={() => {
             navigate({ to: '/student/forms/entrance/files-update' })
           }}
