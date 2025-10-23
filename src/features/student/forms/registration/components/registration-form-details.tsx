@@ -8,19 +8,16 @@ import {
 } from '@/components/ui/card'
 import { Edit2 } from 'lucide-react'
 
-import type { TForm } from '@/types/form'
-import type { TRegistrationFormSchema } from '../schema/registration-form.schema'
+import type { TGetRegistrationFormResponse } from '../types/get.type'
 
 import { Link } from '@tanstack/react-router'
 
-import { cn, nrcObjectToString } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 export const RegistrationFormDetails = ({
-  formDetails,
-  formData,
+  data,
 }: {
-  formDetails: TForm
-  formData: TRegistrationFormSchema
+  data: TGetRegistrationFormResponse
 }) => {
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
@@ -36,145 +33,145 @@ export const RegistrationFormDetails = ({
           </Link>
         </Button>
         <CardTitle className='text-2xl'>Registration Form Details</CardTitle>
-        <CardDescription>{`${formDetails.academicYear} ပညာသင်နှစ်`}</CardDescription>
+        <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
       </CardHeader>
       <CardContent>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Name (English)'
-            value={formData.student.nameEn}
+            value={data.studentNameEng}
           />
           <Info
             label='Name (Myanmar)'
-            value={formData.student.nameMm}
+            value={data.studentNameMm}
           />
           <Info
             label='Other Name'
-            value={formData.student.otherName}
+            value={data.studentNickname || '-'}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.student.nrc)}
+            value={data.studentNrc}
           />
           <Info
             label='Ethnicity'
-            value={formData.student.ethnicity}
+            value={data.studentEthnicity}
           />
           <Info
             label='Religion'
-            value={formData.student.religion}
+            value={data.studentReligion}
           />
           <Info
             label='Place of Birth'
-            value={formData.student.pob}
+            value={data.studentPob}
           />
           <Info
             label='Date of Birth'
-            value={formData.student.dob.toISOString().split('T')[0]}
+            value={data.studentDob}
           />
           <Info
             label='Enrollment Number'
-            value={formData.student.enrollmentNumber}
+            value={data.enrollmentNumber}
           />
         </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Father</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Name (English)'
-            value={formData.father.nameEn}
+            value={data.fatherNameEng}
           />
           <Info
             label='Name (Myanmar)'
-            value={formData.father.nameMm}
+            value={data.fatherNameMm}
           />
           <Info
             label='Other Name'
-            value={formData.father.otherName}
+            value={data.fatherNickname || '-'}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.father.nrc)}
+            value={data.fatherNrc}
           />
           <Info
             label='Ethnicity'
-            value={formData.father.ethnicity}
+            value={data.fatherEthnicity}
           />
           <Info
             label='Religion'
-            value={formData.father.religion}
+            value={data.fatherReligion}
           />
           <Info
             label='Place of Birth'
-            value={formData.father.pob}
+            value={data.fatherPob}
           />
           <Info
             label='Date of Birth'
-            value={formData.father.dob.toISOString().split('T')[0]}
+            value={data.fatherDob}
           />
           <Info
             label='Job'
-            value={formData.father.job}
+            value={data.fatherJob}
           />
           <Info
             label='Address'
-            value={formData.father.address}
+            value={data.fatherAddress}
           />
           <Info
             label='Year of Death'
-            value={formData.father.yod ? String(formData.father.yod) : '-'}
+            value={data.fatherDeathDate || '-'}
           />
         </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Mother</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Name (English)'
-            value={formData.mother.nameEn}
+            value={data.motherNameEng}
           />
           <Info
             label='Name (Myanmar)'
-            value={formData.mother.nameMm}
+            value={data.motherNameMm}
           />
           <Info
             label='Other Name'
-            value={formData.mother.otherName}
+            value={data.motherNickname || '-'}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.mother.nrc)}
+            value={data.motherNrc}
           />
           <Info
             label='Ethnicity'
-            value={formData.mother.ethnicity}
+            value={data.motherEthnicity}
           />
           <Info
             label='Religion'
-            value={formData.mother.religion}
+            value={data.motherReligion}
           />
           <Info
             label='Place of Birth'
-            value={formData.mother.pob}
+            value={data.motherPob}
           />
           <Info
             label='Date of Birth'
-            value={formData.mother.dob.toISOString().split('T')[0]}
+            value={data.motherDob}
           />
           <Info
             label='Job'
-            value={formData.mother.job}
+            value={data.motherJob}
           />
           <Info
             label='Address'
-            value={formData.mother.address}
+            value={data.motherAddress}
           />
           <Info
             label='Year of Death'
-            value={formData.mother.yod ? String(formData.mother.yod) : '-'}
+            value={data.motherDeathDate || '-'}
           />
         </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Siblings</h4>
-        {formData.siblings.length > 0 ? (
-          formData.siblings.map((sibling, index) => (
+        {data.siblings.length > 0 ? (
+          data.siblings.map((sibling, index) => (
             <div
               key={index}
               className={cn(
@@ -188,7 +185,7 @@ export const RegistrationFormDetails = ({
               />
               <Info
                 label='NRC'
-                value={nrcObjectToString(sibling.nrc)}
+                value={sibling.nrc}
               />
               <Info
                 label='Job'

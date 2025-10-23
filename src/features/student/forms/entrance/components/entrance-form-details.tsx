@@ -8,19 +8,14 @@ import {
 } from '@/components/ui/card'
 import { Edit2 } from 'lucide-react'
 
-import type { TForm } from '@/types/form'
-import type { TEntranceFormSchema } from '../schema/entrance-form.schema'
+import type { TGetEntranceFormResponse } from '../types/get.type'
 
 import { Link } from '@tanstack/react-router'
 
-import { nrcObjectToString } from '@/lib/utils'
-
 export const EntranceFormDetails = ({
-  formDetails,
-  formData,
+  data,
 }: {
-  formDetails: TForm
-  formData: TEntranceFormSchema
+  data: TGetEntranceFormResponse
 }) => {
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
@@ -36,50 +31,50 @@ export const EntranceFormDetails = ({
           </Link>
         </Button>
         <CardTitle className='text-2xl'>Entrance Form Details</CardTitle>
-        <CardDescription>{`${formDetails.academicYear} ပညာသင်နှစ်`}</CardDescription>
+        <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
       </CardHeader>
       <CardContent>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Academic Year'
-            value={formDetails.academicYear}
+            value={data.formData.academicYear}
           />
           <Info
             label='Enrollment Number'
-            value={formData.student.enrollmentNumber}
+            value={data.enrollmentNumber}
           />
           <Info
             label='Name (MM)'
-            value={formData.student.nameMm}
+            value={data.studentNameMm}
           />
           <Info
             label='Name (Eng)'
-            value={formData.student.nameEn}
+            value={data.studentNameEng}
           />
           <Info
             label='Ethnicity'
-            value={formData.student.ethnicity}
+            value={data.ethnicity}
           />
           <Info
             label='Religion'
-            value={formData.student.religion}
+            value={data.religion}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.student.nrc)}
+            value={data.studentNrc}
           />
           <Info
             label='Date of Birth'
-            value={formData.student.dob.toISOString().split('T')[0]}
+            value={data.dob}
           />
           <Info
             label='Matriculation Passed Year'
-            value={formData.student.matriculationPassedYear}
+            value={data.matriculationPassedYear}
           />
           <Info
             label='Matriculation Department'
-            value={formData.student.matriculationDepartment}
+            value={data.department}
           />
         </div>
 
@@ -87,19 +82,19 @@ export const EntranceFormDetails = ({
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Name (MM)'
-            value={formData.father.nameMm}
+            value={data.fatherNameMm}
           />
           <Info
             label='Name (Eng)'
-            value={formData.father.nameEn}
+            value={data.fatherNameEng}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.father.nrc)}
+            value={data.fatherNrc}
           />
           <Info
             label='Job'
-            value={formData.father.job}
+            value={data.fatherJob}
           />
         </div>
 
@@ -107,19 +102,19 @@ export const EntranceFormDetails = ({
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Name (MM)'
-            value={formData.mother.nameMm}
+            value={data.motherNameMm}
           />
           <Info
             label='Name (Eng)'
-            value={formData.mother.nameEn}
+            value={data.motherNameEng}
           />
           <Info
             label='NRC'
-            value={nrcObjectToString(formData.mother.nrc)}
+            value={data.motherNrc}
           />
           <Info
             label='Job'
-            value={formData.mother.job}
+            value={data.motherJob}
           />
         </div>
 
@@ -127,19 +122,19 @@ export const EntranceFormDetails = ({
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
             label='Address'
-            value={formData.contact.address}
+            value={data.address}
           />
           <Info
             label='Phone Number'
-            value={formData.contact.phoneNumber}
+            value={data.phoneNumber}
           />
           <Info
             label='Permanent Address'
-            value={formData.contact.permanentAddress}
+            value={data.permanentAddress}
           />
           <Info
             label='Permanent Phone Number'
-            value={formData.contact.permanentPhoneNumber}
+            value={data.permanentPhoneNumber}
           />
         </div>
       </CardContent>

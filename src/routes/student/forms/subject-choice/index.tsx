@@ -4,7 +4,6 @@ import { SubjectChoiceFormDetails } from '@/features/student/forms/subject-choic
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
-import { fromDto } from '@/features/student/forms/subject-choice/lib/subject-choice-form-dto'
 
 export const Route = createFileRoute('/student/forms/subject-choice/')({
   component: RouteComponent,
@@ -29,10 +28,7 @@ function RouteComponent() {
       <title>Subject Choice Form</title>
 
       <div className='pt-4'>
-        <SubjectChoiceFormDetails
-          formDetails={data.formData}
-          formData={fromDto(data)}
-        />
+        <SubjectChoiceFormDetails data={data} />
       </div>
     </>
   )
