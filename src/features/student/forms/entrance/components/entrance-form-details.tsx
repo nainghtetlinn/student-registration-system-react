@@ -18,7 +18,10 @@ export const EntranceFormDetails = ({
   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
   const signResult = useGetFile(data.studentSignatureUrl, 'Signature')
   const paymentResult = useGetFile(data.studentSignatureUrl, 'Payment')
-  const financeSignResult = useGetFile(data.studentSignatureUrl, 'Finance Sign')
+  const financeSignResult = useGetFile(
+    data.departmentSection.financeVerifierSignature,
+    'Finance Sign',
+  )
 
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
@@ -154,41 +157,89 @@ export const EntranceFormDetails = ({
           />
         </div>
 
-        <div className='my-2 flex justify-end gap-2'>
-          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-            {signResult.loading ? (
-              <Skeleton className='h-full w-full' />
-            ) : (
-              <img
-                src={signResult.fileUrl || ''}
-                alt='Photo'
-                className='h-full w-full object-contain'
-              />
-            )}
+        <div className='mt-6 space-y-2'>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ကျောင်းသားရေးရာဌာနမှတ်ချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairNote || '-'}
+            </span>
           </div>
-          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-            {financeSignResult.loading ? (
-              <Skeleton className='h-full w-full' />
-            ) : (
-              <img
-                src={financeSignResult.fileUrl || ''}
-                alt='Photo'
-                className='h-full w-full object-contain'
-              />
-            )}
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              အခြားထောက်ခံချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairOtherNote || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              စစ်ဆေးသည့်ရက်စွဲ
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairVerifiedDate || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ငွေစာရင်းဌာနမှတ်ချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeNote || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ကျောင်းလခပေးသွင်းရက်စွဲ
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeDate || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>ပြေစာအမှတ်</span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeVoucherNumber || '-'}
+            </span>
           </div>
         </div>
-        <div className='flex justify-center'>
-          <div className='h-[500px] w-[300px] overflow-hidden rounded border'>
-            {paymentResult.loading ? (
-              <Skeleton className='h-full w-full' />
-            ) : (
-              <img
-                src={paymentResult.fileUrl || ''}
-                alt='Photo'
-                className='h-full w-full object-contain'
-              />
-            )}
+
+        <div className='mt-4 flex justify-end gap-4'>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              ကျောင်းသား/သူလက်မှတ်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {signResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={signResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.studentNameEng}</h5>
+          </div>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              စစ်ဆေးလက်ခံသူအမည်နှင့်လက်မှတ်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {financeSignResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={financeSignResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.departmentSection.financeVerifierName || '-'}</h5>
           </div>
         </div>
       </CardContent>
