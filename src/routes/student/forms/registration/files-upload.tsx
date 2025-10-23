@@ -16,7 +16,20 @@ export const Route = createFileRoute(
     })
   },
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(getRegistrationFormQuery())
+    const registrationForm = await context.queryClient.ensureQueryData(
+      getRegistrationFormQuery(),
+    )
+
+    if (
+      registrationForm.studentSignatureUrl &&
+      registrationForm.guardianSginatureUrl &&
+      registrationForm.guardianName
+    )
+      throw redirect({
+        to: '/student',
+      })
+
+    return registrationForm
   },
 })
 

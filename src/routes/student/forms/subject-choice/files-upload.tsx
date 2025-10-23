@@ -12,13 +12,24 @@ export const Route = createFileRoute(
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
-      to: '/student/forms/subject-choice/create',
+      to: '/student',
     })
   },
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(
+    const subjectChoiceForm = await context.queryClient.ensureQueryData(
       getSubjectChoiceFormQuery(),
     )
+
+    if (
+      subjectChoiceForm.studentSignatureUrl &&
+      subjectChoiceForm.guardianSginatureUrl &&
+      subjectChoiceForm.guardianName
+    )
+      throw redirect({
+        to: '/student',
+      })
+
+    return subjectChoiceForm
   },
 })
 

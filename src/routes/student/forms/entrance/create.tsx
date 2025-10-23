@@ -27,6 +27,10 @@ export const Route = createFileRoute('/student/forms/entrance/create')({
         getEntranceFormQuery(),
       )
       if (entranceForm) shouldRedirect = true
+      if (!entranceForm.studentPhotoUrl || !entranceForm.studentSignatureUrl)
+        throw redirect({
+          to: '/student/forms/entrance/files-upload',
+        })
     } catch (error) {
       console.log(error)
     }

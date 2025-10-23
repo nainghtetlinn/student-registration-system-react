@@ -23,6 +23,14 @@ export const Route = createFileRoute('/student/forms/subject-choice/create')({
         getSubjectChoiceFormQuery(),
       )
       if (subjectChoiceForm) shouldRedirect = true
+      if (
+        !subjectChoiceForm.studentSignatureUrl ||
+        !subjectChoiceForm.guardianSginatureUrl ||
+        !subjectChoiceForm.guardianName
+      )
+        throw redirect({
+          to: '/student/forms/subject-choice/files-upload',
+        })
     } catch (error) {
       console.log(error)
     }

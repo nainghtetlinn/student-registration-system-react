@@ -10,11 +10,20 @@ export const Route = createFileRoute('/student/forms/entrance/files-upload')({
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
     throw redirect({
-      to: '/student/forms/entrance/create',
+      to: '/student',
     })
   },
   loader: async ({ context }) => {
-    return await context.queryClient.ensureQueryData(getEntranceFormQuery())
+    const entranceForm = await context.queryClient.ensureQueryData(
+      getEntranceFormQuery(),
+    )
+
+    if (entranceForm.studentPhotoUrl && entranceForm.studentSignatureUrl)
+      throw redirect({
+        to: '/student',
+      })
+
+    return entranceForm
   },
 })
 
