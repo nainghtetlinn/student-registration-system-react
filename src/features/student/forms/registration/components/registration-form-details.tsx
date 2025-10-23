@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Edit2 } from 'lucide-react'
 
 import type { TGetRegistrationFormResponse } from '../types/get.type'
@@ -13,12 +14,23 @@ import type { TGetRegistrationFormResponse } from '../types/get.type'
 import { Link } from '@tanstack/react-router'
 
 import { cn } from '@/lib/utils'
+import { useGetFile } from '../api/get-file.api'
 
 export const RegistrationFormDetails = ({
   data,
 }: {
   data: TGetRegistrationFormResponse
 }) => {
+  //   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
+  const studentSignResult = useGetFile(
+    data.studentSignatureUrl,
+    'Student Signature',
+  )
+  const guardianSignResult = useGetFile(
+    data.guardianSginatureUrl,
+    'Guardian Signature',
+  )
+
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
       <CardHeader className='text-center'>
@@ -36,6 +48,19 @@ export const RegistrationFormDetails = ({
         <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
       </CardHeader>
       <CardContent>
+        {/* <div>
+          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+            {photoResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={photoResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
+        </div> */}
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
@@ -200,6 +225,49 @@ export const RegistrationFormDetails = ({
         ) : (
           <p className='rounded border py-4 text-center'>No Siblings.</p>
         )}
+
+        <div className='mt-4 flex justify-end gap-4'>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              ဝင်ခွင့်လျှောက်ထားသူလက်မှတ်၊အမည်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {studentSignResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={studentSignResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.studentNameEng}</h5>
+            <p className='text-muted-foreground text-xs'>
+              {data.studentSignatureDate}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              မိဘ(သို့မဟုတ်)အုပ်ထိန်းသူ၏လက်မှတ်၊အမည်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {guardianSignResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={guardianSignResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.guardianName}</h5>
+            <p className='text-muted-foreground text-xs'>
+              {data.guardianSignatureDate}
+            </p>
+          </div>
+        </div>
       </CardContent>
     </Card>
   )
