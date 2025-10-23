@@ -20,7 +20,7 @@ export const ErrorComponent = ({
   children: ReactNode
 }) => {
   return (
-    <div className='flex h-[800px] items-center justify-center'>
+    <div className='flex h-[80vh] items-center justify-center'>
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant='icon'>
