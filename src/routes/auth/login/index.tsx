@@ -1,10 +1,16 @@
-import { paths } from '@/config/paths'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { LoginForm } from '@/features/auth/components/login-form'
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { z } from 'zod'
-import { AlertCircleIcon } from 'lucide-react'
 
 export const Route = createFileRoute('/auth/login/')({
   validateSearch: z.object({
@@ -23,37 +29,40 @@ function RouteComponent() {
     <>
       <title>Login</title>
 
-      <div className='flex w-full flex-col items-center gap-2'>
-        {search.isSuccessPasswordReset && (
-          <Alert className='max-w-xl border-yellow-200 bg-yellow-50 text-yellow-800 dark:border-yellow-800 dark:bg-yellow-950/30 dark:text-yellow-200 [&>svg]:text-yellow-600 dark:[&>svg]:text-yellow-400'>
-            <AlertCircleIcon />
-            <AlertTitle>Login required</AlertTitle>
-            <AlertDescription>
+      <AlertDialog defaultOpen={search.isSuccessPasswordReset}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Login required</AlertDialogTitle>
+            <AlertDialogDescription>
               You need to login again after successful password reset.
-            </AlertDescription>
-          </Alert>
-        )}
-        <LoginForm
-          redirect={search.redirect}
-          email={search.email ?? ''}
-          onSuccess={(data) => {
-            if (data.user.updatedAt == null) {
-              router.navigate({
-                to: paths.auth.changePassword.getHref(),
-                search: {
-                  email: data.user.email,
-                  redirect: search.redirect,
-                },
-              })
-            } else if (search.redirect) {
-              router.history.push(search.redirect)
-            } else {
-              if (data.user.role === 'Student') router.history.push('/student')
-              else router.history.push('/admin')
-            }
-          }}
-        />
-      </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>Ok</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <LoginForm
+        redirect={search.redirect}
+        email={search.email ?? ''}
+        onSuccess={(data) => {
+          if (data.user.updatedAt == null) {
+            router.navigate({
+              to: '/auth/change-password',
+              search: {
+                email: data.user.email,
+                redirect: search.redirect,
+              },
+            })
+          } else if (search.redirect) {
+            router.history.push(search.redirect)
+          } else {
+            if (data.user.role === 'Student') router.history.push('/student')
+            else router.history.push('/admin')
+          }
+        }}
+      />
     </>
   )
 }
