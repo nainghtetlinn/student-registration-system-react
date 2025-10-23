@@ -5,6 +5,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 import { nrcStringToObject } from '@/lib/utils'
+import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
 
 export const Route = createFileRoute('/student/forms/subject-choice/create')({
   component: RouteComponent,
@@ -15,6 +16,22 @@ export const Route = createFileRoute('/student/forms/subject-choice/create')({
     })
   },
   loader: async ({ context }) => {
+    let shouldRedirect = false
+
+    try {
+      const subjectChoiceForm = await context.queryClient.ensureQueryData(
+        getSubjectChoiceFormQuery(),
+      )
+      if (subjectChoiceForm) shouldRedirect = true
+    } catch (error) {
+      console.log(error)
+    }
+
+    if (shouldRedirect)
+      throw redirect({
+        to: '/student',
+      })
+
     return await context.queryClient.ensureQueryData(getEntranceFormQuery())
   },
 })
