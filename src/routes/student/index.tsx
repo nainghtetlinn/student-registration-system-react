@@ -28,7 +28,9 @@ export const Route = createFileRoute('/student/')({
   ),
   loader: async ({ context }) => {
     const qc = context.queryClient
-    return await qc.ensureQueryData(getOpenedFormsQuery())
+    const openedForms = await qc.ensureQueryData(getOpenedFormsQuery())
+    if (openedForms.length === 0) throw new Error('No Form Available')
+    return openedForms[0]
   },
 })
 
