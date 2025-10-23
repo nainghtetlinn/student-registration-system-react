@@ -33,6 +33,8 @@ export const MajorChoices = () => {
 
   const form = useFormContext<TSubjectChoiceFormSchema>()
 
+  const currentValues = form.watch('majorChoices')
+
   useEffect(() => {
     if (!majors || majors.length === 0) return
     majors.forEach((_, i) => {
@@ -98,8 +100,6 @@ export const MajorChoices = () => {
                       <Select
                         value={field.value}
                         onValueChange={(newValue) => {
-                          const currentValues =
-                            form.getValues('majorChoices') || []
                           const existingIndex = currentValues.findIndex(
                             (item, idx) =>
                               item.majorName === newValue && idx !== i,
@@ -134,12 +134,21 @@ export const MajorChoices = () => {
                         </FormControl>
                         <SelectContent>
                           {majors.map((m) => {
+                            const selectedIndex = currentValues.findIndex(
+                              (item) => item.majorName === m.shortName,
+                            )
                             return (
                               <SelectItem
                                 key={m.id}
                                 value={m.shortName}
                               >
                                 {m.engName}
+                                {selectedIndex !== -1 &&
+                                  i !== selectedIndex && (
+                                    <span className='text-muted-foreground ml-1'>
+                                      ({selectedIndex + 1})
+                                    </span>
+                                  )}
                               </SelectItem>
                             )
                           })}
