@@ -4,6 +4,7 @@ import { CreateRegistrationForm } from '@/features/student/forms/registration/co
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
+import { nrcStringToObject } from '@/lib/utils'
 
 export const Route = createFileRoute('/student/forms/registration/create')({
   component: RouteComponent,
@@ -22,11 +23,7 @@ export const Route = createFileRoute('/student/forms/registration/create')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const {
-    formDetails,
-    formData: subjectChoiceForm,
-    entranceForm,
-  } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -34,47 +31,47 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <CreateRegistrationForm
-          formDetails={formDetails}
+          formDetails={data.formData}
           defaultValues={{
             student: {
-              nameEn: entranceForm.student.nameEn,
-              nameMm: entranceForm.student.nameMm,
-              otherName: subjectChoiceForm.student.otherName,
-              ethnicity: subjectChoiceForm.student.ethnicity,
-              religion: subjectChoiceForm.student.religion,
-              nrc: subjectChoiceForm.student.nrc,
-              dob: subjectChoiceForm.student.dob,
-              pob: subjectChoiceForm.student.pob,
-              enrollmentNumber: subjectChoiceForm.student.enrollmentNumber,
+              nameEn: data.studentNameEng,
+              nameMm: data.studentNameMm,
+              otherName: data.studentNickname,
+              ethnicity: data.studentEthnicity,
+              religion: data.studentReligion,
+              nrc: nrcStringToObject(data.studentNrc),
+              dob: new Date(data.studentDob),
+              pob: data.studentPob,
+              enrollmentNumber: data.enrollmentNumber,
             },
             father: {
-              nameEn: entranceForm.father.nameEn,
-              nameMm: entranceForm.father.nameMm,
-              otherName: subjectChoiceForm.father.otherName,
-              ethnicity: subjectChoiceForm.father.ethnicity,
-              religion: subjectChoiceForm.father.religion,
-              nrc: subjectChoiceForm.father.nrc,
-              dob: subjectChoiceForm.father.dob,
-              pob: subjectChoiceForm.father.pob,
-              address: subjectChoiceForm.father.address,
-              job: subjectChoiceForm.father.job,
+              nameEn: data.fatherNameEng,
+              nameMm: data.fatherNameMm,
+              otherName: data.fatherNickname,
+              ethnicity: data.fatherEthnicity,
+              religion: data.fatherReligion,
+              nrc: nrcStringToObject(data.fatherNrc),
+              dob: new Date(data.fatherDob),
+              pob: data.fatherPob,
+              address: data.fatherAddress,
+              job: data.fatherJob,
               yod: '' as unknown as number,
             },
             mother: {
-              nameEn: entranceForm.mother.nameEn,
-              nameMm: entranceForm.mother.nameMm,
-              otherName: subjectChoiceForm.mother.otherName,
-              ethnicity: subjectChoiceForm.mother.ethnicity,
-              religion: subjectChoiceForm.mother.religion,
-              nrc: subjectChoiceForm.mother.nrc,
-              dob: subjectChoiceForm.mother.dob,
-              pob: subjectChoiceForm.mother.pob,
-              address: subjectChoiceForm.mother.address,
-              job: subjectChoiceForm.mother.job,
+              nameEn: data.motherNameEng,
+              nameMm: data.motherNameMm,
+              otherName: data.motherNickname,
+              ethnicity: data.motherEthnicity,
+              religion: data.motherReligion,
+              nrc: nrcStringToObject(data.motherNrc),
+              dob: new Date(data.motherDob),
+              pob: data.motherPob,
+              address: data.motherAddress,
+              job: data.motherJob,
               yod: '' as unknown as number,
             },
             siblings: [],
-            formId: formDetails.id,
+            formId: data.formData.id,
             acknowledged: false,
           }}
           onSuccess={() => {

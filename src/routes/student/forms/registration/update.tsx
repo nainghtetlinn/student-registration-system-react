@@ -1,8 +1,10 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { getRegistrationFormQuery } from '@/features/student/forms/registration/api/get.api'
 import { UpdateRegistrationForm } from '@/features/student/forms/registration/components/update-registration-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
+
+import { getRegistrationFormQuery } from '@/features/student/forms/registration/api/get.api'
+import { fromDto } from '@/features/student/forms/registration/lib/registration-form-dto'
 
 export const Route = createFileRoute('/student/forms/registration/update')({
   component: RouteComponent,
@@ -19,7 +21,7 @@ export const Route = createFileRoute('/student/forms/registration/update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -27,8 +29,8 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <UpdateRegistrationForm
-          formDetails={formDetails}
-          formData={formData}
+          formDetails={data.formData}
+          formData={fromDto(data)}
           onSuccess={() => {
             navigate({ to: '/student/forms/registration/files-update' })
           }}

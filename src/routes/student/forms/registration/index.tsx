@@ -4,6 +4,7 @@ import { RegistrationFormDetails } from '@/features/student/forms/registration/c
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getRegistrationFormQuery } from '@/features/student/forms/registration/api/get.api'
+import { fromDto } from '@/features/student/forms/registration/lib/registration-form-dto'
 
 export const Route = createFileRoute('/student/forms/registration/')({
   component: RouteComponent,
@@ -26,7 +27,10 @@ function RouteComponent() {
       <title>Registration Form</title>
 
       <div className='pt-4'>
-        <RegistrationFormDetails {...data} />
+        <RegistrationFormDetails
+          formDetails={data.formData}
+          formData={fromDto(data)}
+        />
       </div>
     </>
   )

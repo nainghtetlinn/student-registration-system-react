@@ -2,15 +2,19 @@ import type { TForm } from '@/types/form'
 import type { TRegistrationForm } from '@/types/student'
 
 export type TFiles = {
+  studentSignatureUrl: string | null
+  guardianName: string | null
+  guardianSginatureUrl: string | null
+}
+
+export type TGetRegistrationFormResponse = {
+  formData: TForm
   studentPhotoUrl: string | null
   studentSignatureUrl: string | null
   studentSignatureDate: string | null
   guardianName: string | null
   guardianSginatureUrl: string | null
   guardianSignatureDate: string | null
-}
-
-export type TOthers = {
   enrollmentNumber: string
   matriculationRollNumber: string
   studentNameMm: string
@@ -41,10 +45,4 @@ export type TOthers = {
   motherJob: string
   fatherAddress: string
   motherAddress: string
-}
-
-export type TGetRegistrationFormResponse = {
-  formData: TForm
-} & Omit<TRegistrationForm, 'formId'> &
-  TFiles &
-  TOthers
+} & Omit<TRegistrationForm, 'formId'>
