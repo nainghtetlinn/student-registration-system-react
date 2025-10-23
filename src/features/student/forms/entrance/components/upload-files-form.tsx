@@ -75,7 +75,7 @@ export const UploadFilesForm = ({
         </section>
 
         <section>
-          <Label className='leading-8'>လက်မှတ်</Label>
+          <Label className='leading-8'>ကျောင်းသား/သူလက်မှတ်</Label>
           <DropPhoto
             ref={signRef}
             photoName='Signature'

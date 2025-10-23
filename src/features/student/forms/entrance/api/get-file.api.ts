@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '@/api/lib/axios'
 
-type Type = 'Profile Photo' | 'Signature'
+type Type = 'Profile Photo' | 'Signature' | 'Payment' | 'Finance Sign'
 
 export const getFile = (url: string, type: Type) => {
   return api.get<ArrayBuffer>('/student/entranceForm/getFile', {

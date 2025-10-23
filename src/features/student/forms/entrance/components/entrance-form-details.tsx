@@ -1,39 +1,58 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Edit2 } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import type { TGetEntranceFormResponse } from '../types/get.type'
 
 import { Link } from '@tanstack/react-router'
+
+import { useGetFile } from '../api/get-file.api'
 
 export const EntranceFormDetails = ({
   data,
 }: {
   data: TGetEntranceFormResponse
 }) => {
+  const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
+  const signResult = useGetFile(data.studentSignatureUrl, 'Signature')
+  //   const paymentResult = useGetFile(data.studentSignatureUrl, 'Payment')
+  const financeSignResult = useGetFile(
+    data.departmentSection.financeVerifierSignature,
+    'Finance Sign',
+  )
+
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
-      <CardHeader className='text-center'>
-        <Button
-          className='absolute top-3 right-3'
-          asChild
-          variant='outline'
-          size='icon'
-        >
-          <Link to='/student/forms/entrance/update'>
-            <Edit2 />
-          </Link>
-        </Button>
-        <CardTitle className='text-2xl'>Entrance Form Details</CardTitle>
-        <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
-      </CardHeader>
+      <Button
+        className='absolute top-16 right-3'
+        asChild
+        variant='outline'
+        size='icon'
+      >
+        <Link to='/student/forms/entrance/update'>
+          <Edit2 />
+        </Link>
+      </Button>
+      <FormCardHeader
+        form={data.formData}
+        title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
+      />
       <CardContent>
+        <div>
+          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+            {photoResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={photoResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
+        </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
@@ -136,6 +155,92 @@ export const EntranceFormDetails = ({
             label='Permanent Phone Number'
             value={data.permanentPhoneNumber}
           />
+        </div>
+
+        <div className='mt-6 space-y-2'>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ကျောင်းသားရေးရာဌာနမှတ်ချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairNote || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              အခြားထောက်ခံချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairOtherNote || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              စစ်ဆေးသည့်ရက်စွဲ
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.studentAffairVerifiedDate || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ငွေစာရင်းဌာနမှတ်ချက်
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeNote || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>
+              ကျောင်းလခပေးသွင်းရက်စွဲ
+            </span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeDate || '-'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <span className='text-muted-foreground block'>ပြေစာအမှတ်</span>
+            <span className='text-card-foreground block'>
+              {data.departmentSection.financeVoucherNumber || '-'}
+            </span>
+          </div>
+        </div>
+
+        <div className='mt-4 flex justify-end gap-4'>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              ကျောင်းသား/သူလက်မှတ်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {signResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={signResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.studentNameEng}</h5>
+          </div>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              စစ်ဆေးလက်ခံသူအမည်နှင့်လက်မှတ်
+            </h5>
+            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+              {financeSignResult.loading ? (
+                <Skeleton className='h-full w-full' />
+              ) : (
+                <img
+                  src={financeSignResult.fileUrl || ''}
+                  alt='Photo'
+                  className='h-full w-full object-contain'
+                />
+              )}
+            </div>
+            <h5>{data.departmentSection.financeVerifierName || '-'}</h5>
+          </div>
         </div>
       </CardContent>
     </Card>

@@ -22,10 +22,10 @@ export const FormCardHeader = ({
         id={form.id.toString()}
         className='absolute top-2 left-2'
       />
-      <p className='absolute top-2 right-2'>
-        <span>{form.code}</span>
-        <span>#{form.number}</span>
-      </p>
+      <div className='absolute top-2 right-2'>
+        <p>{form.code}</p>
+        <p>#{form.number}</p>
+      </div>
     </CardHeader>
   )
 }
