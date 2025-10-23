@@ -8,6 +8,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty'
+import { OverviewCard } from '@/features/student/components/overview-card'
 import { EntranceFormDetails } from '@/features/student/forms/entrance/components/entrance-form-details'
 import { RegistrationFormDetails } from '@/features/student/forms/registration/components/registration-form-details'
 import { SubjectChoiceFormDetails } from '@/features/student/forms/subject-choice/components/subject-choice-form-details'
@@ -142,6 +143,27 @@ function RouteComponent() {
 
   return (
     <div>
+      <section className='container mx-auto my-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
+        <OverviewCard
+          title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
+          submitted={entranceFormResult.data.submitted}
+          paid={entranceFormResult.data.paid}
+          verified={entranceFormResult.data.verified}
+        />
+        <OverviewCard
+          title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
+          submitted
+          paid
+          verified
+        />
+        <OverviewCard
+          title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
+          submitted
+          paid
+          verified
+        />
+      </section>
+
       <div className='pt-4'>
         <EntranceFormDetails data={entranceFormResult.data} />
       </div>
