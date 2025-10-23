@@ -4,6 +4,7 @@ import { CreateSubjectChoiceForm } from '@/features/student/forms/subject-choice
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
+import { nrcStringToObject } from '@/lib/utils'
 
 export const Route = createFileRoute('/student/forms/subject-choice/create')({
   component: RouteComponent,
@@ -20,7 +21,7 @@ export const Route = createFileRoute('/student/forms/subject-choice/create')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData: entranceForm } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -28,47 +29,47 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <CreateSubjectChoiceForm
-          formDetails={formDetails}
+          formDetails={data.formData}
           defaultValues={{
             student: {
-              enrollmentNumber: entranceForm.student.enrollmentNumber,
-              name: entranceForm.student.nameEn,
+              enrollmentNumber: data.enrollmentNumber,
+              name: data.studentNameEng,
               otherName: '',
-              nrc: entranceForm.student.nrc,
-              ethnicity: entranceForm.student.ethnicity,
-              religion: entranceForm.student.religion,
-              dob: entranceForm.student.dob,
-              phoneNumber: entranceForm.contact.phoneNumber,
+              nrc: nrcStringToObject(data.studentNrc),
+              ethnicity: data.ethnicity,
+              religion: data.religion,
+              dob: new Date(data.dob),
+              phoneNumber: data.phoneNumber,
               pob: '',
             },
             father: {
-              name: entranceForm.father.nameEn,
+              name: data.fatherNameEng,
               otherName: '',
-              nrc: entranceForm.father.nrc,
+              nrc: nrcStringToObject(data.fatherNrc),
               ethnicity: '',
               religion: '',
               pob: '',
               dob: '' as unknown as Date,
               phoneNumber: '',
-              job: entranceForm.father.job,
+              job: data.fatherJob,
               address: '',
             },
             mother: {
-              name: entranceForm.mother.nameEn,
+              name: data.motherNameEng,
               otherName: '',
-              nrc: entranceForm.mother.nrc,
+              nrc: nrcStringToObject(data.motherNrc),
               ethnicity: '',
               religion: '',
               pob: '',
               dob: '' as unknown as Date,
               phoneNumber: '',
-              job: entranceForm.mother.job,
+              job: data.motherJob,
               address: '',
             },
             matriculation: {
               rollNo: '',
-              year: entranceForm.student.matriculationPassedYear,
-              department: entranceForm.student.matriculationDepartment,
+              year: data.matriculationPassedYear,
+              department: data.department,
               myanmar: '' as unknown as number,
               english: '' as unknown as number,
               mathematic: '' as unknown as number,
@@ -77,7 +78,7 @@ function RouteComponent() {
               other: '' as unknown as number,
             },
             majorChoices: [],
-            formId: formDetails.id,
+            formId: data.formData.id,
             acknowledged: false,
           }}
           onSuccess={() => {

@@ -4,6 +4,7 @@ import { UpdateSubjectChoiceForm } from '@/features/student/forms/subject-choice
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getSubjectChoiceFormQuery } from '@/features/student/forms/subject-choice/api/get.api'
+import { fromDto } from '@/features/student/forms/subject-choice/lib/subject-choice-form-dto'
 
 export const Route = createFileRoute('/student/forms/subject-choice/update')({
   component: RouteComponent,
@@ -22,7 +23,7 @@ export const Route = createFileRoute('/student/forms/subject-choice/update')({
 
 function RouteComponent() {
   const navigate = Route.useNavigate()
-  const { formDetails, formData } = Route.useLoaderData()
+  const data = Route.useLoaderData()
 
   return (
     <>
@@ -30,8 +31,8 @@ function RouteComponent() {
 
       <div className='pt-4'>
         <UpdateSubjectChoiceForm
-          formDetails={formDetails}
-          formData={formData}
+          formDetails={data.formData}
+          formData={fromDto(data)}
           onSuccess={() => {
             navigate({ to: '/student/forms/subject-choice/files-update' })
           }}
