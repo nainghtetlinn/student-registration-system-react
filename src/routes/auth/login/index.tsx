@@ -45,8 +45,11 @@ function RouteComponent() {
                   redirect: search.redirect,
                 },
               })
+            } else if (search.redirect) {
+              router.history.push(search.redirect)
             } else {
-              router.history.push(search.redirect ?? '/')
+              if (data.user.role === 'Student') router.history.push('/student')
+              else router.history.push('/admin')
             }
           }}
         />
