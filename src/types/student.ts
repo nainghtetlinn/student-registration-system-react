@@ -42,32 +42,10 @@ export type TSubjectChoiceForm = {
   fatherAddress: string
   motherAddress: string
   matriculationRollNumber: string
-  subjectScores: [
-    {
-      subjectName: 'MYAN'
-      score: number
-    },
-    {
-      subjectName: 'ENG'
-      score: number
-    },
-    {
-      subjectName: 'MATH'
-      score: number
-    },
-    {
-      subjectName: 'CHEMIST'
-      score: number
-    },
-    {
-      subjectName: 'PHYSICS'
-      score: number
-    },
-    {
-      subjectName: 'OTHERS'
-      score: number
-    },
-  ]
+  subjectScores: {
+    subjectName: string
+    score: number
+  }[]
   majorChoices: {
     majorName: string
     priorityScore: number
