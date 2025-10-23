@@ -20,7 +20,7 @@ export const SubjectChoiceFormDetails = ({
 }: {
   data: TGetSubjectChoiceFormResponse
 }) => {
-  const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
+  //   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
   const studentSignResult = useGetFile(
     data.studentSignatureUrl,
     'Student Signature',
@@ -47,7 +47,7 @@ export const SubjectChoiceFormDetails = ({
         <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div>
+        {/* <div>
           <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
             {photoResult.loading ? (
               <Skeleton className='h-full w-full' />
@@ -59,7 +59,7 @@ export const SubjectChoiceFormDetails = ({
               />
             )}
           </div>
-        </div>
+        </div> */}
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
