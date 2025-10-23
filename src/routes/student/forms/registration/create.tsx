@@ -17,7 +17,7 @@ export const Route = createFileRoute('/student/forms/registration/create')({
   },
   loader: async ({ context }) => {
     let shouldRedirect = false
-
+    let shouldGoToNext = false
     try {
       const registrationForm = await context.queryClient.ensureQueryData(
         getRegistrationFormQuery(),
@@ -28,12 +28,15 @@ export const Route = createFileRoute('/student/forms/registration/create')({
         !registrationForm.guardianSginatureUrl ||
         !registrationForm.guardianName
       )
-        throw redirect({
-          to: '/student/forms/registration/files-upload',
-        })
+        shouldGoToNext = true
     } catch (error) {
       console.log(error)
     }
+
+    if (shouldGoToNext)
+      throw redirect({
+        to: '/student/forms/registration/files-upload',
+      })
 
     if (shouldRedirect)
       throw redirect({

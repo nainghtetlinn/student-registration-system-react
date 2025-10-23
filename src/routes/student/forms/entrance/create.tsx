@@ -22,18 +22,22 @@ export const Route = createFileRoute('/student/forms/entrance/create')({
     )
     if (openedForms.length === 0) shouldRedirect = true
 
+    let shouldGoToNext = false
     try {
       const entranceForm = await context.queryClient.ensureQueryData(
         getEntranceFormQuery(),
       )
       if (entranceForm) shouldRedirect = true
       if (!entranceForm.studentPhotoUrl || !entranceForm.studentSignatureUrl)
-        throw redirect({
-          to: '/student/forms/entrance/files-upload',
-        })
+        shouldGoToNext = true
     } catch (error) {
       console.log(error)
     }
+
+    if (shouldGoToNext)
+      throw redirect({
+        to: '/student/forms/entrance/files-upload',
+      })
 
     if (shouldRedirect)
       throw redirect({
