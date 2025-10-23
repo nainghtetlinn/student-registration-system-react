@@ -1,11 +1,6 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Edit2 } from 'lucide-react'
 
@@ -32,20 +27,20 @@ export const SubjectChoiceFormDetails = ({
 
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
-      <CardHeader className='text-center'>
-        <Button
-          className='absolute top-3 right-3'
-          asChild
-          variant='outline'
-          size='icon'
-        >
-          <Link to='/student/forms/subject-choice/update'>
-            <Edit2 />
-          </Link>
-        </Button>
-        <CardTitle className='text-2xl'>Subject Choice Form Details</CardTitle>
-        <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
-      </CardHeader>
+      <Button
+        className='absolute top-16 right-3'
+        asChild
+        variant='outline'
+        size='icon'
+      >
+        <Link to='/student/forms/subject-choice/update'>
+          <Edit2 />
+        </Link>
+      </Button>
+      <FormCardHeader
+        form={data.formData}
+        title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
+      />
       <CardContent>
         {/* <div>
           <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
