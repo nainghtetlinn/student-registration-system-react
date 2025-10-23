@@ -22,7 +22,14 @@ import { useFormContext } from 'react-hook-form'
 import { useGetMajorData } from '@/api/lookup/get-major-data'
 
 export const MajorChoices = () => {
-  const { data: majors, isPending, isError } = useGetMajorData()
+  const {
+    data: majors,
+    isPending,
+    isError,
+  } = useGetMajorData({
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  })
 
   const form = useFormContext<TSubjectChoiceFormSchema>()
 
