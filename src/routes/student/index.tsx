@@ -71,6 +71,21 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
+  if (
+    !entranceFormResult.data.studentPhotoUrl ||
+    !entranceFormResult.data.studentSignatureUrl
+  )
+    return (
+      <ErrorComponent
+        title='Entrance form is not completed'
+        description="You haven't completed an entrance form yet."
+      >
+        <Button asChild>
+          <Link to='/student/forms/entrance/files-upload'>Continue</Link>
+        </Button>
+      </ErrorComponent>
+    )
+
   if (!subjectChoiceFormResult.data)
     return (
       <ErrorComponent
@@ -85,6 +100,22 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
+  if (
+    !subjectChoiceFormResult.data.studentSignatureUrl ||
+    !subjectChoiceFormResult.data.guardianSginatureUrl ||
+    !subjectChoiceFormResult.data.guardianName
+  )
+    return (
+      <ErrorComponent
+        title='Subject choice form is not completed'
+        description="You haven't completed a subject choice form yet."
+      >
+        <Button asChild>
+          <Link to='/student/forms/subject-choice/files-upload'>Continue</Link>
+        </Button>
+      </ErrorComponent>
+    )
+
   if (!registrationFormResult.data)
     return (
       <ErrorComponent
@@ -95,6 +126,22 @@ function RouteComponent() {
           <Link to='/student/forms/registration/create'>
             Submit registration form
           </Link>
+        </Button>
+      </ErrorComponent>
+    )
+
+  if (
+    !registrationFormResult.data.studentSignatureUrl ||
+    !registrationFormResult.data.guardianSginatureUrl ||
+    !registrationFormResult.data.guardianName
+  )
+    return (
+      <ErrorComponent
+        title='Registration form is not completed'
+        description="You haven't completed a registration form yet."
+      >
+        <Button asChild>
+          <Link to='/student/forms/registration/files-upload'>Continue</Link>
         </Button>
       </ErrorComponent>
     )
