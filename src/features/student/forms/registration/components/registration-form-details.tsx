@@ -1,7 +1,7 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
+import { Image } from '@/components/common/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Edit2 } from 'lucide-react'
 
 import type { TGetRegistrationFormResponse } from '../types/get.type'
@@ -226,17 +226,11 @@ export const RegistrationFormDetails = ({
             <h5 className='text-xs leading-8 font-semibold'>
               ဝင်ခွင့်လျှောက်ထားသူလက်မှတ်၊အမည်
             </h5>
-            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-              {studentSignResult.loading ? (
-                <Skeleton className='h-full w-full' />
-              ) : (
-                <img
-                  src={studentSignResult.fileUrl || ''}
-                  alt='Photo'
-                  className='h-full w-full object-contain'
-                />
-              )}
-            </div>
+            <Image
+              loading={studentSignResult.loading}
+              url={studentSignResult.fileUrl}
+              alt='Student Sign'
+            />
             <h5>{data.studentNameEng}</h5>
             <p className='text-muted-foreground text-xs'>
               {data.studentSignatureDate}
@@ -246,17 +240,11 @@ export const RegistrationFormDetails = ({
             <h5 className='text-xs leading-8 font-semibold'>
               မိဘ(သို့မဟုတ်)အုပ်ထိန်းသူ၏လက်မှတ်၊အမည်
             </h5>
-            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-              {guardianSignResult.loading ? (
-                <Skeleton className='h-full w-full' />
-              ) : (
-                <img
-                  src={guardianSignResult.fileUrl || ''}
-                  alt='Photo'
-                  className='h-full w-full object-contain'
-                />
-              )}
-            </div>
+            <Image
+              loading={guardianSignResult.loading}
+              url={guardianSignResult.fileUrl}
+              alt='Guardian Sign'
+            />
             <h5>{data.guardianName}</h5>
             <p className='text-muted-foreground text-xs'>
               {data.guardianSignatureDate}

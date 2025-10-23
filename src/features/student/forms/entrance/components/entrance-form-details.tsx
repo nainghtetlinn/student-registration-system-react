@@ -1,8 +1,8 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
+import { Image } from '@/components/common/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Edit2 } from 'lucide-react'
-import { Skeleton } from '@/components/ui/skeleton'
 
 import type { TGetEntranceFormResponse } from '../types/get.type'
 
@@ -41,17 +41,11 @@ export const EntranceFormDetails = ({
       />
       <CardContent>
         <div>
-          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-            {photoResult.loading ? (
-              <Skeleton className='h-full w-full' />
-            ) : (
-              <img
-                src={photoResult.fileUrl || ''}
-                alt='Photo'
-                className='h-full w-full object-contain'
-              />
-            )}
-          </div>
+          <Image
+            loading={photoResult.loading}
+            url={photoResult.fileUrl}
+            alt='Profile photo'
+          />
         </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
@@ -211,34 +205,22 @@ export const EntranceFormDetails = ({
             <h5 className='text-xs leading-8 font-semibold'>
               ကျောင်းသား/သူလက်မှတ်
             </h5>
-            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-              {signResult.loading ? (
-                <Skeleton className='h-full w-full' />
-              ) : (
-                <img
-                  src={signResult.fileUrl || ''}
-                  alt='Photo'
-                  className='h-full w-full object-contain'
-                />
-              )}
-            </div>
+            <Image
+              loading={signResult.loading}
+              url={signResult.fileUrl}
+              alt='Student Sign'
+            />
             <h5>{data.studentNameEng}</h5>
           </div>
           <div className='flex flex-col items-center'>
             <h5 className='text-xs leading-8 font-semibold'>
               စစ်ဆေးလက်ခံသူအမည်နှင့်လက်မှတ်
             </h5>
-            <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
-              {financeSignResult.loading ? (
-                <Skeleton className='h-full w-full' />
-              ) : (
-                <img
-                  src={financeSignResult.fileUrl || ''}
-                  alt='Photo'
-                  className='h-full w-full object-contain'
-                />
-              )}
-            </div>
+            <Image
+              loading={financeSignResult.loading}
+              url={financeSignResult.fileUrl}
+              alt='Finance Sign'
+            />
             <h5>{data.departmentSection.financeVerifierName || '-'}</h5>
           </div>
         </div>
