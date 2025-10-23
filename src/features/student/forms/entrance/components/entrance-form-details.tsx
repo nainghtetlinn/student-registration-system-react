@@ -17,7 +17,7 @@ export const EntranceFormDetails = ({
 }) => {
   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
   const signResult = useGetFile(data.studentSignatureUrl, 'Signature')
-  const paymentResult = useGetFile(data.studentSignatureUrl, 'Payment')
+  //   const paymentResult = useGetFile(data.studentSignatureUrl, 'Payment')
   const financeSignResult = useGetFile(
     data.departmentSection.financeVerifierSignature,
     'Finance Sign',
