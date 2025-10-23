@@ -4,6 +4,7 @@ import { CreateEntranceForm } from '@/features/student/forms/entrance/components
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getOpenedFormsQuery } from '@/features/form/api/get-opened-forms'
+import { getEntranceFormQuery } from '@/features/student/forms/entrance/api/get.api'
 
 export const Route = createFileRoute('/student/forms/entrance/create')({
   component: RouteComponent,
@@ -14,10 +15,27 @@ export const Route = createFileRoute('/student/forms/entrance/create')({
     })
   },
   loader: async ({ context }) => {
+    let shouldRedirect = false
+
     const openedForms = await context.queryClient.ensureQueryData(
       getOpenedFormsQuery(),
     )
-    if (openedForms.length === 0) throw new Error('There is no opened form.')
+    if (openedForms.length === 0) shouldRedirect = true
+
+    try {
+      const entranceForm = await context.queryClient.ensureQueryData(
+        getEntranceFormQuery(),
+      )
+      if (entranceForm) shouldRedirect = true
+    } catch (error) {
+      console.log(error)
+    }
+
+    if (shouldRedirect)
+      throw redirect({
+        to: '/student',
+      })
+
     return { formDetails: openedForms[0] }
   },
 })
