@@ -1,39 +1,55 @@
+import { FormCardHeader } from '@/components/common/form-card-header'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Edit2 } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import type { TGetEntranceFormResponse } from '../types/get.type'
 
 import { Link } from '@tanstack/react-router'
+
+import { useGetFile } from '../api/get-file.api'
 
 export const EntranceFormDetails = ({
   data,
 }: {
   data: TGetEntranceFormResponse
 }) => {
+  const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
+  const signResult = useGetFile(data.studentSignatureUrl, 'Signature')
+  const paymentResult = useGetFile(data.studentSignatureUrl, 'Payment')
+  const financeSignResult = useGetFile(data.studentSignatureUrl, 'Finance Sign')
+
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
-      <CardHeader className='text-center'>
-        <Button
-          className='absolute top-3 right-3'
-          asChild
-          variant='outline'
-          size='icon'
-        >
-          <Link to='/student/forms/entrance/update'>
-            <Edit2 />
-          </Link>
-        </Button>
-        <CardTitle className='text-2xl'>Entrance Form Details</CardTitle>
-        <CardDescription>{`${data.formData.academicYear} ပညာသင်နှစ်`}</CardDescription>
-      </CardHeader>
+      <Button
+        className='absolute top-16 right-3'
+        asChild
+        variant='outline'
+        size='icon'
+      >
+        <Link to='/student/forms/entrance/update'>
+          <Edit2 />
+        </Link>
+      </Button>
+      <FormCardHeader
+        form={data.formData}
+        title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
+      />
       <CardContent>
+        <div>
+          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+            {photoResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={photoResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
+        </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
@@ -136,6 +152,44 @@ export const EntranceFormDetails = ({
             label='Permanent Phone Number'
             value={data.permanentPhoneNumber}
           />
+        </div>
+
+        <div className='my-2 flex justify-end gap-2'>
+          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+            {signResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={signResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
+          <div className='h-[150px] w-[150px] overflow-hidden rounded border'>
+            {financeSignResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={financeSignResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
+        </div>
+        <div className='flex justify-center'>
+          <div className='h-[500px] w-[300px] overflow-hidden rounded border'>
+            {paymentResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : (
+              <img
+                src={paymentResult.fileUrl || ''}
+                alt='Photo'
+                className='h-full w-full object-contain'
+              />
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>
