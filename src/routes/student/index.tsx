@@ -16,49 +16,48 @@ import { useGetSubjectChoiceForm } from '@/features/student/forms/subject-choice
 export const Route = createFileRoute('/student/')({
   component: RouteComponent,
   pendingComponent: () => <Pending />,
-  errorComponent: () => (
-    <ErrorComponent
-      title='No Form Available'
-      description='There are currently no forms to be filled out.'
-    >
-      <Button asChild>
-        <Link to='/'>Home</Link>
-      </Button>
-    </ErrorComponent>
-  ),
   loader: async ({ context }) => {
     const qc = context.queryClient
     const openedForms = await qc.ensureQueryData(getOpenedFormsQuery())
-    if (openedForms.length === 0) throw new Error('No Form Available')
     return openedForms[0]
   },
 })
 
 function RouteComponent() {
+  const openedForm = Route.useLoaderData()
+
   const entranceFormResult = useGetEntranceForm({
     retry: 0,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    enabled: !!openedForm,
   })
 
   const subjectChoiceFormResult = useGetSubjectChoiceForm({
     retry: 0,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    enabled: !!entranceFormResult.data,
   })
 
   const registrationFormResult = useGetRegistrationForm({
     retry: 0,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    enabled: !!subjectChoiceFormResult.data,
   })
 
-  if (
-    entranceFormResult.isPending ||
-    subjectChoiceFormResult.isPending ||
-    registrationFormResult.isPending
-  )
-    return <Pending />
+  if (!openedForm)
+    return (
+      <ErrorComponent
+        title='No Form Available'
+        description='There are currently no forms to be filled out.'
+      >
+        <Button asChild>
+          <Link to='/'>Home</Link>
+        </Button>
+      </ErrorComponent>
+    )
 
   if (!entranceFormResult.data)
     return (
