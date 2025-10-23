@@ -17,8 +17,11 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { useGetOpenedForms } from '@/features/form/api/get-opened-forms'
 import { useGetEntranceForm } from '@/features/student/forms/entrance/api/get.api'
+import { fromDto as fromEntranceFormDto } from '@/features/student/forms/entrance/lib/entrance-form-dto'
 import { useGetRegistrationForm } from '@/features/student/forms/registration/api/get.api'
+import { fromDto as fromRegistrationFormDto } from '@/features/student/forms/registration/lib/registration-form-dto'
 import { useGetSubjectChoiceForm } from '@/features/student/forms/subject-choice/api/get.api'
+import { fromDto as fromSubjectChoiceFormDto } from '@/features/student/forms/subject-choice/lib/subject-choice-form-dto'
 
 export const Route = createFileRoute('/student/')({
   component: RouteComponent,
@@ -144,20 +147,20 @@ function RouteComponent() {
     <div>
       <div className='pt-4'>
         <EntranceFormDetails
-          formDetails={entranceFormResult.data.formDetails}
-          formData={entranceFormResult.data.formData}
+          formDetails={entranceFormResult.data.formData}
+          formData={fromEntranceFormDto(entranceFormResult.data)}
         />
       </div>
       <div className='pt-4'>
         <SubjectChoiceFormDetails
-          formDetails={subjectChoiceFormResult.data.formDetails}
-          formData={subjectChoiceFormResult.data.formData}
+          formDetails={subjectChoiceFormResult.data.formData}
+          formData={fromSubjectChoiceFormDto(subjectChoiceFormResult.data)}
         />
       </div>
       <div className='pt-4'>
         <RegistrationFormDetails
-          formDetails={registrationFormResult.data.formDetails}
-          formData={registrationFormResult.data.formData}
+          formDetails={registrationFormResult.data.formData}
+          formData={fromRegistrationFormDto(registrationFormResult.data)}
         />
       </div>
     </div>
