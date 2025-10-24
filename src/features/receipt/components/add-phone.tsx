@@ -9,26 +9,24 @@ import {
 } from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
-import { PlusCircle } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { dataSchema, type TDataSchema } from '../schema/receipt.schema'
+import { phoneSchema, type TPhoneSchema } from '../schema/receipt.schema'
 
-export const AddData = ({
+export const AddPhone = ({
   append,
 }: {
-  append: (data: TDataSchema) => void
+  append: (data: TPhoneSchema) => void
 }) => {
   const [open, setOpen] = useState(false)
 
   const form = useForm({
-    resolver: zodResolver(dataSchema),
+    resolver: zodResolver(phoneSchema),
     defaultValues: {
-      name: '',
-      amount: '',
+      phoneNumber: '',
     },
   })
 
@@ -37,7 +35,7 @@ export const AddData = ({
     if (!isValid) return
 
     const data = form.getValues()
-    append(data as TDataSchema)
+    append(data as TPhoneSchema)
     form.reset()
     setOpen(false)
   }
@@ -50,27 +48,22 @@ export const AddData = ({
       <DialogTrigger asChild>
         <Button
           type='button'
-          size={'icon'}
           variant={'outline'}
+          size={'sm'}
         >
-          <PlusCircle />
+          Add Phone
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Data</DialogTitle>
+          <DialogTitle>Add Phone number to receive payment</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <div className='space-y-4'>
             <FormInputField
               control={form.control}
-              name='name'
-              label='Name'
-            />
-            <FormInputField
-              control={form.control}
-              name='amount'
-              label='Amount'
+              name='phoneNumber'
+              label='Phone Number'
             />
           </div>
           <DialogFooter>

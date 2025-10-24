@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/table'
 import { TicketPlus, Trash2 } from 'lucide-react'
 import { AddData } from './add-data'
+import { AddPhone } from './add-phone'
 
 import type { TReceiptSchema } from '../schema/receipt.schema'
 
@@ -37,12 +38,22 @@ export const CreateReceipt = () => {
     defaultValues: {
       year: '',
       data: [],
+      phoneNumbers: [],
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'data',
+  })
+
+  const {
+    fields: phones,
+    append: appendPhone,
+    remove: removePhone,
+  } = useFieldArray({
+    control: form.control,
+    name: 'phoneNumbers',
   })
 
   const { mutate, isPending } = useCreateReceipt({
@@ -83,19 +94,23 @@ export const CreateReceipt = () => {
             />
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className='hover:bg-transparent'>
+                  <TableHead>No.</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Amount</TableHead>
-                  <TableHead></TableHead>
+                  <TableHead className='flex justify-end'>
+                    <AddData append={append} />
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {fields.length > 0 ? (
                   fields.map((field, index) => (
                     <TableRow key={field.id}>
+                      <TableCell className='w-[59px]'>{index + 1}.</TableCell>
                       <TableCell>{field.name}</TableCell>
                       <TableCell>{field.amount as string}</TableCell>
-                      <TableCell className='w-9'>
+                      <TableCell className='w-[59px]'>
                         <Button
                           size='icon'
                           variant='destructive'
@@ -120,7 +135,31 @@ export const CreateReceipt = () => {
               </TableBody>
             </Table>
 
-            <AddData append={append} />
+            <div>
+              <div className='mb-2 flex items-center justify-between'>
+                <p>Phone numbers: </p>
+                <AddPhone append={appendPhone} />
+              </div>
+              {phones.map((p, i) => (
+                <div
+                  key={p.id}
+                  className='flex items-center justify-between border-b'
+                >
+                  <p>
+                    {i + 1}. {p.phoneNumber}
+                  </p>
+                  <Button
+                    size='icon'
+                    variant='ghost'
+                    type='button'
+                    className='text-destructive'
+                    onClick={() => removePhone(i)}
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              ))}
+            </div>
           </CardContent>
           <CardFooter className='flex justify-end gap-2'>
             <BackBtn />
