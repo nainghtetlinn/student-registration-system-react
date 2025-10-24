@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { dataSchema, type TDataSchema } from '../schema/receipt.schema'
+import { dataSchema, type TDataSchema } from '../../schema/receipt.schema'
 
 export const AddData = ({
   append,

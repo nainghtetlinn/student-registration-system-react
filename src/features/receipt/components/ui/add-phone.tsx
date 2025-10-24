@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { phoneSchema, type TPhoneSchema } from '../schema/receipt.schema'
+import { phoneSchema, type TPhoneSchema } from '../../schema/receipt.schema'
 
 export const AddPhone = ({
   append,
