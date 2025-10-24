@@ -59,6 +59,13 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
+  if (
+    entranceFormResult.isPending ||
+    subjectChoiceFormResult.isPending ||
+    registrationFormResult.isPending
+  )
+    return <Pending />
+
   if (!entranceFormResult.data)
     return (
       <ErrorComponent
