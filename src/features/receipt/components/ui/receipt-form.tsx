@@ -8,7 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Form } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { FormSelectField } from '@/components/ui/form-fields'
 import { Spinner } from '@/components/ui/spinner'
 import {
@@ -73,7 +80,7 @@ export const ReceiptForm = ({
               {description}
             </CardDescription>
           </CardHeader>
-          <CardContent className='grid gap-4'>
+          <CardContent className='grid gap-6'>
             <FormSelectField
               control={form.control}
               name='year'
@@ -91,74 +98,113 @@ export const ReceiptForm = ({
               hideErrorMessage
             />
 
-            <Table>
-              <TableHeader>
-                <TableRow className='hover:bg-transparent'>
-                  <TableHead className='w-[59px]'>No.</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead className='w-[59px]'>
-                    <AddData append={append} />
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {fields.length > 0 ? (
-                  fields.map((field, index) => (
-                    <TableRow key={field.id}>
-                      <TableCell>{index + 1}.</TableCell>
-                      <TableCell>{field.name}</TableCell>
-                      <TableCell>{field.amount as string}</TableCell>
-                      <TableCell className='w-[59px]'>
-                        <Button
-                          size='icon'
-                          variant='destructive'
-                          type='button'
-                          onClick={() => remove(index)}
-                        >
-                          <Trash2 />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={4}
-                      className='text-muted-foreground text-center text-sm'
-                    >
-                      No data added yet
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+            <FormField
+              control={form.control}
+              name='data'
+              render={() => (
+                <FormItem>
+                  <FormLabel>Receipt Items</FormLabel>
+                  <FormControl>
+                    <Table>
+                      <TableHeader>
+                        <TableRow className='hover:bg-transparent'>
+                          <TableHead className='w-[59px]'>No.</TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Amount</TableHead>
+                          <TableHead className='w-[59px]'>
+                            <AddData append={append} />
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {fields.length > 0 ? (
+                          fields.map((field, index) => (
+                            <TableRow key={field.id}>
+                              <TableCell>{index + 1}.</TableCell>
+                              <TableCell>{field.name}</TableCell>
+                              <TableCell>{field.amount as string}</TableCell>
+                              <TableCell>
+                                <Button
+                                  size='icon'
+                                  variant='destructive'
+                                  type='button'
+                                  onClick={() => remove(index)}
+                                >
+                                  <Trash2 />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell
+                              colSpan={4}
+                              className='text-muted-foreground text-center text-sm'
+                            >
+                              No data added yet
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div>
-              <div className='mb-2 flex items-center justify-between'>
-                <p>Phone numbers: </p>
-                <AddPhone append={appendPhone} />
-              </div>
-              {phones.map((p, i) => (
-                <div
-                  key={p.id}
-                  className='flex items-center justify-between border-b'
-                >
-                  <p>
-                    {i + 1}. {p.phoneNumber}
-                  </p>
-                  <Button
-                    size='icon'
-                    variant='ghost'
-                    type='button'
-                    className='text-destructive'
-                    onClick={() => removePhone(i)}
-                  >
-                    <Trash2 />
-                  </Button>
-                </div>
-              ))}
-            </div>
+            <FormField
+              control={form.control}
+              name='phoneNumbers'
+              render={() => (
+                <FormItem>
+                  <FormLabel>Phone Numbers</FormLabel>
+                  <FormControl>
+                    <Table>
+                      <TableHeader>
+                        <TableRow className='hover:bg-transparent'>
+                          <TableHead className='w-[59px]'>No.</TableHead>
+                          <TableHead>Phone No.</TableHead>
+                          <TableHead className='w-[59px]'>
+                            <AddPhone append={appendPhone} />
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {phones.length > 0 ? (
+                          phones.map((field, index) => (
+                            <TableRow key={field.id}>
+                              <TableCell>{index + 1}.</TableCell>
+                              <TableCell>{field.phoneNumber}</TableCell>
+                              <TableCell>
+                                <Button
+                                  size='icon'
+                                  variant='destructive'
+                                  type='button'
+                                  onClick={() => removePhone(index)}
+                                >
+                                  <Trash2 />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell
+                              colSpan={4}
+                              className='text-muted-foreground text-center text-sm'
+                            >
+                              No phone number added yet
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </CardContent>
           <CardFooter className='flex justify-end gap-2'>
             <BackBtn />

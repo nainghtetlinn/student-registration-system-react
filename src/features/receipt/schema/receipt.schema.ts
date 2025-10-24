@@ -11,8 +11,10 @@ export const phoneSchema = z.object({
 
 export const receiptSchema = z.object({
   year: z.string().min(1),
-  data: z.array(dataSchema),
-  phoneNumbers: z.array(phoneSchema),
+  data: z.array(dataSchema).min(1, 'Required at least one receipt item.'),
+  phoneNumbers: z
+    .array(phoneSchema)
+    .min(1, 'Required at least one phone number.'),
 })
 
 export type TDataSchema = z.infer<typeof dataSchema>

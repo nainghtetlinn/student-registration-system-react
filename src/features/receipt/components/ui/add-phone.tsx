@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
 import { FormInputField } from '@/components/ui/form-fields'
+import { PlusCircle } from 'lucide-react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
@@ -49,9 +50,9 @@ export const AddPhone = ({
         <Button
           type='button'
           variant={'outline'}
-          size={'sm'}
+          size={'icon'}
         >
-          Add Phone
+          <PlusCircle />
         </Button>
       </DialogTrigger>
       <DialogContent>
