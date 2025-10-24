@@ -51,20 +51,22 @@ export const Route = createFileRoute('/admin')({
       })
     }
 
-    let profile
-    try {
-      profile = await context.queryClient.ensureQueryData(getProfileQuery())
-    } catch (error) {
-      console.log(error)
-    }
-    if (!profile && !location.href.includes('/admin/profile/create')) {
-      // redirect profile/create if profile is undefined
-      throw redirect({
-        to: '/admin/profile/create',
-        search: {
-          redirect: location.href,
-        },
-      })
+    if (user?.role !== 'Admin') {
+      let profile
+      try {
+        profile = await context.queryClient.ensureQueryData(getProfileQuery())
+      } catch (error) {
+        console.log(error)
+      }
+      if (!profile && !location.href.includes('/admin/profile/create')) {
+        // redirect profile/create if profile is undefined
+        throw redirect({
+          to: '/admin/profile/create',
+          search: {
+            redirect: location.href,
+          },
+        })
+      }
     }
   },
 })

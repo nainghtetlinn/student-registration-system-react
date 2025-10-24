@@ -89,12 +89,14 @@ export const AppSidebarFooter = () => {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem asChild>
-              <Link to={paths.admin.profile.root.getHref()}>
-                <UserCircle2 />
-                Profile
-              </Link>
-            </DropdownMenuItem>
+            {user?.role !== 'Admin' && (
+              <DropdownMenuItem asChild>
+                <Link to={paths.admin.profile.root.getHref()}>
+                  <UserCircle2 />
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               onClick={() => logout.mutate({})}
               disabled={logout.isPending}
