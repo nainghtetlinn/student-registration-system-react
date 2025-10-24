@@ -28,7 +28,10 @@ function RouteComponent() {
       <title>Subject Choice Form</title>
 
       <div className='pt-4'>
-        <SubjectChoiceFormDetails data={data} />
+        <SubjectChoiceFormDetails
+          editable={false}
+          data={data}
+        />
       </div>
     </>
   )

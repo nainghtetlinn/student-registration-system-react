@@ -26,7 +26,10 @@ function RouteComponent() {
       <title>Registration Form</title>
 
       <div className='pt-4'>
-        <RegistrationFormDetails data={data} />
+        <RegistrationFormDetails
+          editable={false}
+          data={data}
+        />
       </div>
     </>
   )

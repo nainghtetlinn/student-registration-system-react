@@ -26,7 +26,10 @@ function RouteComponent() {
       <title>Entrance Form</title>
 
       <div className='pt-4'>
-        <EntranceFormDetails data={data} />
+        <EntranceFormDetails
+          editable={false}
+          data={data}
+        />
       </div>
     </>
   )
