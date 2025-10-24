@@ -12,9 +12,11 @@ export const Route = createFileRoute('/admin/review/$id')({
 function RouteComponent() {
   const navigate = Route.useNavigate()
   const { id } = Route.useParams()
-  const { data, isPending } = useUser()
+  const { data, isPending, isError } = useUser()
 
   if (isPending) return <Pending />
+
+  if (isError) return <div>Something went wrong.</div>
 
   return (
     <>
