@@ -1,36 +1,34 @@
 import type { TForm } from '@/types/form'
+import type { TEntranceForm } from '@/types/student'
 import type { TSubmittedData } from './submitted-data.type'
 
 export type TGetAllSubmittedDataResponse = TSubmittedData[]
 
 export type TGetStudentEntranceFormResponse = {
   formData: TForm
-  enrollmentNumber: string
-  studentNameMm: string
-  studentNameEng: string
-  studentNrc: string
-  ethnicity: string
-  religion: string
-  dob: string
-  matriculationPassedYear: string
-  department: string
-  fatherNameMm: string
-  fatherNameEng: string
-  fatherNrc: string
-  fatherJob: string
-  motherNameMm: string
-  motherNameEng: string
-  motherNrc: string
-  motherJob: string
-  address: string
-  phoneNumber: string
-  permanentAddress: string
-  permanentPhoneNumber: string
-  studentSignatureUrl: string
-  studentPhotoUrl: string
+  studentId: number
+  studentSignatureUrl: string | null
+  studentPhotoUrl: string | null
   submitted: boolean
   paid: boolean
-}
+  verified: boolean
+  departmentSection: {
+    studentAffairNote: string | null
+    studentAffairOtherNote: string | null
+    studentAffairVerifiedDate: string | null
+    financeNote: string | null
+    financeDate: string | null
+    financeVoucherNumber: string | null
+    financeVerifierName: string | null
+    financeVerifierSignature: string | null
+    paymentUrl: string | null
+  }
+  formUrls: {
+    entranceFormUrl: string | null
+    subjectChoiceUrl: string | null
+    registrationUrl: string | null
+  }
+} & Omit<TEntranceForm, 'formId'>
 
 export type TGetStudentSubjectChoiceFormResponse = {
   formData: TForm

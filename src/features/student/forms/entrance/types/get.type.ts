@@ -23,6 +23,7 @@ export type TGetEntranceFormResponse = {
     financeVoucherNumber: string | null
     financeVerifierName: string | null
     financeVerifierSignature: string | null
+    paymentUrl: string | null
   }
   formUrls: {
     entranceFormUrl: string | null
