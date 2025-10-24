@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Trash2 } from 'lucide-react'
 
 import type { TDropPhoto } from '@/components/drop-photo'
 import type { TForm } from '@/types/form'
@@ -31,7 +32,7 @@ export const PaymentForm = ({
 }) => {
   const paymentRef = useRef<TDropPhoto>(null)
 
-  const [screenshot, setScreenshot] = useState<File>()
+  const [screenshot, setScreenshot] = useState<File | null>()
 
   const { mutate, isPending } = useUploadPayment({ onSuccess })
 
@@ -96,6 +97,19 @@ export const PaymentForm = ({
           onDrop={setScreenshot}
           photoName='Screenshot'
         />
+
+        <div className='mt-2 flex justify-center'>
+          <Button
+            variant={'destructive'}
+            onClick={() => {
+              paymentRef.current?.remove()
+              setScreenshot(null)
+            }}
+            disabled={!screenshot}
+          >
+            Remove <Trash2 />
+          </Button>
+        </div>
       </CardContent>
       <CardFooter className='flex justify-end'>
         <Button
