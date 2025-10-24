@@ -12,8 +12,10 @@ import { cn } from '@/lib/utils'
 import { useGetFile } from '../api/get-file.api'
 
 export const RegistrationFormDetails = ({
+  editable = false,
   data,
 }: {
+  editable: boolean
   data: TGetRegistrationFormResponse
 }) => {
   //   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
@@ -28,16 +30,18 @@ export const RegistrationFormDetails = ({
 
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
-      <Button
-        className='absolute top-16 right-3'
-        asChild
-        variant='outline'
-        size='icon'
-      >
-        <Link to='/student/forms/registration/update'>
-          <Edit2 />
-        </Link>
-      </Button>
+      {editable && (
+        <Button
+          className='absolute top-16 right-3'
+          asChild
+          variant='outline'
+          size='icon'
+        >
+          <Link to='/student/forms/registration/update'>
+            <Edit2 />
+          </Link>
+        </Button>
+      )}
       <FormCardHeader
         form={data.formData}
         title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'

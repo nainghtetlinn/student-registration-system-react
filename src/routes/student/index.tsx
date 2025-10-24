@@ -158,13 +158,22 @@ function RouteComponent() {
       </section>
 
       <div className='pt-4'>
-        <EntranceFormDetails data={entranceFormResult.data} />
+        <EntranceFormDetails
+          editable={!entranceFormResult.data.submitted}
+          data={entranceFormResult.data}
+        />
       </div>
       <div className='pt-4'>
-        <SubjectChoiceFormDetails data={subjectChoiceFormResult.data} />
+        <SubjectChoiceFormDetails
+          editable={!entranceFormResult.data.submitted}
+          data={subjectChoiceFormResult.data}
+        />
       </div>
       <div className='pt-4'>
-        <RegistrationFormDetails data={registrationFormResult.data} />
+        <RegistrationFormDetails
+          editable={!entranceFormResult.data.submitted}
+          data={registrationFormResult.data}
+        />
       </div>
     </div>
   )

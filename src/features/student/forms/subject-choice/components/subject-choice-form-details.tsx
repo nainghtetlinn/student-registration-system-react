@@ -11,8 +11,10 @@ import { Link } from '@tanstack/react-router'
 import { useGetFile } from '../api/get-file.api'
 
 export const SubjectChoiceFormDetails = ({
+  editable = false,
   data,
 }: {
+  editable: boolean
   data: TGetSubjectChoiceFormResponse
 }) => {
   //   const photoResult = useGetFile(data.studentPhotoUrl, 'Profile Photo')
@@ -27,16 +29,18 @@ export const SubjectChoiceFormDetails = ({
 
   return (
     <Card className='relative mx-auto w-full max-w-3xl'>
-      <Button
-        className='absolute top-16 right-3'
-        asChild
-        variant='outline'
-        size='icon'
-      >
-        <Link to='/student/forms/subject-choice/update'>
-          <Edit2 />
-        </Link>
-      </Button>
+      {editable && (
+        <Button
+          className='absolute top-16 right-3'
+          asChild
+          variant='outline'
+          size='icon'
+        >
+          <Link to='/student/forms/subject-choice/update'>
+            <Edit2 />
+          </Link>
+        </Button>
+      )}
       <FormCardHeader
         form={data.formData}
         title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
