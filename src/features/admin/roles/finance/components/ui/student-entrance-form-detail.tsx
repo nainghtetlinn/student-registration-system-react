@@ -1,7 +1,9 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
 import { Image } from '@/components/common/image'
 import { CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Spinner } from '@/components/ui/spinner'
+import { ImageOff } from 'lucide-react'
 import { Info } from './info'
 
 import { useGetFile } from '@/features/admin/api/get-file'
@@ -12,6 +14,7 @@ export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
 
   const photoResult = useGetFile(data?.studentPhotoUrl)
   const signResult = useGetFile(data?.studentSignatureUrl)
+  const paymentResult = useGetFile(data?.departmentSection.paymentUrl)
 
   if (isPending)
     return (
@@ -139,6 +142,24 @@ export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
             url={signResult.fileUrl}
             alt='Student Sign'
           />
+        </div>
+
+        <div className='mt-2 flex justify-center'>
+          <div className='h-[600px] w-[350px] overflow-hidden rounded border'>
+            {paymentResult.loading ? (
+              <Skeleton className='h-full w-full' />
+            ) : paymentResult.fileUrl ? (
+              <img
+                src={paymentResult.fileUrl}
+                alt={'Payment screenshot'}
+                className='h-full w-full object-contain'
+              />
+            ) : (
+              <div className='text-muted-foreground flex h-full w-full items-center justify-center'>
+                <ImageOff className='h-8 w-8' />
+              </div>
+            )}
+          </div>
         </div>
       </CardContent>
     </>
