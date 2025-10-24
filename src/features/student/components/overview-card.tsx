@@ -1,5 +1,13 @@
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Link } from '@tanstack/react-router'
 import { CheckCircle2, Clock, XCircle } from 'lucide-react'
 
 export const OverviewCard = ({
@@ -47,6 +55,14 @@ export const OverviewCard = ({
         {renderStatus('Paid', paid)}
         {renderStatus('Verified', verified)}
       </CardContent>
+      {!submitted && (
+        <CardFooter className='flex items-center justify-between'>
+          <p>Acknowledge rules of university to actually submit the form.</p>
+          <Button asChild>
+            <Link to='/student/forms/acknowledge'>Acknowledge</Link>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   )
 }
