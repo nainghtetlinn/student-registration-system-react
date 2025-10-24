@@ -1,3 +1,4 @@
+import { BackBtn } from '@/components/common/back-btn'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -7,15 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
-import { FormInputField, FormSelectField } from '@/components/ui/form-fields'
+import { FormSelectField } from '@/components/ui/form-fields'
 import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
@@ -26,18 +20,18 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { TicketPlus, Trash2 } from 'lucide-react'
-import { BackBtn } from '@/components/common/back-btn'
 
 import type { TReceipt } from '@/types/receipt'
 import type { TReceiptSchema } from '../schema/receipt.schema'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 import { useUpdateReceipt } from '../api/update-receipt.api'
-import { dataSchema, receiptSchema } from '../schema/receipt.schema'
+import { receiptSchema } from '../schema/receipt.schema'
+import { AddData } from './add-data'
+import { AddPhone } from './add-phone'
 
 export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
   const navigate = useNavigate()
@@ -47,20 +41,22 @@ export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
     defaultValues: {
       year: receipt.year,
       data: receipt.data,
-    },
-  })
-
-  const dataForm = useForm({
-    resolver: zodResolver(dataSchema),
-    defaultValues: {
-      name: '',
-      amount: '',
+      phoneNumbers: receipt.phoneNumbers,
     },
   })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'data',
+  })
+
+  const {
+    fields: phones,
+    append: appendPhone,
+    remove: removePhone,
+  } = useFieldArray({
+    control: form.control,
+    name: 'phoneNumbers',
   })
 
   const { mutate, isPending } = useUpdateReceipt(receipt.id.toString(), {
@@ -70,20 +66,8 @@ export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
     },
   })
 
-  const [open, setOpen] = useState(false)
-
   const onSubmit = (data: TReceiptSchema) => {
     mutate(data)
-  }
-
-  const handleAdd = async () => {
-    const isValid = await dataForm.trigger()
-    if (!isValid) return
-
-    const data = dataForm.getValues()
-    append(data)
-    dataForm.reset()
-    setOpen(false)
   }
 
   return (
@@ -119,19 +103,23 @@ export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
 
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className='hover:bg-transparent'>
+                  <TableHead>No.</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Amount</TableHead>
-                  <TableHead></TableHead>
+                  <TableHead>
+                    <AddData append={append} />
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {fields.length > 0 ? (
                   fields.map((field, index) => (
                     <TableRow key={field.id}>
+                      <TableCell className='w-[59px]'>{index + 1}.</TableCell>
                       <TableCell>{field.name}</TableCell>
                       <TableCell>{field.amount as string}</TableCell>
-                      <TableCell className='w-9'>
+                      <TableCell className='w-[59px]'>
                         <Button
                           size='icon'
                           variant='destructive'
@@ -156,46 +144,31 @@ export const UpdateReceipt = ({ data: receipt }: { data: TReceipt }) => {
               </TableBody>
             </Table>
 
-            <Dialog
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <DialogTrigger asChild>
-                <Button type='button'>Add Data</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogTitle>Add Data</DialogTitle>
-                <Form {...dataForm}>
-                  <div className='space-y-4'>
-                    <FormInputField
-                      control={dataForm.control}
-                      name='name'
-                      label='Name'
-                    />
-                    <FormInputField
-                      control={dataForm.control}
-                      name='amount'
-                      label='Amount'
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button
-                      type='button'
-                      variant={'secondary'}
-                      onClick={() => setOpen(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      type='button'
-                      onClick={handleAdd}
-                    >
-                      Add
-                    </Button>
-                  </DialogFooter>
-                </Form>
-              </DialogContent>
-            </Dialog>
+            <div>
+              <div className='mb-2 flex items-center justify-between'>
+                <p>Phone numbers: </p>
+                <AddPhone append={appendPhone} />
+              </div>
+              {phones.map((p, i) => (
+                <div
+                  key={p.id}
+                  className='flex items-center justify-between border-b'
+                >
+                  <p>
+                    {i + 1}. {p.phoneNumber}
+                  </p>
+                  <Button
+                    size='icon'
+                    variant='ghost'
+                    type='button'
+                    className='text-destructive'
+                    onClick={() => removePhone(i)}
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              ))}
+            </div>
           </CardContent>
           <CardFooter className='flex justify-end gap-2'>
             <BackBtn />
