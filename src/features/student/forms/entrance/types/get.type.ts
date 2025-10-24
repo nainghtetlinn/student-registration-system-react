@@ -8,6 +8,7 @@ export type TFiles = {
 
 export type TGetEntranceFormResponse = {
   formData: TForm
+  studentId: number
   studentSignatureUrl: string | null
   studentPhotoUrl: string | null
   submitted: boolean
