@@ -1,6 +1,6 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
-import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
 import { CardContent } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 import { Info } from './info'
 
 import { useGetStudentEntranceForm } from '../../api/get-student-entrance-form.api'
@@ -8,9 +8,14 @@ import { useGetStudentEntranceForm } from '../../api/get-student-entrance-form.a
 export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
   const { data, isPending, isError } = useGetStudentEntranceForm(id)
 
-  if (isPending) return <FormSkeleton />
+  if (isPending)
+    return (
+      <div className='flex h-[500px] items-center justify-center'>
+        <Spinner />
+      </div>
+    )
 
-  if (isError) return <div>Error</div>
+  if (isError) return <div>Something went wrong.</div>
 
   return (
     <>
