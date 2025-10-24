@@ -40,7 +40,7 @@ function RouteComponent() {
           formDetails={formDetails}
           paymentDetails={receipt}
           onSuccess={() => {
-            navigate({ to: '/student/forms/payment/success' })
+            navigate({ to: '/student/forms/acknowledge' })
           }}
         />
       </div>

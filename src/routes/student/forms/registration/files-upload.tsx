@@ -46,7 +46,7 @@ function RouteComponent() {
           formDetails={data.formData}
           onSuccess={() => {
             navigate({
-              to: '/student/forms/registration/rules',
+              to: '/student/forms/payment',
             })
           }}
         />

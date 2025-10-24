@@ -20,7 +20,7 @@ export const useAcknowledgeRules = (
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
-    mutationKey: ['form', 'registration', 'acknowledge-rules'],
+    mutationKey: ['form', 'acknowledge'],
     mutationFn: async () => {
       const response = await acknowledgeRules()
       return response.data.data

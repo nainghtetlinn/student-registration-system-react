@@ -1,11 +1,11 @@
 import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
-import { RulesForm } from '@/features/student/forms/registration/components/rules-form'
+import { RulesForm } from '@/features/student/forms/acknowledge/components/rules-form'
 
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getOpenedFormsQuery } from '@/features/form/api/get-opened-forms'
 
-export const Route = createFileRoute('/student/forms/registration/rules')({
+export const Route = createFileRoute('/student/forms/acknowledge/')({
   component: RouteComponent,
   pendingComponent: () => <FormSkeleton />,
   onError: () => {
@@ -28,13 +28,13 @@ function RouteComponent() {
 
   return (
     <>
-      <title>Rules</title>
+      <title>Acknowledge</title>
 
       <div className='pt-4'>
         <RulesForm
           formDetails={formDetails}
           onSuccess={() => {
-            navigate({ to: '/student' })
+            navigate({ to: '/student/forms/success' })
           }}
         />
       </div>
