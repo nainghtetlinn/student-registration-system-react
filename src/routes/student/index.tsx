@@ -148,24 +148,12 @@ function RouteComponent() {
 
   return (
     <div>
-      <section className='container mx-auto my-2 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
+      <section className='container mx-auto my-2'>
         <OverviewCard
-          title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
+          title='Overview'
           submitted={entranceFormResult.data.submitted}
           paid={entranceFormResult.data.paid}
           verified={entranceFormResult.data.verified}
-        />
-        <OverviewCard
-          title='အထူးပြုဘာသာရပ်ရွေးချယ်ခွင့်လျှောက်လွှာ'
-          submitted
-          paid
-          verified
-        />
-        <OverviewCard
-          title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
-          submitted
-          paid
-          verified
         />
       </section>
 
