@@ -28,21 +28,18 @@ function RouteComponent() {
 
   const entranceFormResult = useGetEntranceForm({
     retry: 0,
-    staleTime: Infinity,
     refetchOnWindowFocus: false,
     enabled: !!openedForm,
   })
 
   const subjectChoiceFormResult = useGetSubjectChoiceForm({
     retry: 0,
-    staleTime: Infinity,
     refetchOnWindowFocus: false,
     enabled: !!entranceFormResult.data,
   })
 
   const registrationFormResult = useGetRegistrationForm({
     retry: 0,
-    staleTime: Infinity,
     refetchOnWindowFocus: false,
     enabled: !!subjectChoiceFormResult.data,
   })
