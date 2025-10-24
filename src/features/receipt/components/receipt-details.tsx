@@ -63,6 +63,16 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
             </span>{' '}
             {format(receipt.createdAt, 'MMM dd, yyyy, h:mm a')}
           </p>
+          <div>
+            <span className='text-muted-foreground font-medium'>
+              Phone numbers:
+            </span>
+            {receipt.phoneNumbers.map((p, i) => (
+              <p key={i}>
+                {i + 1}. {p.phoneNumber}
+              </p>
+            ))}
+          </div>
           <p>
             <span className='text-muted-foreground font-medium'>
               Updated At:
@@ -76,6 +86,7 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>No.</TableHead>
               <TableHead>Name</TableHead>
               <TableHead className='text-right'>Amount</TableHead>
             </TableRow>
@@ -84,6 +95,7 @@ export const ReceiptDetails = ({ data: receipt }: { data: TReceipt }) => {
             {receipt.data.length > 0 ? (
               receipt.data.map((item, i) => (
                 <TableRow key={i}>
+                  <TableCell className='w-[59px]'>{i + 1}.</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell className='text-right'>
                     {item.amount.toLocaleString()}

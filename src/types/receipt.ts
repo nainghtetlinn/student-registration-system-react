@@ -4,6 +4,7 @@ export type TReceipt = {
   id: number
   year: string
   data: TData[]
+  phoneNumbers: { phoneNumber: string }[]
   createdAt: string
   updatedAt: string | null
 }
