@@ -59,12 +59,7 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
-  if (
-    entranceFormResult.isPending ||
-    subjectChoiceFormResult.isPending ||
-    registrationFormResult.isPending
-  )
-    return <Pending />
+  if (entranceFormResult.isPending) return <Pending />
 
   if (!entranceFormResult.data)
     return (
@@ -92,6 +87,8 @@ function RouteComponent() {
         </Button>
       </ErrorComponent>
     )
+
+  if (subjectChoiceFormResult.isPending) return <Pending />
 
   if (!subjectChoiceFormResult.data)
     return (
@@ -122,6 +119,8 @@ function RouteComponent() {
         </Button>
       </ErrorComponent>
     )
+
+  if (registrationFormResult.isPending) return <Pending />
 
   if (!registrationFormResult.data)
     return (
