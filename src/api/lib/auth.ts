@@ -80,9 +80,7 @@ export const useLogout = (
     },
     ...options,
     onSuccess: (...args) => {
-      queryClient.setQueryData(['auth', 'user'], null)
-      queryClient.setQueryData(['profile'], null)
-      queryClient.setQueryData(['auth', 'refresh-token'], null)
+      queryClient.clear()
       localStorage.removeItem('access-token')
       options?.onSuccess?.(...args)
     },
