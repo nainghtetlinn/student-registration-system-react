@@ -59,7 +59,7 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
-  if (entranceFormResult.isPending) return <Pending />
+  if (entranceFormResult.isLoading) return <Pending />
 
   if (!entranceFormResult.data)
     return (
@@ -88,7 +88,7 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
-  if (subjectChoiceFormResult.isPending) return <Pending />
+  if (subjectChoiceFormResult.isLoading) return <Pending />
 
   if (!subjectChoiceFormResult.data)
     return (
@@ -120,7 +120,7 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
-  if (registrationFormResult.isPending) return <Pending />
+  if (registrationFormResult.isLoading) return <Pending />
 
   if (!registrationFormResult.data)
     return (
