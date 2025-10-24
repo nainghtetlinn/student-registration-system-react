@@ -1,17 +1,28 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
-import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
+import { Image } from '@/components/common/image'
 import { CardContent } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 import { Info } from './info'
 
+import { useGetFile } from '@/features/admin/api/get-file'
 import { cn } from '@/lib/utils'
 import { useGetStudentRegistrationForm } from '../../api/get-student-registration-form.api'
 
 export const StudentRegistrationFormDetail = ({ id }: { id: string }) => {
   const { data, isPending, isError } = useGetStudentRegistrationForm(id)
 
-  if (isPending) return <FormSkeleton />
+  const photoResult = useGetFile(data?.studentPhotoUrl)
+  const studentSignResult = useGetFile(data?.studentSignatureUrl)
+  const guardianSignResult = useGetFile(data?.guardianSginatureUrl)
 
-  if (isError) return <div>Error</div>
+  if (isPending)
+    return (
+      <div className='flex h-[500px] items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+
+  if (isError) return <div>Something went wrong.</div>
 
   return (
     <>
@@ -20,6 +31,13 @@ export const StudentRegistrationFormDetail = ({ id }: { id: string }) => {
         title='ကျောင်းသားမှတ်ပုံတင်ခွင့်လျှောက်လွှာ'
       />
       <CardContent>
+        <div className='mt-4'>
+          <Image
+            loading={photoResult.loading}
+            url={photoResult.fileUrl}
+            alt='Profile photo'
+          />
+        </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
           <Info
@@ -184,6 +202,37 @@ export const StudentRegistrationFormDetail = ({ id }: { id: string }) => {
         ) : (
           <p className='rounded border py-4 text-center'>No Siblings.</p>
         )}
+
+        <div className='mt-4 flex justify-end gap-4'>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              ဝင်ခွင့်လျှောက်ထားသူလက်မှတ်၊အမည်
+            </h5>
+            <Image
+              loading={studentSignResult.loading}
+              url={studentSignResult.fileUrl}
+              alt='Student Sign'
+            />
+            <h5>{data.studentNameEng}</h5>
+            <p className='text-muted-foreground text-xs'>
+              {data.studentSignatureDate}
+            </p>
+          </div>
+          <div className='flex flex-col items-center'>
+            <h5 className='text-xs leading-8 font-semibold'>
+              မိဘ(သို့မဟုတ်)အုပ်ထိန်းသူ၏လက်မှတ်၊အမည်
+            </h5>
+            <Image
+              loading={guardianSignResult.loading}
+              url={guardianSignResult.fileUrl}
+              alt='Guardian Sign'
+            />
+            <h5>{data.guardianName}</h5>
+            <p className='text-muted-foreground text-xs'>
+              {data.guardianSignatureDate}
+            </p>
+          </div>
+        </div>
       </CardContent>
     </>
   )

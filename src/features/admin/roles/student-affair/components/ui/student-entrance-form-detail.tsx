@@ -1,16 +1,26 @@
 import { FormCardHeader } from '@/components/common/form-card-header'
-import { FormSkeleton } from '@/components/layouts/shared/form-skeleton'
+import { Image } from '@/components/common/image'
 import { CardContent } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 import { Info } from './info'
 
+import { useGetFile } from '@/features/admin/api/get-file'
 import { useGetStudentEntranceForm } from '../../api/get-student-entrance-form.api'
 
 export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
   const { data, isPending, isError } = useGetStudentEntranceForm(id)
 
-  if (isPending) return <FormSkeleton />
+  const photoResult = useGetFile(data?.studentPhotoUrl)
+  const signResult = useGetFile(data?.studentSignatureUrl)
 
-  if (isError) return <div>Error</div>
+  if (isPending)
+    return (
+      <div className='flex h-[500px] items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+
+  if (isError) return <div>Something went wrong.</div>
 
   return (
     <>
@@ -19,6 +29,13 @@ export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
         title='တက္ကသိုလ်ဝင်ခွင့်လျှောက်လွှာ'
       />
       <CardContent>
+        <div className='mt-4'>
+          <Image
+            loading={photoResult.loading}
+            url={photoResult.fileUrl}
+            alt='Profile photo'
+          />
+        </div>
         <h4 className='mt-4 mb-2 text-center text-2xl font-bold'>Student</h4>
         <div></div>
         <div className='grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2'>
@@ -114,6 +131,13 @@ export const StudentEntranceFormDetail = ({ id }: { id: string }) => {
           <Info
             label='Permanent Phone Number'
             value={data.permanentPhoneNumber}
+          />
+        </div>
+        <div className='flex justify-end'>
+          <Image
+            loading={signResult.loading}
+            url={signResult.fileUrl}
+            alt='Student Sign'
           />
         </div>
       </CardContent>
