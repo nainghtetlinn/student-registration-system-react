@@ -8,7 +8,7 @@ import type {
   TCreateSubjectChoiceFormResponse,
 } from '../types/create.type'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { api } from '@/api/lib/axios'
@@ -62,6 +62,8 @@ export const useCreateSubjectChoiceForm = (
     'mutationKey' | 'mutationFn'
   >,
 ) => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
@@ -73,6 +75,7 @@ export const useCreateSubjectChoiceForm = (
       return response.data.data
     },
     onSuccess: (response, ...restArgs) => {
+      queryClient.invalidateQueries({ queryKey: ['form', 'subject-choice'] })
       toast.success('Subject choice form submitted successfully')
       onSuccess?.(response, ...restArgs)
     },

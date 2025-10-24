@@ -8,7 +8,7 @@ import type {
   TCreateRegistrationFormRequest,
 } from '../types/create.type'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { api } from '@/api/lib/axios'
@@ -44,6 +44,8 @@ export const useCreateRegistrationForm = (
     'mutationKey' | 'mutationFn'
   >,
 ) => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
@@ -55,6 +57,7 @@ export const useCreateRegistrationForm = (
       return response.data.data
     },
     onSuccess: (response, ...restArgs) => {
+      queryClient.invalidateQueries({ queryKey: ['form', 'registration'] })
       toast.success('Registration form submitted successfully')
       onSuccess?.(response, ...restArgs)
     },

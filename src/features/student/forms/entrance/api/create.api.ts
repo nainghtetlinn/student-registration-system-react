@@ -8,7 +8,7 @@ import type {
   TCreateEntranceFormResponse,
 } from '../types/create.type'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { api } from '@/api/lib/axios'
@@ -56,6 +56,8 @@ export const useCreateEntranceForm = (
     'mutationKey' | 'mutationFn'
   >,
 ) => {
+  const queryClient = useQueryClient()
+
   const { onSuccess, onError, ...restOptions } = options ?? {}
 
   return useMutation({
@@ -67,6 +69,7 @@ export const useCreateEntranceForm = (
       return response.data.data
     },
     onSuccess: (response, ...restArgs) => {
+      queryClient.invalidateQueries({ queryKey: ['form', 'entrance'] })
       toast.success('Entrance form submitted successfully')
       onSuccess?.(response, ...restArgs)
     },
