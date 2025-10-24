@@ -1,3 +1,4 @@
+import { Pending } from '@/components/layouts/shared/pending'
 import { FinanceDashboard } from '@/features/admin/roles/finance/components/dashboard'
 import { StudentAffairDashboard } from '@/features/admin/roles/student-affair/components/dashboard'
 
@@ -10,12 +11,15 @@ export const Route = createFileRoute('/admin/')({
 })
 
 function RouteComponent() {
-  const { data: user } = useUser()
+  const { data: user, isPending, isError } = useUser()
 
-  if (user?.role.toLowerCase() === 'finance') return <FinanceDashboard />
+  if (isPending) return <Pending />
 
-  if (user?.role.toLowerCase() === 'student affair')
-    return <StudentAffairDashboard />
+  if (isError) return <div>Something went wrong.</div>
+
+  if (user.role === 'Finance') return <FinanceDashboard />
+
+  if (user.role === 'Student Affair') return <StudentAffairDashboard />
 
   return <div>This is protected route</div>
 }
