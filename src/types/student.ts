@@ -1,5 +1,6 @@
 export type TEntranceForm = {
   formId: number
+  studentId: number
   enrollmentNumber: string
   studentNameMm: string
   studentNameEng: string
