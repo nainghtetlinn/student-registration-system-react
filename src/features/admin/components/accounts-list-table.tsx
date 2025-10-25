@@ -6,7 +6,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Loader2 } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Loader2, Search } from 'lucide-react'
 
 import type { QueryKey } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -15,7 +16,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import {
@@ -25,6 +26,7 @@ import {
 import { paths } from '@/config/paths'
 import type { TUser } from '@/types/user'
 import { accountsListColumns } from '../utils/accounts-list-columns'
+import { Button } from '@/components/ui/button'
 
 export const AccountsListTable = ({
   queryKey,
@@ -35,14 +37,16 @@ export const AccountsListTable = ({
 }) => {
   const navigate = useNavigate()
   const { ref, inView } = useInView()
+  const [k, setK] = useState('')
 
-  const { data, isPending, fetchNextPage, hasNextPage } = useGetAllAccounts(
-    {
-      queryKey,
-      refetchOnWindowFocus: false,
-    },
-    search,
-  )
+  const { data, isPending, fetchNextPage, hasNextPage, refetch } =
+    useGetAllAccounts(
+      {
+        queryKey,
+        refetchOnWindowFocus: false,
+      },
+      { ...search, keyword: k },
+    )
 
   const table = useReactTable<TUser>({
     data: data || [],
@@ -57,6 +61,23 @@ export const AccountsListTable = ({
 
   return (
     <div className='relative p-2'>
+      <form
+        className='mb-2 flex w-full justify-end gap-2'
+        onSubmit={(e) => {
+          e.preventDefault()
+          refetch()
+        }}
+      >
+        <Input
+          value={k}
+          className='w-[300px]'
+          placeholder='Search ...'
+          onChange={(e) => setK(e.target.value)}
+        />
+        <Button size={'icon'}>
+          <Search />
+        </Button>
+      </form>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
