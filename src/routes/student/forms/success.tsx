@@ -12,6 +12,7 @@ function RouteComponent() {
 
       <div className='flex h-[80vh] flex-col items-center justify-center gap-4'>
         <h2 className='text-2xl font-bold'>Success!</h2>
+        <p>We will sent an email if the form is accepted.</p>
         <Button
           asChild
           size='lg'
