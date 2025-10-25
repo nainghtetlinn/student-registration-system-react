@@ -19,7 +19,13 @@ import { useForm } from 'react-hook-form'
 import { useRejectStudent } from '../../api/reject-student.api'
 import { rejectStudentSchema } from '../../schema/reject-student.schema'
 
-export const RejectBtn = ({ id }: { id: string }) => {
+export const RejectBtn = ({
+  id,
+  onSuccess,
+}: {
+  id: string
+  onSuccess: () => void
+}) => {
   const [open, setOpen] = useState(false)
 
   const form = useForm({
@@ -31,6 +37,7 @@ export const RejectBtn = ({ id }: { id: string }) => {
     onSuccess: () => {
       setOpen(false)
       form.reset()
+      onSuccess()
     },
   })
 
