@@ -146,6 +146,18 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
+  if (!entranceFormResult.data.departmentSection.paymentUrl)
+    return (
+      <ErrorComponent
+        title='Payment not completed'
+        description='Your registration form is submitted, but the payment has not been made yet.'
+      >
+        <Button asChild>
+          <Link to='/student/forms/payment'>Continue</Link>
+        </Button>
+      </ErrorComponent>
+    )
+
   return (
     <div>
       <section className='container mx-auto my-2'>
