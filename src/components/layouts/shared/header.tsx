@@ -57,23 +57,25 @@ export const Header = () => {
     })
 
   return (
-    <header className='p-2 shadow'>
+    <header className='p-2'>
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center gap-2'>
-          <img
-            src={Logo}
-            alt='Logo'
-            className='h-12 w-12'
-          />
-          <span className='text-xl font-bold'>
+          <div className='h-12 w-12'>
+            <img
+              src={Logo}
+              alt='Logo'
+              className='h-full w-full object-contain'
+            />
+          </div>
+          <span className='text-xl font-bold text-white'>
             Technological University Taunggyi
           </span>
         </div>
 
         <div className='hidden items-center gap-2 md:flex'>
           <nav>
-            <ul className='flex items-center gap-2'>
-              <li className='hover:bg-accent rounded p-2'>
+            <ul className='flex items-center gap-2 text-white'>
+              {/* <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>Home</a>
               </li>
               <li className='hover:bg-accent rounded p-2'>
@@ -81,15 +83,20 @@ export const Header = () => {
               </li>
               <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>About</a>
-              </li>
+              </li> */}
               {user && user.role === 'Student' && (
                 <li className='hover:bg-accent rounded p-2'>
-                  <Link to='/student'>Dashboard</Link>
+                  <Link to='/student'>Register</Link>
                 </li>
               )}
               {user && user.role !== 'Student' && (
                 <li className='hover:bg-accent rounded p-2'>
                   <Link to='/admin'>Dashboard</Link>
+                </li>
+              )}
+              {!user && (
+                <li className='hover:bg-accent rounded p-2'>
+                  <Link to='/auth/login'>Login</Link>
                 </li>
               )}
             </ul>

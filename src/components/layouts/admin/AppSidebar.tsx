@@ -169,10 +169,11 @@ export const AppSidebar = ({
           />
         )}
 
-        <AppSidebarGroup
+        {/* <AppSidebarGroup
           label='Management'
           items={contents.management}
-        />
+        /> */}
+
         <AppSidebarGroup
           label='Documents'
           items={contents.documents}

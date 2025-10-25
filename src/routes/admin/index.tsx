@@ -2,7 +2,7 @@ import { Pending } from '@/components/layouts/shared/pending'
 import { FinanceDashboard } from '@/features/admin/roles/finance/components/dashboard'
 import { StudentAffairDashboard } from '@/features/admin/roles/student-affair/components/dashboard'
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
 
 import { useUser } from '@/api/lib/auth'
 
@@ -21,5 +21,5 @@ function RouteComponent() {
 
   if (user.role === 'Student Affair') return <StudentAffairDashboard />
 
-  return <div>This is protected route</div>
+  return <Navigate to='/admin/accounts' />
 }
