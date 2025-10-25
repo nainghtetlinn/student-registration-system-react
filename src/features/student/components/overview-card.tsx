@@ -61,14 +61,17 @@ export const OverviewCard = ({
           <DownloadBtn
             studentId={studentId}
             label='Entrance Form'
+            type='Entrance Form'
           />
           <DownloadBtn
             studentId={studentId}
             label='Subject Choice Form'
+            type='Subject Choice'
           />
           <DownloadBtn
             studentId={studentId}
             label='Registration Form'
+            type='Registration'
           />
         </div>
       </CardContent>
