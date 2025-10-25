@@ -24,39 +24,58 @@ export const OverviewCard = ({
   paid: boolean
   verified: boolean
 }) => {
-  const renderStatus = (label: string, value: boolean) => (
-    <div className='flex items-center justify-between border-b py-2 last:border-0'>
-      <span className='text-muted-foreground'>{label}</span>
-      {value ? (
-        <span className='flex items-center gap-1 text-green-600'>
-          <CheckCircle2 size={16} />
-          <span>Yes</span>
-        </span>
-      ) : (
-        <span className='flex items-center gap-1 text-red-500'>
-          <XCircle size={16} />
-          <span>No</span>
-        </span>
-      )}
-    </div>
-  )
+  const renderStatus = (label: string, value: boolean) => {
+    return (
+      <div className='flex items-center justify-between border-b py-2 last:border-0'>
+        <span className='text-muted-foreground'>{label}</span>
+        {value ? (
+          <span className='flex items-center gap-1 text-green-600'>
+            <span>Accepted</span>
+            <CheckCircle2 size={16} />
+          </span>
+        ) : (
+          <span className='flex items-center gap-1 text-red-500'>
+            <span>Pending</span>
+            <XCircle size={16} />
+          </span>
+        )}
+      </div>
+    )
+  }
 
   return (
     <Card className='bg-card rounded-2xl border shadow-sm'>
       <CardHeader className='flex flex-row items-center justify-between pb-2'>
         <CardTitle className='text-lg font-semibold'>{title}</CardTitle>
         <Badge
-          variant={verified ? 'default' : 'outline'}
+          variant={verified && paid && submitted ? 'default' : 'outline'}
           className='flex items-center gap-1'
         >
-          {!verified ? <Clock size={14} /> : <CheckCircle2 size={14} />}
-          {verified ? 'Verified' : 'Pending'}
+          {!verified && !paid && !submitted ? (
+            <Clock size={14} />
+          ) : (
+            <CheckCircle2 size={14} />
+          )}
+          {verified && paid && submitted ? 'Completed' : 'Pending'}
         </Badge>
       </CardHeader>
       <CardContent className='space-y-2'>
-        {renderStatus('Submitted', submitted)}
-        {renderStatus('Paid', paid)}
-        {renderStatus('Verified', verified)}
+        <div className='flex items-center justify-between border-b py-2 last:border-0'>
+          <span className='text-muted-foreground'>Form Submitted</span>
+          {submitted ? (
+            <span className='flex items-center gap-1 text-green-600'>
+              <span>Submitted</span>
+              <CheckCircle2 size={16} />
+            </span>
+          ) : (
+            <span className='flex items-center gap-1 text-red-500'>
+              <span>Pending</span>
+              <XCircle size={16} />
+            </span>
+          )}
+        </div>
+        {renderStatus('Finance Department', paid)}
+        {renderStatus('Student Affair Department', verified)}
         <div className='flex gap-2'>
           <DownloadBtn
             studentId={studentId}
