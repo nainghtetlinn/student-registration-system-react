@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
@@ -7,9 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Search } from 'lucide-react'
 
-import type { TSubmittedData } from '../types/submitted-data.type'
 import type { TData } from '../api/get-all-submitted-data.api'
+import type { TSubmittedData } from '../types/submitted-data.type'
 
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -18,7 +21,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { env } from '@/config/env'
@@ -28,11 +31,12 @@ import { submittedDataColumns } from '../utils/submitted-data-columns'
 export const StudentAffairDashboard = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const [k, setK] = useState('')
 
   const { ref, inView } = useInView()
 
-  const { data, isPending, fetchNextPage, hasNextPage } =
-    useGetAllSubmittedData({ queryKey: ['submitted-data'] })
+  const { data, isPending, fetchNextPage, hasNextPage, refetch } =
+    useGetAllSubmittedData({ queryKey: ['submitted-data'] }, { keyword: k })
 
   const table = useReactTable<TSubmittedData>({
     data: data || [],
@@ -82,6 +86,23 @@ export const StudentAffairDashboard = () => {
       <h2 className='mb-4 text-center text-2xl font-bold'>
         Student Affair Dashboard
       </h2>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          refetch()
+        }}
+        className='flex w-full justify-end gap-2'
+      >
+        <Input
+          className='w-[300px]'
+          placeholder='Search ...'
+          value={k}
+          onChange={(e) => setK(e.target.value)}
+        />
+        <Button size={'icon'}>
+          <Search />
+        </Button>
+      </form>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

@@ -50,13 +50,13 @@ export const useGetAllSubmittedData = (
     >,
     'queryFn' | 'initialPageParam' | 'getNextPageParam'
   >,
-  search?: Omit<TFilterGetAllSubmittedData, 'page'>,
+  search?: Omit<TFilterGetAllSubmittedData, 'page' | 'size'>,
 ) => {
   return useInfiniteQuery({
     queryFn: async ({ pageParam }) => {
       const response = await getAllSubmittedData({
         page: pageParam,
-        size: search?.size || 10,
+        size: 10,
         ...search,
       })
       const { currentPage, totalPages } = response.data.meta
