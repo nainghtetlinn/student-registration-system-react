@@ -67,9 +67,11 @@ export const Header = () => {
               className='h-full w-full object-contain'
             />
           </div>
-          <span className='text-xl font-bold'>
-            Technological University Taunggyi
-          </span>
+          <Link to='/'>
+            <span className='text-xl font-bold'>
+              Technological University Taunggyi
+            </span>
+          </Link>
         </div>
 
         <div className='hidden items-center gap-2 md:flex'>
