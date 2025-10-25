@@ -28,21 +28,21 @@ function RouteComponent() {
 
   const entranceFormResult = useGetEntranceForm({
     retry: 0,
-    staleTime: Infinity,
+    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!openedForm,
   })
 
   const subjectChoiceFormResult = useGetSubjectChoiceForm({
     retry: 0,
-    staleTime: Infinity,
+    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!entranceFormResult.data,
   })
 
   const registrationFormResult = useGetRegistrationForm({
     retry: 0,
-    staleTime: Infinity,
+    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!subjectChoiceFormResult.data,
   })
@@ -58,8 +58,6 @@ function RouteComponent() {
         </Button>
       </ErrorComponent>
     )
-
-  if (entranceFormResult.isLoading) return <Pending />
 
   if (!entranceFormResult.data)
     return (
@@ -87,8 +85,6 @@ function RouteComponent() {
         </Button>
       </ErrorComponent>
     )
-
-  if (subjectChoiceFormResult.isLoading) return <Pending />
 
   if (!subjectChoiceFormResult.data)
     return (
@@ -119,8 +115,6 @@ function RouteComponent() {
         </Button>
       </ErrorComponent>
     )
-
-  if (registrationFormResult.isLoading) return <Pending />
 
   if (!registrationFormResult.data)
     return (

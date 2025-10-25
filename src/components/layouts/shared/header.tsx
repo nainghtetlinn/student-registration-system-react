@@ -67,14 +67,14 @@ export const Header = () => {
               className='h-full w-full object-contain'
             />
           </div>
-          <span className='text-xl font-bold text-white'>
+          <span className='text-xl font-bold'>
             Technological University Taunggyi
           </span>
         </div>
 
         <div className='hidden items-center gap-2 md:flex'>
           <nav>
-            <ul className='flex items-center gap-2 text-white'>
+            <ul className='flex items-center gap-2'>
               {/* <li className='hover:bg-accent rounded p-2'>
                 <a href='#'>Home</a>
               </li>
@@ -85,17 +85,17 @@ export const Header = () => {
                 <a href='#'>About</a>
               </li> */}
               {user && user.role === 'Student' && (
-                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
-                  <Link to='/student'>Register</Link>
+                <li className='hover:bg-accent rounded p-2'>
+                  <Link to='/student'>Dashboard</Link>
                 </li>
               )}
               {user && user.role !== 'Student' && (
-                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
+                <li className='hover:bg-accent rounded p-2'>
                   <Link to='/admin'>Dashboard</Link>
                 </li>
               )}
               {!user && (
-                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
+                <li className='hover:bg-accent rounded p-2'>
                   <Link to='/auth/login'>Login</Link>
                 </li>
               )}

@@ -10,9 +10,9 @@ export const Route = createFileRoute('/_home/')({
 function App() {
   return (
     <div>
-      <div className='bg-gradient-to-br from-green-400 to-blue-600 text-center dark:from-green-700 dark:to-blue-900'>
-        <Header />
+      <Header />
 
+      <div className='bg-gradient-to-br from-green-400 to-blue-600 text-center dark:from-green-700 dark:to-blue-900'>
         <section className='flex h-screen flex-col items-center justify-center'>
           <h2 className='mb-4 text-4xl font-bold text-white md:text-6xl'>
             Student Registration System
