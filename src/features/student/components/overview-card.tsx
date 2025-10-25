@@ -9,13 +9,16 @@ import {
 } from '@/components/ui/card'
 import { Link } from '@tanstack/react-router'
 import { CheckCircle2, Clock, XCircle } from 'lucide-react'
+import { DownloadBtn } from './download-btn'
 
 export const OverviewCard = ({
+  studentId,
   title,
   submitted = false,
   paid = false,
   verified = false,
 }: {
+  studentId: number
   title: string
   submitted: boolean
   paid: boolean
@@ -54,6 +57,23 @@ export const OverviewCard = ({
         {renderStatus('Submitted', submitted)}
         {renderStatus('Paid', paid)}
         {renderStatus('Verified', verified)}
+        <div className='flex gap-2'>
+          <DownloadBtn
+            studentId={studentId}
+            label='Entrance Form'
+            type='Entrance Form'
+          />
+          <DownloadBtn
+            studentId={studentId}
+            label='Subject Choice Form'
+            type='Subject Choice'
+          />
+          <DownloadBtn
+            studentId={studentId}
+            label='Registration Form'
+            type='Registration'
+          />
+        </div>
       </CardContent>
       {!submitted && (
         <CardFooter className='flex items-center justify-between'>

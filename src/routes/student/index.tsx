@@ -162,6 +162,7 @@ function RouteComponent() {
     <div>
       <section className='container mx-auto my-2'>
         <OverviewCard
+          studentId={entranceFormResult.data.studentId}
           title='Overview'
           submitted={entranceFormResult.data.submitted}
           paid={entranceFormResult.data.paid}
