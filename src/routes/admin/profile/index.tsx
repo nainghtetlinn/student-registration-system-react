@@ -36,31 +36,30 @@ function RouteComponent() {
       <title>Profile</title>
 
       <div className='flex items-center justify-center'>
-        <div className='flex flex-col items-center gap-4 pt-6'>
-          <section className='flex items-center gap-4'>
-            <ProfilePhoto url={profile.photoUrl} />
-            <ProfileSignature url={profile.signatureUrl} />
-          </section>
-
-          <div>
-            <h1 className='text-center text-2xl font-bold'>
-              {profile.engName} | {profile.mmName}
-            </h1>
-            <p className='text-muted-foreground text-center text-sm'>
-              {profile.nrc}
-            </p>
+        <div className='mt-8 flex flex-col gap-4'>
+          <div className='text-center'>
+            <h1 className='text-2xl leading-8 font-bold'>{profile.engName}</h1>
+            <h1 className='text-2xl leading-8 font-bold'>{profile.mmName}</h1>
+            <p className='text-muted-foreground mt-2 text-sm'>{profile.nrc}</p>
           </div>
-
-          <div className='flex gap-2'>
-            <Button
-              variant='secondary'
-              asChild
-            >
-              <Link to={paths.admin.profile.update.getHref()}>
-                Edit <Edit2 />
-              </Link>
-            </Button>
+          <div className='flex gap-2 text-center'>
+            <div>
+              <p>Photo</p>
+              <ProfilePhoto url={profile.photoUrl} />
+            </div>
+            <div>
+              <p>Signature</p>
+              <ProfileSignature url={profile.signatureUrl} />
+            </div>
           </div>
+          <Button
+            variant='secondary'
+            asChild
+          >
+            <Link to={paths.admin.profile.update.getHref()}>
+              Edit Profile <Edit2 />
+            </Link>
+          </Button>
         </div>
       </div>
     </>

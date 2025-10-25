@@ -9,15 +9,15 @@ export const ProfileSignature = ({ url }: { url: string | null }) => {
   const { fileUrl, loading } = useGetFile(url, 'Signature')
 
   if (loading)
-    return <Skeleton className='mx-auto h-[100px] w-[100px] rounded-full' />
+    return <Skeleton className='mx-auto h-[150px] w-[150px] rounded-lg' />
 
   return (
     <div className='relative'>
-      <Avatar className='mx-auto h-[100px] w-[100px]'>
+      <Avatar className='mx-auto h-[150px] w-[150px] rounded-lg border'>
         <AvatarImage
           src={fileUrl ?? '/shadcn.jpg'}
           alt='signature'
-          className='object-cover'
+          className='object-contain'
         />
         <AvatarFallback>??</AvatarFallback>
       </Avatar>
