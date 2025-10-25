@@ -13,11 +13,15 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { Skeleton } from '@/components/ui/skeleton'
 import { EllipsisVertical, Loader2, LogOut, UserCircle2 } from 'lucide-react'
+
+import { Link, useNavigate } from '@tanstack/react-router'
 
 import { useLogout, useUser } from '@/api/lib/auth'
 import { paths } from '@/config/paths'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { useGetFile } from '@/features/profile/api/get-file'
+import { useGetProfile } from '@/features/profile/api/get-profile'
 
 export const AppSidebarFooter = () => {
   const { isMobile } = useSidebar()
@@ -31,6 +35,15 @@ export const AppSidebarFooter = () => {
 
   const { data: user } = useUser()
 
+  const { data: profile, isPending } = useGetProfile()
+
+  const { fileUrl, loading } = useGetFile(
+    profile?.photoUrl || null,
+    'Profile Photo',
+  )
+
+  if (isPending) return <Skeleton className='h-[60px] w-full' />
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -40,18 +53,25 @@ export const AppSidebarFooter = () => {
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <Avatar className='h-8 w-8 rounded-lg grayscale'>
-                <AvatarImage
-                  src={'/shadcn.jpg'}
-                  alt={user?.name || 'username'}
-                />
-                <AvatarFallback className='rounded-lg'>
-                  {user?.name ? user.name.slice(0, 2).toUpperCase() : '??'}
-                </AvatarFallback>
-              </Avatar>
+              {loading ? (
+                <Skeleton className='h-8 w-8 rounded-lg' />
+              ) : (
+                <Avatar className='h-8 w-8 rounded-lg'>
+                  <AvatarImage
+                    src={fileUrl || '/shadcn.jpg'}
+                    alt={profile?.engName || 'username'}
+                    className='object-cover'
+                  />
+                  <AvatarFallback className='rounded-lg'>
+                    {profile?.engName
+                      ? profile.engName.slice(0, 2).toUpperCase()
+                      : '??'}
+                  </AvatarFallback>
+                </Avatar>
+              )}
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-medium'>
-                  {user?.name || 'username'} ({user?.role})
+                  {profile?.engName || 'username'} ({user?.role})
                 </span>
                 <span className='text-muted-foreground truncate text-xs'>
                   {user?.email}
@@ -67,18 +87,25 @@ export const AppSidebarFooter = () => {
           >
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
-                <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage
-                    src={'/shadcn.jpg'}
-                    alt={user?.name || 'username'}
-                  />
-                  <AvatarFallback className='rounded-lg'>
-                    {user?.name ? user.name.slice(0, 2).toUpperCase() : '??'}
-                  </AvatarFallback>
-                </Avatar>
+                {loading ? (
+                  <Skeleton className='h-8 w-8 rounded-lg' />
+                ) : (
+                  <Avatar className='h-8 w-8 rounded-lg'>
+                    <AvatarImage
+                      src={fileUrl || '/shadcn.jpg'}
+                      alt={profile?.engName || 'username'}
+                      className='object-cover'
+                    />
+                    <AvatarFallback className='rounded-lg'>
+                      {profile?.engName
+                        ? profile.engName.slice(0, 2).toUpperCase()
+                        : '??'}
+                    </AvatarFallback>
+                  </Avatar>
+                )}
                 <div className='grid flex-1 text-left text-sm leading-tight'>
                   <span className='truncate font-medium'>
-                    {user?.name || 'username'} ({user?.role})
+                    {profile?.engName || 'username'} ({user?.role})
                   </span>
                   <span className='text-muted-foreground truncate text-xs'>
                     {user?.email}
