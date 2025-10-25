@@ -85,17 +85,17 @@ export const Header = () => {
                 <a href='#'>About</a>
               </li> */}
               {user && user.role === 'Student' && (
-                <li className='hover:bg-accent rounded p-2'>
+                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
                   <Link to='/student'>Register</Link>
                 </li>
               )}
               {user && user.role !== 'Student' && (
-                <li className='hover:bg-accent rounded p-2'>
+                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
                   <Link to='/admin'>Dashboard</Link>
                 </li>
               )}
               {!user && (
-                <li className='hover:bg-accent rounded p-2'>
+                <li className='hover:bg-accent rounded p-2 hover:text-gray-700'>
                   <Link to='/auth/login'>Login</Link>
                 </li>
               )}
