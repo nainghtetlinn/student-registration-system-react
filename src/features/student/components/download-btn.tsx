@@ -25,7 +25,7 @@ export const DownloadBtn = ({
     downloadFile({ studentId, type })
       .then((res) => {
         setFileBuffer(res.data)
-        console.log(res.data)
+        console.log(fileBuffer)
         const blob = new Blob([res.data], {
           type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         })
