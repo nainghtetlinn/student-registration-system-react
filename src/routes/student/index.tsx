@@ -28,21 +28,18 @@ function RouteComponent() {
 
   const entranceFormResult = useGetEntranceForm({
     retry: 0,
-    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!openedForm,
   })
 
   const subjectChoiceFormResult = useGetSubjectChoiceForm({
     retry: 0,
-    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!entranceFormResult.data,
   })
 
   const registrationFormResult = useGetRegistrationForm({
     retry: 0,
-    staleTime: 60000,
     refetchOnWindowFocus: false,
     enabled: !!subjectChoiceFormResult.data,
   })
@@ -59,6 +56,8 @@ function RouteComponent() {
       </ErrorComponent>
     )
 
+  if (entranceFormResult.isPending) return <Pending />
+
   if (!entranceFormResult.data)
     return (
       <ErrorComponent
@@ -66,7 +65,12 @@ function RouteComponent() {
         description="You haven't created or submitted an entrance form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/entrance/create'>Submit entrance form</Link>
+          <Link
+            preload={false}
+            to='/student/forms/entrance/create'
+          >
+            Submit entrance form
+          </Link>
         </Button>
       </ErrorComponent>
     )
@@ -81,10 +85,17 @@ function RouteComponent() {
         description="You haven't completed an entrance form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/entrance/files-upload'>Continue</Link>
+          <Link
+            preload={false}
+            to='/student/forms/entrance/files-upload'
+          >
+            Continue
+          </Link>
         </Button>
       </ErrorComponent>
     )
+
+  if (subjectChoiceFormResult.isPending) return <Pending />
 
   if (!subjectChoiceFormResult.data)
     return (
@@ -93,7 +104,10 @@ function RouteComponent() {
         description="You haven't created or submitted a subject choice form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/subject-choice/create'>
+          <Link
+            preload={false}
+            to='/student/forms/subject-choice/create'
+          >
             Submit subject choice form
           </Link>
         </Button>
@@ -111,10 +125,17 @@ function RouteComponent() {
         description="You haven't completed a subject choice form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/subject-choice/files-upload'>Continue</Link>
+          <Link
+            preload={false}
+            to='/student/forms/subject-choice/files-upload'
+          >
+            Continue
+          </Link>
         </Button>
       </ErrorComponent>
     )
+
+  if (registrationFormResult.isPending) return <Pending />
 
   if (!registrationFormResult.data)
     return (
@@ -123,7 +144,10 @@ function RouteComponent() {
         description="You haven't created or submitted a registration form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/registration/create'>
+          <Link
+            preload={false}
+            to='/student/forms/registration/create'
+          >
             Submit registration form
           </Link>
         </Button>
@@ -141,7 +165,12 @@ function RouteComponent() {
         description="You haven't completed a registration form yet."
       >
         <Button asChild>
-          <Link to='/student/forms/registration/files-upload'>Continue</Link>
+          <Link
+            preload={false}
+            to='/student/forms/registration/files-upload'
+          >
+            Continue
+          </Link>
         </Button>
       </ErrorComponent>
     )
@@ -153,7 +182,12 @@ function RouteComponent() {
         description='Your registration form is submitted, but the payment has not been made yet.'
       >
         <Button asChild>
-          <Link to='/student/forms/payment'>Continue</Link>
+          <Link
+            preload={false}
+            to='/student/forms/payment'
+          >
+            Continue
+          </Link>
         </Button>
       </ErrorComponent>
     )
