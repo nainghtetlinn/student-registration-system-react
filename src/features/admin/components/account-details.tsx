@@ -20,7 +20,7 @@ export const AccountDetails = ({ data: accountDetails }: { data: TUser }) => {
     <div className='flex justify-center p-2'>
       <div className='flex flex-col items-center gap-2'>
         <Avatar className='mx-auto h-[100px] w-[100px]'>
-          <AvatarImage src='/shadcn.jpg' />
+          <AvatarImage src='/profile.png' />
           <AvatarFallback>
             {accountDetails.name || accountDetails.email.slice(0, 2) || '?'}
           </AvatarFallback>

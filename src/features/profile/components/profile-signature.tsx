@@ -4,6 +4,7 @@ import { DeleteSignature } from './delete-signature'
 import { UploadSignature } from './upload-signature'
 
 import { useGetFile } from '../api/get-file'
+import { ImageOff } from 'lucide-react'
 
 export const ProfileSignature = ({ url }: { url: string | null }) => {
   const { fileUrl, loading } = useGetFile(url, 'Signature')
@@ -11,11 +12,18 @@ export const ProfileSignature = ({ url }: { url: string | null }) => {
   if (loading)
     return <Skeleton className='mx-auto h-[150px] w-[150px] rounded-lg' />
 
+  if (!fileUrl)
+    return (
+      <div className='mx-auto flex h-[150px] w-[150px] items-center justify-center rounded-lg border'>
+        <ImageOff />
+      </div>
+    )
+
   return (
     <div className='relative'>
       <Avatar className='mx-auto h-[150px] w-[150px] rounded-lg border'>
         <AvatarImage
-          src={fileUrl ?? '/shadcn.jpg'}
+          src={fileUrl}
           alt='signature'
           className='object-contain'
         />

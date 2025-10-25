@@ -58,7 +58,7 @@ export const AppSidebarFooter = () => {
               ) : (
                 <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage
-                    src={fileUrl || '/shadcn.jpg'}
+                    src={fileUrl || '/profile.png'}
                     alt={profile?.engName || 'username'}
                     className='object-cover'
                   />
@@ -92,7 +92,7 @@ export const AppSidebarFooter = () => {
                 ) : (
                   <Avatar className='h-8 w-8 rounded-lg'>
                     <AvatarImage
-                      src={fileUrl || '/shadcn.jpg'}
+                      src={fileUrl || '/profile.png'}
                       alt={profile?.engName || 'username'}
                       className='object-cover'
                     />

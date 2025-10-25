@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ImageOff } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { useGetFile } from '@/features/form/api/get-file'
@@ -18,16 +19,20 @@ export const Stamp = ({
       {...props}
     >
       {loading ? (
-        <Skeleton className='h-full w-full rounded-full' />
-      ) : (
+        <Skeleton className='h-full w-full' />
+      ) : fileUrl ? (
         <Avatar className='h-full w-full'>
           <AvatarImage
-            src={fileUrl ?? '/shadcn.jpg'}
+            src={fileUrl}
             alt='stamp photo'
             className='object-cover'
           />
           <AvatarFallback>??</AvatarFallback>
         </Avatar>
+      ) : (
+        <div className='flex h-full w-full items-center justify-center'>
+          <ImageOff />
+        </div>
       )}
     </div>
   )

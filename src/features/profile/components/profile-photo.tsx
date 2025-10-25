@@ -15,7 +15,7 @@ export const ProfilePhoto = ({ url }: { url: string | null }) => {
     <div className='relative'>
       <Avatar className='mx-auto h-[150px] w-[150px] rounded-lg border'>
         <AvatarImage
-          src={fileUrl ?? '/shadcn.jpg'}
+          src={fileUrl ?? '/profile.png'}
           alt='profile photo'
           className='object-cover'
         />
