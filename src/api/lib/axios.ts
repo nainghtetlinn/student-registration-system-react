@@ -10,9 +10,9 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 
   if (accessToken) {
     config.headers['authorization'] = `Bearer ${accessToken}`
-    config.withCredentials = true
   }
 
+  config.withCredentials = true
   return config
 }
 
