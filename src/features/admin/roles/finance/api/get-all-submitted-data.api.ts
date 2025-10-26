@@ -4,7 +4,6 @@ import type {
   QueryKey,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
-import type { TFilterSchema } from '../schema/filter.schema'
 import type { TGetAllSubmittedDataResponse } from '../types/get.type'
 
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -39,7 +38,7 @@ type DataPage = {
 export type TData = InfiniteData<DataPage, number>
 
 export const useGetAllSubmittedData = (
-  search?: TFilterSchema,
+  search?: Omit<TFilterGetAllSubmittedData, 'page' | 'size'>,
   options?: Omit<
     UseInfiniteQueryOptions<
       DataPage,
