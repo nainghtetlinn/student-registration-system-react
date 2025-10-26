@@ -11,7 +11,7 @@ function RouteComponent() {
     <>
       <title>Accounts</title>
 
-      <AccountsListTable queryKey={['accounts']} />
+      <AccountsListTable />
     </>
   )
 }

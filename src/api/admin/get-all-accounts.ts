@@ -1,60 +1,59 @@
-import {
-  useInfiniteQuery,
-  type QueryKey,
-  type UseInfiniteQueryOptions,
-} from '@tanstack/react-query'
-import { z } from 'zod'
-
 import type { ApiResponse, GetAllAccountsResponse } from '@/types/api'
 import type { TUser } from '@/types/user'
+import type { QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query'
+
+import { useInfiniteQuery } from '@tanstack/react-query'
+
 import { api } from '../lib/axios'
 
-export const filterGetAccountsInputSchema = z.object({
-  keyword: z.string().optional(),
-  role: z.string().optional(),
-  page: z.coerce.number().min(0).optional(),
-  size: z.coerce.number().min(1).optional(),
-  sortField: z.string().optional(),
-  sortDirection: z.string().optional(),
-})
-
-export type TFilterGetAccountsInput = z.infer<
-  typeof filterGetAccountsInputSchema
->
+type TFilterGetAccountsInput = {
+  keyword?: string
+  page: number
+  size: number
+  sortField?: string
+  sortDirection?: string
+  role?: string
+}
 
 export const getAllAccounts = (search: TFilterGetAccountsInput) => {
-  const params = {
-    page: 0,
-    size: 10,
-    ...search,
-  }
   return api.get<ApiResponse<GetAllAccountsResponse>>('/admin/getAllAccounts', {
-    params,
+    params: search,
   })
 }
 
 type UsersPage = {
-  users: TUser[]
+  items: TUser[]
+  currentPage: number
+  totalPages: number
+  totalItems: number
   nextPage: number | null
 }
 
 export const useGetAllAccounts = (
-  options: Omit<
+  search?: Omit<TFilterGetAccountsInput, 'page' | 'size'>,
+  options?: Omit<
     UseInfiniteQueryOptions<UsersPage, Error, TUser[], QueryKey, number>,
-    'queryFn' | 'initialPageParam' | 'getNextPageParam'
+    'queryFn' | 'queryKey' | 'initialPageParam' | 'getNextPageParam'
   >,
-  search?: Omit<TFilterGetAccountsInput, 'page'>,
 ) => {
   return useInfiniteQuery({
+    queryKey: ['admin', 'accounts'],
     queryFn: async ({ pageParam }) => {
-      const response = await getAllAccounts({ page: pageParam, ...search })
-      const { currentPage, totalPages } = response.data.meta
+      const response = await getAllAccounts({
+        page: pageParam,
+        size: 10,
+        ...search,
+      })
+      const { currentPage, totalPages, totalItems } = response.data.meta
       return {
-        users: response.data.data,
+        items: response.data.data,
+        currentPage,
+        totalPages,
+        totalItems,
         nextPage: currentPage === totalPages ? null : pageParam + 1,
       }
     },
-    select: (data) => data.pages.flatMap((p) => p.users),
+    select: (data) => data.pages.flatMap((p) => p.items),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     ...options,

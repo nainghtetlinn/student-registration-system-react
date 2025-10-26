@@ -15,9 +15,13 @@ export const Route = createFileRoute('/admin/accounts/$email')({
   },
   loader: async ({ context, params }) => {
     const details = await context.queryClient.ensureQueryData({
-      queryKey: ['accounts', 'details', params.email],
+      queryKey: ['admin', 'accounts', params.email],
       queryFn: async () => {
-        const response = await getAllAccounts({ keyword: params.email })
+        const response = await getAllAccounts({
+          keyword: params.email,
+          page: 0,
+          size: 1,
+        })
         return response.data.data
       },
       revalidateIfStale: true,

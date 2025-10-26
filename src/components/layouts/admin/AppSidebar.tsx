@@ -23,36 +23,11 @@ import { AppSidebarGroup } from './AppSidebarGroup'
 import { useUser } from '@/api/lib/auth'
 
 const contents = {
-  accounts: [
+  admin: [
     {
-      name: 'Accounts',
-      href: '/admin/accounts',
-      icon: UserRoundCog,
-    },
-    {
-      name: 'Student Affairs',
-      href: '/admin/accounts/student-affairs',
-      icon: UserRoundCog,
-    },
-    {
-      name: 'Finances',
-      href: '/admin/accounts/finances',
-      icon: UserRoundCog,
-    },
-    {
-      name: 'Deans',
-      href: '/admin/accounts/deans',
-      icon: UserRoundCog,
-    },
-    {
-      name: 'Students',
-      href: '/admin/accounts/students',
-      icon: User2,
-    },
-    {
-      name: 'Register',
-      href: '/admin/accounts/register',
-      icon: PlusCircle,
+      name: 'Dashboard',
+      href: '/admin',
+      icon: ShieldUser,
     },
   ],
 
@@ -61,16 +36,6 @@ const contents = {
       name: 'Dashboard',
       href: '/admin',
       icon: ShieldUser,
-    },
-    {
-      name: 'Receipts',
-      href: '/admin/receipts',
-      icon: Ticket,
-    },
-    {
-      name: 'Create Receipt',
-      href: '/admin/receipts/create',
-      icon: PlusCircle,
     },
   ],
 
@@ -82,12 +47,20 @@ const contents = {
     },
   ],
 
-  forms: [
+  accounts: [
     {
-      name: 'Dashboard',
-      href: '/admin',
-      icon: ShieldUser,
+      name: 'Accounts',
+      href: '/admin/accounts',
+      icon: UserRoundCog,
     },
+    {
+      name: 'Register',
+      href: '/admin/accounts/register',
+      icon: PlusCircle,
+    },
+  ],
+
+  forms: [
     {
       name: 'Forms',
       href: '/admin/forms',
@@ -96,6 +69,19 @@ const contents = {
     {
       name: 'Create Form',
       href: '/admin/forms/create',
+      icon: PlusCircle,
+    },
+  ],
+
+  receipts: [
+    {
+      name: 'Receipts',
+      href: '/admin/receipts',
+      icon: Ticket,
+    },
+    {
+      name: 'Create Receipt',
+      href: '/admin/receipts/create',
       icon: PlusCircle,
     },
   ],
@@ -147,7 +133,7 @@ export const AppSidebar = ({
         {user?.role === 'Admin' && (
           <AppSidebarGroup
             label='Admin'
-            items={contents.forms}
+            items={contents.admin}
           />
         )}
         {user?.role === 'Admin' && (
@@ -156,10 +142,22 @@ export const AppSidebar = ({
             items={contents.accounts}
           />
         )}
+        {user?.role === 'Admin' && (
+          <AppSidebarGroup
+            label='Forms'
+            items={contents.forms}
+          />
+        )}
         {user?.role === 'Finance' && (
           <AppSidebarGroup
             label='Finance'
             items={contents.finance}
+          />
+        )}
+        {user?.role === 'Finance' && (
+          <AppSidebarGroup
+            label='Receipts'
+            items={contents.receipts}
           />
         )}
         {user?.role === 'Student Affair' && (
