@@ -14,8 +14,19 @@ export const ProfileSignature = ({ url }: { url: string | null }) => {
 
   if (!fileUrl)
     return (
-      <div className='mx-auto flex h-[150px] w-[150px] items-center justify-center rounded-lg border'>
+      <div className='relative mx-auto flex h-[150px] w-[150px] items-center justify-center rounded-lg border'>
         <ImageOff />
+        <div className='absolute right-0 bottom-0'>
+          {import.meta.env.DEV ? (
+            url ? (
+              <DeleteSignature />
+            ) : (
+              <UploadSignature />
+            )
+          ) : (
+            !url && <UploadSignature />
+          )}
+        </div>
       </div>
     )
 

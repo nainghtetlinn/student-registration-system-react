@@ -35,14 +35,12 @@ export const AppSidebarFooter = () => {
 
   const { data: user } = useUser()
 
-  const { data: profile, isPending } = useGetProfile()
+  const { data: profile } = useGetProfile()
 
   const { fileUrl, loading } = useGetFile(
     profile?.photoUrl || null,
     'Profile Photo',
   )
-
-  if (isPending) return <Skeleton className='h-[60px] w-full' />
 
   return (
     <SidebarMenu>
