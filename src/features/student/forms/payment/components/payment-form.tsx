@@ -54,7 +54,35 @@ export const PaymentForm = ({
       <CardContent className='space-y-4'>
         <Table>
           <TableHeader>
+            <TableRow className='hover:bg-transparent'>
+              <TableHead className='w-[59px]'>No.</TableHead>
+              <TableHead>Phone No.</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paymentDetails.phoneNumbers.length > 0 ? (
+              paymentDetails.phoneNumbers.map((field, i) => (
+                <TableRow key={i}>
+                  <TableCell>{i + 1}.</TableCell>
+                  <TableCell>{field.phoneNumber}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={4}
+                  className='text-muted-foreground text-center text-sm'
+                >
+                  No data available
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <Table>
+          <TableHeader>
             <TableRow>
+              <TableHead className='w-[59px]'>No.</TableHead>
               <TableHead>Name</TableHead>
               <TableHead className='text-right'>Amount</TableHead>
             </TableRow>
@@ -63,6 +91,7 @@ export const PaymentForm = ({
             {paymentDetails.data.length > 0 ? (
               paymentDetails.data.map((item, i) => (
                 <TableRow key={i}>
+                  <TableCell>{i + 1}.</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell className='text-right'>
                     {item.amount.toLocaleString()}
