@@ -16,6 +16,7 @@ import {
   Ticket,
   User2,
   UserRoundCog,
+  Users2,
 } from 'lucide-react'
 import { AppSidebarFooter } from './AppSidebarFooter'
 import { AppSidebarGroup } from './AppSidebarGroup'
@@ -44,6 +45,11 @@ const contents = {
       name: 'Dashboard',
       href: '/admin',
       icon: ShieldUser,
+    },
+    {
+      name: 'Students Status',
+      href: '/admin/status',
+      icon: Users2,
     },
   ],
 

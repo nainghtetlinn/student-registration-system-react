@@ -18,6 +18,7 @@ import { Route as HomeIndexRouteImport } from './routes/_home/index'
 import { Route as StudentFormsRouteRouteImport } from './routes/student/forms/route'
 import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
 import { Route as AuthChangePasswordIndexRouteImport } from './routes/auth/change-password/index'
+import { Route as AdminStatusIndexRouteImport } from './routes/admin/status/index'
 import { Route as AdminReviewIndexRouteImport } from './routes/admin/review/index'
 import { Route as AdminReceiptsIndexRouteImport } from './routes/admin/receipts/index'
 import { Route as AdminProfileIndexRouteImport } from './routes/admin/profile/index'
@@ -100,6 +101,11 @@ const AuthChangePasswordIndexRoute = AuthChangePasswordIndexRouteImport.update({
   id: '/change-password/',
   path: '/change-password/',
   getParentRoute: () => AuthRouteRoute,
+} as any)
+const AdminStatusIndexRoute = AdminStatusIndexRouteImport.update({
+  id: '/status/',
+  path: '/status/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminReviewIndexRoute = AdminReviewIndexRouteImport.update({
   id: '/review/',
@@ -326,6 +332,7 @@ export interface FileRoutesByFullPath {
   '/admin/profile': typeof AdminProfileIndexRoute
   '/admin/receipts': typeof AdminReceiptsIndexRoute
   '/admin/review': typeof AdminReviewIndexRoute
+  '/admin/status': typeof AdminStatusIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -372,6 +379,7 @@ export interface FileRoutesByTo {
   '/admin/profile': typeof AdminProfileIndexRoute
   '/admin/receipts': typeof AdminReceiptsIndexRoute
   '/admin/review': typeof AdminReviewIndexRoute
+  '/admin/status': typeof AdminStatusIndexRoute
   '/auth/change-password': typeof AuthChangePasswordIndexRoute
   '/auth/login': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -421,6 +429,7 @@ export interface FileRoutesById {
   '/admin/profile/': typeof AdminProfileIndexRoute
   '/admin/receipts/': typeof AdminReceiptsIndexRoute
   '/admin/review/': typeof AdminReviewIndexRoute
+  '/admin/status/': typeof AdminStatusIndexRoute
   '/auth/change-password/': typeof AuthChangePasswordIndexRoute
   '/auth/login/': typeof AuthLoginIndexRoute
   '/student/forms/entrance/create': typeof StudentFormsEntranceCreateRoute
@@ -471,6 +480,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/receipts'
     | '/admin/review'
+    | '/admin/status'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/forms/entrance/create'
@@ -517,6 +527,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/receipts'
     | '/admin/review'
+    | '/admin/status'
     | '/auth/change-password'
     | '/auth/login'
     | '/student/forms/entrance/create'
@@ -565,6 +576,7 @@ export interface FileRouteTypes {
     | '/admin/profile/'
     | '/admin/receipts/'
     | '/admin/review/'
+    | '/admin/status/'
     | '/auth/change-password/'
     | '/auth/login/'
     | '/student/forms/entrance/create'
@@ -667,6 +679,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/change-password'
       preLoaderRoute: typeof AuthChangePasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
+    }
+    '/admin/status/': {
+      id: '/admin/status/'
+      path: '/status'
+      fullPath: '/admin/status'
+      preLoaderRoute: typeof AdminStatusIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/review/': {
       id: '/admin/review/'
@@ -941,6 +960,7 @@ interface AdminRouteRouteChildren {
   AdminProfileIndexRoute: typeof AdminProfileIndexRoute
   AdminReceiptsIndexRoute: typeof AdminReceiptsIndexRoute
   AdminReviewIndexRoute: typeof AdminReviewIndexRoute
+  AdminStatusIndexRoute: typeof AdminStatusIndexRoute
   AdminFormsIdIndexRoute: typeof AdminFormsIdIndexRoute
   AdminFormsCreateIndexRoute: typeof AdminFormsCreateIndexRoute
   AdminProfileCreateIndexRoute: typeof AdminProfileCreateIndexRoute
@@ -963,6 +983,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminProfileIndexRoute: AdminProfileIndexRoute,
   AdminReceiptsIndexRoute: AdminReceiptsIndexRoute,
   AdminReviewIndexRoute: AdminReviewIndexRoute,
+  AdminStatusIndexRoute: AdminStatusIndexRoute,
   AdminFormsIdIndexRoute: AdminFormsIdIndexRoute,
   AdminFormsCreateIndexRoute: AdminFormsCreateIndexRoute,
   AdminProfileCreateIndexRoute: AdminProfileCreateIndexRoute,

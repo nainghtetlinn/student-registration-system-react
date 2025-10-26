@@ -3,6 +3,8 @@ import type { TSubmittedData } from './submitted-data.type'
 
 export type TGetAllSubmittedDataResponse = TSubmittedData[]
 
+export type TGetAllSubmittedVerifiedDataResponse = TSubmittedData[]
+
 export type TGetStudentEntranceFormResponse = {
   formData: TForm
   enrollmentNumber: string
