@@ -18,12 +18,18 @@ export const submittedDataColumns: ColumnDef<TSubmittedData>[] = [
   },
   {
     accessorKey: 'enrollmentNumber',
-    header: 'EN',
+    header: 'Enrollment Number',
     cell: ({ getValue }) => getValue() ?? 'N/A',
   },
   {
     accessorKey: 'createdAt',
-    header: 'Time',
+    header: 'Created At',
+    cell: ({ getValue }) =>
+      format(getValue() as string, 'MMM dd, yyyy, h:mm a'),
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'Updated At',
     cell: ({ getValue }) =>
       format(getValue() as string, 'MMM dd, yyyy, h:mm a'),
   },
