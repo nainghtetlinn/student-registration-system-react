@@ -94,12 +94,23 @@ export const OverviewCard = ({
           />
         </div>
       </CardContent>
+
       {!submitted && (
-        <CardFooter className='flex items-center justify-between'>
-          <p>Acknowledge rules of university to actually submit the form.</p>
-          <Button asChild>
-            <Link to='/student/forms/acknowledge'>Acknowledge</Link>
-          </Button>
+        <CardFooter className='flex flex-col items-stretch gap-2'>
+          {!submitted && !paid && (
+            <div className='flex items-center justify-between'>
+              <p>You can update payment here.</p>
+              <Button asChild>
+                <Link to='/student/forms/payment'>Payment</Link>
+              </Button>
+            </div>
+          )}
+          <div className='flex items-center justify-between'>
+            <p>Acknowledge rules of university to actually submit the form.</p>
+            <Button asChild>
+              <Link to='/student/forms/acknowledge'>Acknowledge</Link>
+            </Button>
+          </div>
         </CardFooter>
       )}
     </Card>
