@@ -1,4 +1,6 @@
 import { FormInputField } from '@/components/ui/form-fields'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 import type { TSubjectChoiceFormSchema } from '../../schema/subject-choice-form.schema'
 
@@ -6,6 +8,8 @@ import { useFormContext } from 'react-hook-form'
 
 export const MatriculationDetails = () => {
   const form = useFormContext<TSubjectChoiceFormSchema>()
+
+  const matriculation = form.watch('matriculation')
 
   return (
     <div className='min-h-[550px] space-y-4'>
@@ -62,6 +66,20 @@ export const MatriculationDetails = () => {
         name='matriculation.other'
         label='ဇီဝ/ဘောဂ/သမိုင်း/ပထဝီ/စိတ်ကြိုက်မြန်မာ'
       />
+      <div>
+        <Label className='leading-8'>အမှတ်ပေါင်း</Label>
+        <Input
+          disabled
+          value={
+            +matriculation.myanmar +
+            +matriculation.english +
+            +matriculation.mathematic +
+            +matriculation.chemistry +
+            +matriculation.physics +
+            +matriculation.other
+          }
+        />
+      </div>
     </div>
   )
 }
