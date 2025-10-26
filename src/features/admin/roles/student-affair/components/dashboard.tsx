@@ -1,5 +1,11 @@
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
@@ -9,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Search } from 'lucide-react'
+import { ArrowDown, ArrowUp } from 'lucide-react'
 
 import type { TData } from '../api/get-all-submitted-data.api'
 import type { TSubmittedData } from '../types/submitted-data.type'
@@ -23,6 +29,7 @@ import {
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
+import { useDebouncedCallback } from 'use-debounce'
 
 import { env } from '@/config/env'
 import { useGetAllSubmittedData } from '../api/get-all-submitted-data.api'
@@ -31,12 +38,20 @@ import { submittedDataColumns } from '../utils/submitted-data-columns'
 export const StudentAffairDashboard = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [k, setK] = useState('')
-
   const { ref, inView } = useInView()
 
+  const [keyword, setKeyword] = useState('')
+  const [field, setField] = useState('createdAt')
+  const [direction, setDirection] = useState('desc')
+
+  const debounced = useDebouncedCallback((k: string) => setKeyword(k), 500)
+
   const { data, isPending, fetchNextPage, hasNextPage, refetch } =
-    useGetAllSubmittedData({ queryKey: ['submitted-data'] }, { keyword: k })
+    useGetAllSubmittedData({
+      keyword,
+      sortDirection: direction,
+      sortField: field,
+    })
 
   const table = useReactTable<TSubmittedData>({
     data: data || [],
@@ -81,28 +96,53 @@ export const StudentAffairDashboard = () => {
     if (inView && hasNextPage) fetchNextPage()
   }, [fetchNextPage, hasNextPage, inView])
 
+  useEffect(() => {
+    refetch()
+  }, [keyword, direction, field])
+
   return (
     <div className='relative p-2'>
       <h2 className='mb-4 text-center text-2xl font-bold'>
         Student Affair Dashboard
-      </h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          refetch()
-        }}
-        className='flex w-full justify-end gap-2'
-      >
+      </h2>{' '}
+      <div className='mb-4 flex w-full flex-wrap items-center justify-end gap-2'>
+        <Select
+          value={field}
+          onValueChange={setField}
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='mmName'>Name (mm)</SelectItem>
+            <SelectItem value='engName'>Name (eng)</SelectItem>
+            <SelectItem value='enrollmentNumber'>Enrollment number</SelectItem>
+            <SelectItem value='createdAt'>Created at</SelectItem>
+            <SelectItem value='updatedAt'>Updated at</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select
+          value={direction}
+          onValueChange={setDirection}
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='asc'>
+              <ArrowUp /> Asc
+            </SelectItem>
+            <SelectItem value='desc'>
+              <ArrowDown /> Desc
+            </SelectItem>
+          </SelectContent>
+        </Select>
         <Input
-          className='w-[300px]'
+          onChange={(e) => debounced(e.target.value)}
           placeholder='Search ...'
-          value={k}
-          onChange={(e) => setK(e.target.value)}
+          className='w-[240px]'
         />
-        <Button size={'icon'}>
-          <Search />
-        </Button>
-      </form>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

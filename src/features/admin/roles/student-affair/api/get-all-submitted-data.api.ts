@@ -1,27 +1,22 @@
 import type { ApiResponse } from '@/types/api'
 import type {
+  InfiniteData,
   QueryKey,
   UseInfiniteQueryOptions,
-  InfiniteData,
 } from '@tanstack/react-query'
 import type { TGetAllSubmittedDataResponse } from '../types/get.type'
 
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { api } from '@/api/lib/axios'
 
-export const filterGetAllSubmittedDataSchema = z.object({
-  keyword: z.string().optional(),
-  page: z.coerce.number().min(0).optional().default(0),
-  size: z.coerce.number().min(1).optional().default(10),
-  sortField: z.string().optional(),
-  sortDirection: z.string().optional(),
-})
-
-export type TFilterGetAllSubmittedData = z.infer<
-  typeof filterGetAllSubmittedDataSchema
->
+type TFilterGetAllSubmittedData = {
+  keyword?: string
+  page: number
+  size: number
+  sortField?: string
+  sortDirection?: string
+}
 
 export const getAllSubmittedData = (search: TFilterGetAllSubmittedData) => {
   return api.get<ApiResponse<TGetAllSubmittedDataResponse>>(
@@ -34,13 +29,17 @@ export const getAllSubmittedData = (search: TFilterGetAllSubmittedData) => {
 
 type DataPage = {
   items: TGetAllSubmittedDataResponse
+  currentPage: number
+  totalPages: number
+  totalItems: number
   nextPage: number | null
 }
 
 export type TData = InfiniteData<DataPage, number>
 
 export const useGetAllSubmittedData = (
-  options: Omit<
+  search?: Omit<TFilterGetAllSubmittedData, 'page' | 'size'>,
+  options?: Omit<
     UseInfiniteQueryOptions<
       DataPage,
       Error,
@@ -48,20 +47,23 @@ export const useGetAllSubmittedData = (
       QueryKey,
       number
     >,
-    'queryFn' | 'initialPageParam' | 'getNextPageParam'
+    'queryFn' | 'queryKey' | 'initialPageParam' | 'getNextPageParam'
   >,
-  search?: Omit<TFilterGetAllSubmittedData, 'page' | 'size'>,
 ) => {
   return useInfiniteQuery({
+    queryKey: ['student-affair', 'submitted-data'],
     queryFn: async ({ pageParam }) => {
       const response = await getAllSubmittedData({
         page: pageParam,
         size: 10,
         ...search,
       })
-      const { currentPage, totalPages } = response.data.meta
+      const { currentPage, totalPages, totalItems } = response.data.meta
       return {
         items: response.data.data,
+        currentPage,
+        totalPages,
+        totalItems,
         nextPage: currentPage === totalPages ? null : pageParam + 1,
       }
     },
